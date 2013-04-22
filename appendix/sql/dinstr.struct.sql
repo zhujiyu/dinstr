@@ -1,5 +1,5 @@
 /**
- * @file： dis.struct.sql
+ * @file： dinstr.struct.sql
  * @group: DIS
  * @brief：DIS项目的核心是提供一个为中小企业和个人发布海报的平台。
  *
@@ -16,9 +16,9 @@
  *    重组织PMAIL项目，简化成DIS。
 \*/
 
-DROP DATABASE IF EXISTS disv1;
-CREATE DATABASE disv1;
-use disv1;
+DROP DATABASE IF EXISTS dinstr;
+CREATE DATABASE dinstr;
+use dinstr;
 
 /*************************************
  * 以下是基础数据模块，包括用户、频道两部分
