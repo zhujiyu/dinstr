@@ -149,7 +149,7 @@ class DisHeadCtrl extends DisHeadData
 
         if( $this->check_interest($user_id) )
             return ;
-        $interest_id = DisTitleUserData::insert($this->ID, $user_id);
+        $interest_id = DisHeadUserData::insert($this->ID, $user_id);
         if( !$interest_id )
             throw new DisException('发生了意外异常！');
 
@@ -175,7 +175,7 @@ class DisHeadCtrl extends DisHeadData
 
         if( !$this->check_interest($user_id) )
             return ;
-        DisTitleUserData::remove($this->ID, $user_id);
+        DisHeadUserData::remove($this->ID, $user_id);
 
         $param = new DisUserParamCtrl();
         $param->ID = $user_id;
@@ -197,12 +197,12 @@ class DisHeadCtrl extends DisHeadData
 
         if( $this->check_approved($user_id) )
             return ;
-        $approve_id = DisTitleUserData::get_interest_id($this->ID, $user_id);
+        $approve_id = DisHeadUserData::get_interest_id($this->ID, $user_id);
         if( !$approve_id )
-            $approve_id = DisTitleUserData::insert($this->ID, $user_id);
+            $approve_id = DisHeadUserData::insert($this->ID, $user_id);
         if( !$approve_id )
             throw new DisException('发生了意外异常！');
-        DisTitleUserData::approve($approve_id);
+        DisHeadUserData::approve($approve_id);
 
         $param = new DisUserParamCtrl();
         $param->ID = $user_id;
@@ -231,10 +231,10 @@ class DisHeadCtrl extends DisHeadData
 
         if( !$this->check_approved($user_id) )
             return ;
-        $approve_id = DisTitleUserData::get_interest_id($this->ID, $user_id);
+        $approve_id = DisHeadUserData::get_interest_id($this->ID, $user_id);
         if( !$approve_id )
             return ;
-        DisTitleUserData::cancel_approve($approve_id);
+        DisHeadUserData::cancel_approve($approve_id);
 
         $param = new DisUserParamCtrl();
         $param->ID = $user_id;
@@ -255,7 +255,7 @@ class DisHeadCtrl extends DisHeadData
         if( !$user_ids )
         {
             $user_ids[0] = "#E#";
-            $ids = DisTitleUserData::list_follow_user_ids($this->ID);
+            $ids = DisHeadUserData::list_follow_user_ids($this->ID);
             $count = count($ids);
             for( $i = 0; $i < $count; $i ++ )
                 $user_ids[$i] = $ids[$i]['user_id'];
@@ -277,7 +277,7 @@ class DisHeadCtrl extends DisHeadData
         if( !$user_ids )
         {
             $user_ids[0] = "#E#";
-            $ids = DisTitleUserData::list_approve_user_ids($this->ID);
+            $ids = DisHeadUserData::list_approve_user_ids($this->ID);
             $count = count($ids);
             for( $i = 0; $i < $count; $i ++ )
                 $user_ids[$i] = $ids[$i]['user_id'];

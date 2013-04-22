@@ -117,7 +117,7 @@ class DisNoticeCtrl extends DisNoticeData
         {
             $mail = DisNoteCtrl::get_data($notice[data_id]);
             $user = DisUserCtrl::get_data($mail[user_id]);
-            $theme = DisTitleCtrl::get_data($mail[theme_id]);
+            $theme = DisHeadCtrl::get_data($mail[theme_id]);
 
             $notice[theme_id] = $mail[theme_id];
             $notice[theme] = $theme[content];
@@ -126,9 +126,9 @@ class DisNoticeCtrl extends DisNoticeData
         }
         else if( $notice[type] == 'approve' )
         {
-            $approve = DisTitleUserCtrl::get_data($notice[data_id]);
+            $approve = DisHeadUserCtrl::get_data($notice[data_id]);
             $user = DisUserCtrl::get_data($approve[user_id]);
-            $theme = DisTitleCtrl::get_data($approve[theme_id]);
+            $theme = DisHeadCtrl::get_data($approve[theme_id]);
 
             $notice[theme_id] = $approve[theme_id];
             $notice[theme] = $theme[content];

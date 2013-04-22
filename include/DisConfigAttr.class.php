@@ -67,12 +67,6 @@ class DisConfigAttr
         'DisDBStaticTable'=>'include/mysql/DisDBStaticTable.class.php',
         'DisMysqlStatement'=>'include/mysql/DisMysqlStatement.class.php',
 
-        'SphinxClient'=>'include/plugin/SphinxClient.class.php',
-        'DisMailPlg'  =>'include/plugin/DisMailPlg.class.php',
-        'DisImagePlg' =>'include/plugin/DisImagePlg.class.php',
-        'DisSearchPlg'=>'include/plugin/DisSearchPlg.class.php',
-        'DisTaobaoPlg'=>'include/plugin/DisTaobaoPlg.class.php',
-
         'DisIMemcached'  =>'include/cache/DisIMemcached.class.php',
         'DisVectorCache' =>'include/cache/DisVectorCache.class.php',
         'DisRowCache'    =>'include/cache/DisRowCache.class.php',
@@ -85,30 +79,17 @@ class DisConfigAttr
         'DisChanVectorCache' =>'include/cache/DisChanVectorCache.class.php',
         'DisChanDataCache'   =>'include/cache/DisChanDataCache.class.php',
 
-        'DisNoticeData'=>'include/data/DisNoticeData.class.php',
-        'DisNoticeCtrl'=>'include/ctrl/DisNoticeCtrl.class.php',
-
         'DisUserData'        =>'include/data/DisUserData.class.php',
         'DisUserParamData'   =>'include/data/DisUserParamData.class.php',
         'DisUserRelationData'=>'include/data/DisUserRelationData.class.php',
         'DisUserCtrl'        =>'include/ctrl/DisUserCtrl.class.php',
         'DisUserParamCtrl'   =>'include/ctrl/DisUserParamCtrl.class.php',
-        'pmCtrlUserRelation'=>'include/ctrl/pmCtrlUser.php',
-
-        'DisMessageData'    =>'include/data/DisMessageData.class.php',
-        'DisMessageFormData'=>'include/data/DisMessageFormData.class.php',
-        'DisMessageUserData'=>'include/data/DisMessageUserData.class.php',
-        'DisMessageCtrl'    =>'include/ctrl/DisMessageCtrl.class.php',
+        'DisUserRelationCtrl'=>'include/ctrl/DisUserRelationCtrl.class.php',
 
         'DisUserLoginData'=>'include/data/DisUserLoginData.class.php',
         'DisMoneyLogData' =>'include/data/DisMoneyLogData.class.php',
         'DisUserLoginCtrl'=>'include/ctrl/DisUserLoginCtrl.class.php',
         'DisMoneyLogCtrl' =>'include/ctrl/DisMoneyLogCtrl.class.php',
-
-        'DisInviteData'  =>'include/data/DisInviteData.class.php',
-        'DisFeedbackData'=>'include/data/DisFeedbackData.class.php',
-        'DisInviteCtrl'  =>'include/ctrl/DisInviteCtrl.class.php',
-        'DisFeedbackCtrl'=>'include/ctrl/DisFeedbackCtrl.class.php',
 
         'DisChannelData'      =>'include/data/DisChannelData.class.php',
         'DisChanUserData'     =>'include/data/DisChanUserData.class.php',
@@ -134,14 +115,14 @@ class DisConfigAttr
         'DisNoteCtrl'    =>'include/ctrl/DisNoteCtrl.class.php',
         'DisNoteFlowCtrl'=>'include/ctrl/DisNoteFlowCtrl.class.php',
 
+        'DisHeadData'    =>'include/data/DisHeadData.class.php',
+        'DisHeadUserData'=>'include/data/DisHeadUserData.class.php',
+        'DisHeadCtrl'    =>'include/ctrl/DisHeadCtrl.class.php',
+        'DisHeadUserCtrl'=>'include/ctrl/DisHeadUserCtrl.class.php',
+
         'pmDataMailCollect' =>'include/data/pmDataMailExt.php',
         'pmCtrlMailCollect' =>'include/ctrl/pmCtrlMailExt.php',
         'pmDataMailCollectTag'=>'include/data/pmDataMailExt.php',
-
-        'DisTitleData'    =>'include/data/DisTitleData.class.php',
-        'DisTitleUserData'=>'include/data/DisTitleUserData.class.php',
-        'DisTitleCtrl'    =>'include/ctrl/DisTitleCtrl.class.php',
-        'DisTitleUserCtrl'=>'include/ctrl/DisTitleUserCtrl.class.php',
 
         'DisValueData'    =>'include/data/DisValueData.class.php',
         'DisFeedData'     =>'include/data/DisFeedData.class.php',
@@ -149,6 +130,25 @@ class DisConfigAttr
         'DisValueCtrl'    =>'include/ctrl/DisValueCtrl.class.php',
         'DisFeedCtrl'     =>'include/ctrl/DisFeedCtrl.class.php',
         'DisGuestFeedCtrl'=>'include/ctrl/DisGuestFeedCtrl.class.php',
+
+        'DisNoticeData'=>'include/data/DisNoticeData.class.php',
+        'DisNoticeCtrl'=>'include/ctrl/DisNoticeCtrl.class.php',
+
+        'DisMessageData'    =>'include/data/DisMessageData.class.php',
+        'DisMessageFormData'=>'include/data/DisMessageFormData.class.php',
+        'DisMessageUserData'=>'include/data/DisMessageUserData.class.php',
+        'DisMessageCtrl'    =>'include/ctrl/DisMessageCtrl.class.php',
+
+        'SphinxClient'=>'include/plugin/SphinxClient.class.php',
+        'DisMailPlg'  =>'include/plugin/DisMailPlg.class.php',
+        'DisImagePlg' =>'include/plugin/DisImagePlg.class.php',
+        'DisSearchPlg'=>'include/plugin/DisSearchPlg.class.php',
+        'DisTaobaoPlg'=>'include/plugin/DisTaobaoPlg.class.php',
+
+        'DisInviteData'  =>'include/data/DisInviteData.class.php',
+        'DisFeedbackData'=>'include/data/DisFeedbackData.class.php',
+        'DisInviteCtrl'  =>'include/ctrl/DisInviteCtrl.class.php',
+        'DisFeedbackCtrl'=>'include/ctrl/DisFeedbackCtrl.class.php',
     );
 }
 

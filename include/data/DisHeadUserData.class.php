@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.DATA
- * @file   : DisTitleUserData.class.php
+ * @file   : DisHeadUserData.class.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -12,7 +12,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisTitleUserData extends DisDBStaticTable
+class DisHeadUserData extends DisDBStaticTable
 {
     static function load($approve_id)
     {

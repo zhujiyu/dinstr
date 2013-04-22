@@ -64,20 +64,4 @@ class DisUserParamCtrl extends DisUserParamData
         DisUserDataCache::set_user_param($this->ID, $this->detail);
     }
 }
-
-class DisUserRelationCtrl extends DisUserRelationData
-{
-    static function get_data($relation_id)
-    {
-//        pmCacheUserData::set_relation_data($relation_id, null);
-        $relation = DisUserDataCache::get_relation_data($relation_id);
-        if( !$relation )
-        {
-            $relation = parent::load($relation_id);
-            DisUserDataCache::set_relation_data($relation_id, $relation);
-        }
-        return $relation;
-    }
-}
-
 ?>

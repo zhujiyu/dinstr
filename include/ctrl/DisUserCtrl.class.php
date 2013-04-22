@@ -168,7 +168,7 @@ class DisUserCtrl extends DisUserData
         $len = count($theme_ids);
         for( $i = 0; $i < $len; $i ++ )
         {
-            $theme = DisTitleCtrl::theme($theme_ids[$i]);
+            $theme = DisHeadCtrl::theme($theme_ids[$i]);
             $data = $theme->theme_view();
             $data['status'] = $theme->check_status($this->ID);
             $data['last_mail'] = $theme->last_mail();
@@ -186,7 +186,7 @@ class DisUserCtrl extends DisUserData
         {
             $mail = DisNoteCtrl::get_mail_view($mail_ids[$i]);
             $mail[content] = strip_tags($mail[content]);
-            $theme = DisTitleCtrl::theme($mail['theme_id']);
+            $theme = DisHeadCtrl::theme($mail['theme_id']);
             $mail[theme] = $theme->info();
             $mail[theme][status] = $theme->check_status($this->ID);
             array_push($mail_list, $mail);
@@ -204,7 +204,7 @@ class DisUserCtrl extends DisUserData
             try
             {
                 $flow = DisNoteFlowCtrl::get_flow_view($flow_ids[$i]);
-                $theme = DisTitleCtrl::theme($flow['theme_id']);
+                $theme = DisHeadCtrl::theme($flow['theme_id']);
                 $flow['theme']['status'] = $theme->check_status($this->ID);
             }
             catch (DisException $ex)
@@ -329,7 +329,7 @@ class DisUserCtrl extends DisUserData
     protected function _list_interest_theme_ids($max_id = 0, $count = 200)
     {
         $theme_ids = array();
-        $ids = DisTitleUserData::list_interest_theme_ids($this->ID, $max_id, $count);
+        $ids = DisHeadUserData::list_interest_theme_ids($this->ID, $max_id, $count);
         $len = count($ids);
         for ($i = 0; $i < $len; $i ++ )
             $theme_ids[$i] = $ids[$i]['theme_id'];
@@ -370,7 +370,7 @@ class DisUserCtrl extends DisUserData
     protected function _list_approved_theme_ids($start = 0, $count = 20)
     {
         $theme_ids = array();
-        $ids = DisTitleUserData::list_approve_theme_ids($this->ID, $start, $count);
+        $ids = DisHeadUserData::list_approve_theme_ids($this->ID, $start, $count);
         $len = count($ids);
         for( $i = 0; $i < $len; $i ++ )
             $theme_ids[$i] = $ids[$i]['theme_id'];

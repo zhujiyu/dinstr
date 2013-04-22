@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.DATA
- * @file   : DisTitleData.class.php
+ * @file   : DisHeadData.class.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -12,7 +12,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisTitleData extends DisDBTable
+class DisHeadData extends DisDBTable
 {
     function __construct($ID = null)
     {

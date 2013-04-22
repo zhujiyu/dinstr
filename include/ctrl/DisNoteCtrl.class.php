@@ -50,7 +50,7 @@ class DisNoteCtrl extends DisNoteData
         {
             $mail = DisNoteCtrl::get_mail_view($mail_ids[$i]);
             $mail[content] = strip_tags($mail[content]);
-            $theme = DisTitleCtrl::theme($mail['theme_id']);
+            $theme = DisHeadCtrl::theme($mail['theme_id']);
             $mail[theme] = $theme->info();
             array_push($mail_list, $mail);
         }
@@ -168,7 +168,7 @@ class DisNoteCtrl extends DisNoteData
 
         $good_num = $goods ? count($goods) : 0;
         $photo_num = $photos ? count($photos) : 0;
-        $theme = DisTitleCtrl::new_theme($user_id, $title, $channel_id);
+        $theme = DisHeadCtrl::new_theme($user_id, $title, $channel_id);
         $mail = new DisNoteCtrl();
         $mail->insert($user_id, $content, $theme->ID, $photo_num, $good_num, $video);
         if( !$mail->ID )
@@ -255,7 +255,7 @@ class DisNoteCtrl extends DisNoteData
             $mail_user->reply_notice($mail_id);
         }
 
-        $theme = DisTitleCtrl::theme((int)$this->detail['theme_id']);
+        $theme = DisHeadCtrl::theme((int)$this->detail['theme_id']);
         $theme->increase('mail_num');
 
         $user_ids = $theme->list_interest_user_ids();

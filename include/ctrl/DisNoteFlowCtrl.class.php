@@ -38,7 +38,7 @@ class DisNoteFlowCtrl extends DisNoteFlowData
         $mail = DisNoteCtrl::get_mail_view($flow['mail_id']);
         $mail[content] = strip_tags($mail[content]);
         if( $mail['ID'] > 0 )
-            $mail['theme'] = DisTitleCtrl::get_data($mail['theme_id']);
+            $mail['theme'] = DisHeadCtrl::get_data($mail['theme_id']);
         $mail['flow'] = $flow;
 //        $mail['theme'] = $_data;
         return $mail;

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.CTRL
- * @file   : DisTitleUserCtrl.class.php
+ * @file   : DisHeadUserCtrl.class.php
  * @abstract  :
  *
  * @author    : 朱继玉<zhuhz82@126.com>
@@ -13,7 +13,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisTitleUserCtrl extends DisTitleUserData
+class DisHeadUserCtrl extends DisHeadUserData
 {
     static function get_data($approve_id)
     {
