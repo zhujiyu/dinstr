@@ -1,0 +1,172 @@
+/*!
+ * PMAIL项目 CSS V1.9.25
+ *
+ * @author 朱继玉
+ * @copyright http://gou86.com/ @2011
+ */
+/* 网站的主题样式 */
+.pm-shadow {z-index: 210; top: 0; left: 0; width: 100%; height: 100%; position: absolute;}
+.pm-tip {position: absolute; z-index: 10;}
+.pm-tip .pm-tip-content {z-index: 211; background-color: #fff; position: relative;}
+
+#parsing {left: 0; top: 0; width: 100%; height: 100%; z-index: 999; position: absolute;}
+#parsing span {color: #eb4f01; text-align: center; vertical-align: middle; position: relative; padding: 5px; display: block; width: 120px; margin: auto; background-color: #fff;}
+.pm-loading .pm-loading-pic {padding: 20px; text-align: center;}
+
+.pm-err {padding: 0 10px; border: 1px solid #b94a48;}
+.pm-err .content {font-size: 12px; color: #555;}
+
+.pm-special {padding: 14px; background-color: #eaeaea; border: 1px solid #e1e1e1;}
+.pm-special .pm-special {padding: 0; border: 0;}
+.pm-sorting {border: 1px solid red; background-color: white; padding: 5px;}
+.pm-prompt, .pm-prompt-wrap .pm-prompt {background-color: yellow;}
+.pm-shirt-v, .pm-shirt-h {width: 5px; height: 5px;}
+.pm-veri-data .pm-desc {color: red;}
+
+.pm-arrow {font-family: Arial; line-height: 14px; text-align: center; width: 20px; position: relative; display: block; z-index: 0;}
+.pm-arrow-up .head {height: 8px; margin: 0 0 0 3px; font-size: 28px; overflow: hidden; text-align: left; display: block; position: relative;}
+.pm-arrow-up .tear {height: 8px; margin: -3px 0 4px 4px; font-size: 11px; overflow: hidden; text-align: left; display: block; position: relative;}
+.pm-arrow-dwon .head {height: 8px; margin: 0 0 0 3px; font-size: 28px; overflow: hidden; display: block; position: relative;}
+
+.pm-avatar-img {white-space: nowrap; overflow: hidden; position: relative;}
+.pm-avatar-icon {width: 20px; height: 20px;}
+.pm-avatar-icon img {max-width: 20px; max-height: 20px;}
+.pm-avatar-small {width: 24px; height: 24px;}
+.pm-avatar-small img {max-width: 24px; max-height: 24px;}
+.pm-avatar-middle {width: 50px; height: 50px;}
+.pm-avatar-middle img {max-width: 50px; max-height: 50px;}
+.pm-avatar-big {width: 150px; height: 150px;}
+.pm-avatar-big img {max-width: 150px; max-height: 150px;}
+
+.pm-upload-ctrl img {display: none; vertical-align: middle; margin-left: 20px;}
+.pm-upload-ctrl input {vertical-align: middle; border: 1px solid #aaa;}
+
+.pm-avatar-dialog {width: 720px;}
+.pm-avatar-dialog .pm-dialog-content {padding: 10px;}
+.pm-avatar-source {position: relative; vertical-align: middle; margin-right: 20px; max-width: 500px; overflow: hidden;}
+.pm-avatar-source img {z-index: 20;}
+.pm-avatar-source .pm-overlay {position: absolute; top: 0; left: 0; z-index: 21; display: none; width: 100%; height: 100%;}
+.pm-avatar-source .pm-overlay td {height: 100px; overflow: hidden;}
+.pm-avatar-source #adjust {position: absolute; width: 100px; height: 100px; top: 0; left: 0; z-index: 222; cursor: pointer;}
+.pm-avatar-result {vertical-align: top;}
+.pm-avatar-result .pm-avatar-new {position: relative; vertical-align: middle; margin: 0 auto;}
+/*.pm-avatar-source .pm-overlay .ui-widget-overlay {position: relative;}*/
+
+.pm-tag {display: inline-block; position: relative; padding-right: 10px;}
+.pm-red-star {display: inline-block; width: 16px; height: 16px;}
+.pm-content {text-indent: 2em;}
+.pm-empty-content {font-size: 14px; padding: 20px 0; text-align: center;}
+.pm-page-title {padding: 10px 0; font-size: 20px; font-weight: bold;}
+.pm-module-title {font-size: 14px; font-weight: bold;}
+
+.pm-border-line {background-color: #ddd; height: 1px;}
+.pm-content-border  {background-color: #ddd; height: 2px; margin: 10px 0;}
+.pm-vertical-border {background-color: #ddd; width: 1px; height: 100%;}
+
+.pm-to-top {width: 20px; padding: 15px 5px; background-color: #f1f1f1; cursor: pointer;
+            font-family: Arial; line-height: 14px; text-align: center;
+            position: fixed; _position: absolute; bottom: 100px; left: 50%; margin-left: 200px; display: none;}
+.pm-to-top:hover {background-color: #e1e1e1; color: #222; text-decoration: none;}
+
+.pm-param {font-size: 14px;}
+.pm-param a:hover {text-decoration: none;}
+.pm-param .data {display: block; text-align: center;}
+.pm-param .pm-vertical-border {width: 1px; height: 40px; margin: 0 10px;}
+
+.pm-page-navi {padding: 0 10px; border-bottom: 1px solid #cacaca; position: relative; text-align: right; margin-bottom: 15px;}
+.pm-page-navi .item {position: relative; cursor: pointer; top: 1px; display: inline-block; font-size: 14px; padding: 5px 10px; background-color: #fff; border: 1px solid transparent; border-bottom: 1px solid #cacaca;}
+.pm-page-navi .item:hover {text-decoration: none; border: 1px solid #cacaca; border-bottom: 1px solid transparent;}
+.pm-page-navi .current {color: #444; cursor: text; border: 1px solid #cacaca; border-bottom: 1px solid #fff;}
+.pm-page-navi .pm-module-title {float: left; margin-top: 10px;}
+
+.pm-dialog input[type=text] {font-size: 14px; line-height: 22px; width: 440px; padding: 2px 4px;}
+.pm-dialog input[type=file] {width: 300px;}
+.pm-photo-dialog .pm-dialog-content {min-width: 520px;}
+.pm-photo-dialog .pm-photo-box {text-align: center; margin-bottom: 20px; overflow: auto; max-height: 400px; min-height: 200px;}
+.pm-photo-dialog .pm-photo-param {display: none;}
+.pm-good-dialog .pm-error {padding-top: 10px; color: red;}
+
+/*
+.pm-photo-dialog .ctrl {padding: 10px;}
+.pm-photo-dialog .ctrl input[type=file] {width: 300px;}
+.pm-photo-dialog .pm-input-photo {overflow: auto; max-width: 600px; max-height: 400px; min-width: 400px; min-height: 200px;}
+.pm-photo-dialog .pm-upload-ctrl {text-align: left;}
+.pm-photo-dialog .pm-web-photo input {width: 400px; padding: 2px 4px;}
+*/
+.item a {text-decoration: none;}
+.current a {color: #444; cursor: text;}
+
+.pm-content-navi .item {padding: 5px 0 5px 30px; display: block; position: relative; vertical-align: middle;}
+.pm-content-navi .item:hover {background-color: #e1f0f7; text-decoration: none;}
+.pm-content-navi .current {background-color: #dee9ee;}
+/*.pm-content-navi .current {background-color: #eaeaea;}*/
+
+.pm-manage-box {padding: 10px; text-align: center;}
+.pm-manage-box a {margin: 0 20px; padding: 3px 10px;}
+
+.pm-imagecode-ctrl img {vertical-align: top; vertical-align: middle; width: 120px; height: 40px;}
+.pm-imagecode-ctrl #imagecode {width: 80px; padding: 2px 4px;}
+/*.pm-imagecode-ctrl .pm-content-border {width: 180px; margin: 10px auto;}*/
+
+.pm-object-edit {width: 640px; min-height: 500px;}
+.pm-object-edit .pm-logo-list {vertical-align: middle;}
+.pm-object-edit .pm-edit-ctrl {padding: 10px 0; vertical-align: middle;}
+.pm-object-edit .pm-edit-title {padding: 10px 0; text-align: center;}
+.pm-object-edit .pm-upload-ctrl {text-align: left; vertical-align: top; padding: 60px 20px;}
+
+.pm-object-edit .pm-tag-list {padding: 20px 0;}
+.pm-object-edit .pm-tag-list .pm-tag {padding: 0 30px 0 10px; margin-right: 10px; border: 1px solid #ccc; background-color: #f5f1f1;}
+.pm-object-edit .pm-edit-item .name {width: 100px;}
+.pm-object-edit .pm-edit-item .desc {color: #888; padding: 5px 0;}
+
+.pm-object-edit textarea {width: 630px; padding: 5px;}
+.pm-object-edit .pm-edit-info td.name {width: 70px; text-align: right; font-weight: bold; padding-right: 10px;}
+
+.pm-object-item .pm-object-avatar {width: 70px;color: #105cb6}
+.pm-object-item .pm-object-info {width: 480px; vertical-align: top;}
+.pm-object-item .pm-ctrl {width: 100px; vertical-align: top;}
+
+.pm-join-dialog textarea {padding: 3px 5px; width: 510px;}
+.pm-join-dialog .pm-upload-ctrl {display: none;}
+
+.pm-imoney-ctrl {padding: 0; text-align: center;}
+.pm-channel-plaza td {width: 70px;}
+
+.pm-user-simple .pm-user-avatar {width: 70px;}
+.pm-user-simple .pm-user-info {vertical-align: top;}
+
+/*.pm-user-simple .pm-user-name a {font-size: 18px; font-weight: bold;}*/
+/*.pm-upload-dialog .pm-dialog-head {padding: 10px 10px 0;}*/
+/*.pm-upload-dialog .pm-dialog-head .pm-page-navi {text-align: left; padding: 0; margin: 0; border: 0;}*/
+/*.pm-upload-dialog .pm-dialog-head .pm-page-navi .item {background-color: #f1f1f1;}*/
+/*.pm-upload-dialog .pm-dialog-head .pm-page-navi .item:hover {background-color: white;}*/
+/*.pm-upload-dialog .pm-dialog-head .pm-page-navi .current {background-color: white;}*/
+/*.pm-upload-dialog .pm-photo {width: 400px; text-align: center; padding: 20px; margin-top: -20px;}*/
+/*.pm-upload-dialog .pm-photo img {width: 200px; height: 200px; border: 1px solid gray;}*/
+/*.pm-upload-dialog .pm-photo-box {margin: 0 auto;}*/
+/*.pm-upload-dialog .pm-photo-title {text-align: left;}*/
+
+/*
+.pm-page-more  {padding: 0px 0px; font-size: 14px; font-weight: bold; height: 27px; line-height: 27px; text-align: center; min-width: 46px;
+                border: 1px solid #cacaca; background-color: whiteSmoke;
+                background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+                background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
+                background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
+                background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
+                background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                outline: 0; text-shadow: 0 1px rgba(0, 0, 0, 0.2); text-transform: uppercase;
+                -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; cursor: default; color: #444;}
+.pm-page-more:hover { background-color: #f8f8f8;
+                      background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
+                      background-image: -moz-linear-gradient(top,#f8f8f8,#f1f1f1);
+                      background-image: -ms-linear-gradient(top,#f8f8f8,#f1f1f1);
+                      background-image: -o-linear-gradient(top,#f8f8f8,#f1f1f1);
+                      background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
+                      text-decoration: none; border: 1px solid #cacaca; color: #000;}*/
+
+/* 蓝色方案 */
+/*a, .pm-a, .pm-am {color: #eb4f01;}*/
+/*a, .pm-a, .pm-mail .pm-am, .pm-theme .pm-am {color: #105cb6;}*/
+/*a[href], .pm-a[href], .pm-am[href] {cursor: pointer; color: #105cb6;}*/
+/*.pm-gray-button:hover .pm-icon {background-image: url("images/ui-icons_222222_256x240.png");}*/

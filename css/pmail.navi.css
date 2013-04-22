@@ -1,0 +1,79 @@
+.pm-navi {padding: 0; position: fixed; z-index: 10; top: 0; left: 0; width: 100%; border-bottom: 1px solid #c1c1c1; background-color: #14589c;}
+.pm-navi-content {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px; margin: 0 auto; width: 940px; position: relative; text-align: left; height: 36px;}
+.pm-navi-content a {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;}
+.pm-navi-content a:hover {color: #fff; text-decoration: none;}
+.pm-navi-content .pm-icon-wrap {vertical-align: middle;}
+.pm-navi-content .pm-icon, .pm-navi-content a:hover .pm-icon {background-image: url('images/ui-icons_ffffff_256x240.png');}
+
+.pm-navi-logo {width: 170px; color: #fff;}
+.pm-navi-logo a {color: #fff;}
+.pm-search-bar {width: 230px;}
+.pm-manage-account {width: 220px; text-align: right;}
+
+#add-mail {padding: 3px 10px; vertical-align: middle; position: relative;}
+.pm-navi-item {padding: 5px 10px; font-weight: bold; position: relative; vertical-align: middle; display: inline-block;}
+.pm-navi-item:hover {background-color: #1f4974;}
+.pm-search-form #keyword {width: 200px; padding: 2px 4px; position: relative;}
+.pm-search-form #search {width: 16px; height: 16px; height: 16px; border: 0; background: url("images/find.png") no-repeat; left: -10px; position: relative;}
+
+.pm-menu-list {position: absolute; display: block; right: 0; top: 2px; min-width: 120px; padding: 1px; background-color: #14589c;}
+.pm-menu-list .pm-icon {margin-right: 10px;}
+.pm-menu-list .pm-border-line {display: none;}
+.pm-menu-list .pm-navi-item {display: none; text-align: left; padding: 4px 10px 4px 15px; background-color: #14589c; position: relative;}
+.pm-menu-list .pm-navi-item:hover {background-color: #1f4974;}
+
+.pm-menu-list:hover {background-color: #1f4974;}
+.pm-menu-list:hover .pm-border-line {display: block;}
+.pm-menu-list:hover .pm-navi-item {display: block;}
+
+.pm-manage-account .pm-user-name {display: block; padding: 3px 10px; text-align: right;}
+.pm-manage-account .pm-user-name .username {white-space: nowrap; overflow: hidden; display: inline-block; vertical-align: middle; padding-top: 3px;}
+.pm-manage-account .pm-user-name .pm-icon {margin-right: 0;}
+.pm-manage-account .pm-user-name .pm-avatar-img {margin-right: 10px;}
+
+.pm-dropdown-menu, .pm-dropdown-list {display: none; color: #555; position: absolute; top: 35px; padding: 5px; z-index: 100; background-color: #fff; border: 1px solid #858585;}
+.pm-dropdown-menu {white-space: nowrap; left: -80px;}
+.pm-dropdown-menu a {color: #105cb6; padding: 5px 10px; display: inline-block;}
+.pm-dropdown-menu .pm-triangle {left: 95px;}
+.pm-navi-item:hover .pm-dropdown-menu {display: block;}
+
+.pm-dropdown-list {min-width: 80px; left: -10px;}
+.pm-dropdown-list a {color: #105cb6;}
+.pm-dropdown-list .pm-triangle {left: 30px;}
+.pm-dropdown-list .pm-gray-button {color: #555;}
+.pm-dropdown-list .pm-gray-button:hover {color: #222;}
+
+.pm-manage-notice:hover .pm-notice-list {display: block; min-width: 120px;}
+.pm-manage-notice .pm-notice-item {width: 300px; position: relative; margin: 5px 10px;}
+
+.pm-notice-prompt {border: 1px solid #e1e1e1; padding: 10px 20px; margin-bottom: 10px; position: relative; display: none;}
+.pm-notice-prompt .pm-notice-content {margin: 5px 0;}
+.pm-notice-item {padding: 5px 0; position: relative;}
+.pm-notice-item .pm-close {display: block; position: relative; width: 16px; height: 16px; float: right;}
+.pm-notice-item .pm-close .pm-icon {display: none; background-image: url("images/ui-icons_454545_256x240.png");}
+.pm-notice-item:hover .pm-close .pm-icon {display: block;}
+
+.pm-notice-tip {position: absolute; top: -2px; left: 30px; z-index: 100;}
+.pm-notice-tip .pm-icon-mail {display: block; width: 16px; height: 16px; background-image: url("images/mail.png"); background-repeat: no-repeat;}
+.pm-notice-count {text-decoration: none; color: white; padding: 0 5px; font-size: 11px; font-weight: bold; line-height: 13px; background-color: #C3412F;}
+
+.pm-notice-feed {padding: 3px; text-align: center; border: 1px solid #F9F2A7; background-color: #FEFFE5;}
+.pm-notice-wrap {z-index: 5; position: fixed; display: block; top: 38px; left: 0; width: 100%; background-color: #e1f0f7;}
+.pm-fixed-notices {margin: 0 auto; width: 940px; position: relative;}
+.pm-fixed-notices .pm-close {float: right; position: relative;}
+.pm-fixed-notices .pm-notice-item {position: relative; width: 920px; padding: 5px 0;}
+
+/*.pm-manage-account .pm-user-name span {vertical-align: middle;}*/
+/*.pm-dropdown-list {color: #555; position: absolute; top: 40px; left: 0; padding: 5px; min-width: 80px; display: none; z-index: 100; background-color: #fff; border: 1px solid #858585;}*/
+/*.pm-dropdown-list {background-color: #14589c;}*/
+
+/*.pm-manage-account {text-align: right;}*/
+/*.pm-navi-list {width: 270px;}*/
+/*.pm-navi-list #add-mail {display: none;}*/
+/*.pm-navi {background-color: #1c7bd9;}*/
+/*#add-mail .pm-icon-wrap .pm-icon {top: 2px; position: relative;}*/
+
+/*.pm-navi-item .pm-icon-wrap {vertical-align: middle; position: relative;}*/
+/*.pm-navi-item:hover .pm-dropdown-list {display: block;}*/
+/*.pm-dropdown-list .pm-drop-subitem {padding: 5px; position: relative;}*/
+/*.pm-dropdown-list .pm-drop-subitem:hover {background-color: #1f4974;}*/

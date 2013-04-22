@@ -1,0 +1,61 @@
+.pm-page {font-size: 14px; width: 940px; margin: 0 auto;}
+.pm-shirt-h {height: 50px; width:  40px; margin: 0 auto;}
+.pm-module-title {font-size: 18px; padding: 10px 0;}
+
+.pm-intr-user {padding: 10px; background-color: #f1f1f1;}
+.pm-intr-user .pm-user-avatar {width: 70px;}
+.pm-intr-user .pm-user-info {padding: 5px;}
+
+/* 注册 */
+.pm-register {min-height: 450px;}
+.pm-register .pm-shirt-v {height: 300px; background-color: #14589c; margin: 0 50px;}
+.pm-register-form {width: 520px; padding: 5px;}
+.pm-register-form td {padding: 5px 0;}
+.pm-register-form td.label {width: 80px;}
+.pm-register-form td.data-td {width: 200px;}
+.pm-register-form .pm-ctrl {width: 200px;}
+.pm-register-form .pm-desc {color: #eb4f01;}
+.pm-register-form .pm-light-button, .pm-register-form .pm-gray-button {padding: 3px 15px;}
+
+.pm-login-content {padding: 20px; width: 240px;}
+.pm-login-content .pm-login-input {margin: 10px 0; line-height: 24px; font-size: 14px;}
+.pm-login-content .pm-login-button {float: right;}
+.pm-login-content .pm-login-input {width: 240px;}
+.pm-login-content #pword {display: none;}
+
+.pm-ctrl {text-align: right;}
+.pm-ctrl input {display: none;}
+.pm-ctrl #cancel, .pm-ctrl #join {margin-right: 5px;}
+
+.pm-reg-navi {font-size: 16px; line-height: 27px; font-weight: bold; margin: 10px 0; background-color: #f1f1f1; text-align: center;}
+.pm-reg-navi .symbol {margin: 0 20px;}
+.pm-reg-navi .arrow {height: 28px; display: inline-block; background-color: #14589c; vertical-align: middle;}
+.pm-reg-navi .arrow .tear {width: 0; height: 0; display: inline-block; border-right: 4px solid transparent; border-left: 14px solid #f1f1f1; border-bottom: 14px solid transparent; border-top: 14px solid transparent;}
+.pm-reg-navi .arrow .head {width: 0; height: 0; display: inline-block; border-right: 4px solid #f1f1f1; border-left: 14px solid transparent; border-bottom: 14px solid #f1f1f1;     border-top: 14px solid #f1f1f1;    }
+/*.pm-reg-navi .arrow .shirt {width: 0px; display: inline-block;}*/
+.pm-reg-navi .text {width: 160px; display: inline-block; vertical-align: middle; padding-right: 20px;}
+.pm-reg-navi .text span {vertical-align: middle;}
+.pm-reg-navi .current {background-color: #14589c; color: #fff;}
+.pm-reg-navi .current+.arrow .tear {border-left: 14px solid transparent;}
+.pm-reg-navi .arrow-curr .head {border-right: 4px solid transparent; border-bottom: 14px solid transparent; border-top: 14px solid transparent;}
+/*.pm-regi-ctrl {background-color: #f1f1f1; padding: 5px 10px;}*/
+
+.pm-channel-navi {width: 120px; margin-right: 20px;}
+.pm-channel-navi .item {padding: 5px 0; text-align: right; padding-right: 20px;}
+
+.pm-card-list {width: 800px;}
+.pm-card-list .pm-shirt-v {width: 1px; height: 1px; margin: 0 8px; background-color: #e1e1e1;}
+.pm-card-list .pm-shirt-h {width: 1px; height: 1px; margin: 8px 0; background-color: #e1e1e1;}
+
+.pm-channel-card {position: relative; vertical-align: top; width: 365px; padding: 10px; border: 1px solid #acacac;}
+.pm-channel-card a {color: #888;}
+.pm-channel-card .pm-channel-logo {width: 120px;}
+.pm-channel-card .pm-avatar-img {width: 100px; height: 100px;}
+.pm-channel-card .pm-avatar-img img {max-width: 100px; max-height: 100px;}
+.pm-channel-card .pm-channel-title {padding: 5px 0;}
+.pm-channel-card .pm-channel-info {vertical-align: top; width: 245px;}
+.pm-channel-card .pm-tags-list {padding: 5px 0;}
+.pm-channel-card .pm-channel-type {float: right;}
+.pm-channel-card .pm-channel-desc {height: 40px;}
+.pm-channel-card .pm-channel-ctrl {padding: 5px 15px; background-color: #f1f1f1; margin: 0 -10px -10px;}
+.pm-channel-card .pm-channel-ctrl a {color: #105cb6;}

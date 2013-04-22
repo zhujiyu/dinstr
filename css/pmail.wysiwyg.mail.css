@@ -1,0 +1,18 @@
+
+.wysiwyg {font-size: 14px; line-height: 22px; padding: 5px; position: relative;}
+/*.wysiwyg div {position: relative;}*/
+/*.wysiwyg .pm-input-photo {border: 1px solid #cacaca; background-color: #f1f5f8; width: 500px; clear: both;}*/
+/*.wysiwyg .pm-mail-good {border: 1px solid #cacaca; background-color: #f1f5f8; width: 500px; clear: both;}*/
+
+.pm-input-photo, .pm-mail-good {position: relative; display: inline-block; border: 1px solid #cacaca;}
+/*.pm-input-photo, .pm-mail-good {position: relative; display: inline-block;}*/
+.pm-input-photo .title {text-align: center; font-weight: bold;}
+.pm-mail-good .title {font-size: 16px; font-weight: bold;}
+.pm-mail-good .price {font-size: 18px; color: #eb4f01; font-weight: bold;}
+.pm-mail-good .photo {width: 500px; height: 500px;}
+.pm-mail-good .photo img {max-width: 500px; max-height: 500px;}
+.pm-mail-good h1 {display: inline-block;}
+
+.cart {position: absolute; top: 0; right: 0; width: 20px; height: 20px;}
+.cart img {width: 20px; height: 20px;}
+.pm-mail-good .cart {top: 5px; right: 5px;}

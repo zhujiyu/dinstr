@@ -1,0 +1,1 @@
+<div class="pm-avatar-img pm-load-display {$type}" imgsrc="{$channel.logo.small}" title="{$channel.name}"></div>

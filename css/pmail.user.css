@@ -1,0 +1,46 @@
+/* 
+    Document   : so.user
+    Created on : 2012-1-8, 3:57:46
+    Author     : jiyu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.pm-user {position: relative; padding: 10px 0;}
+
+.pm-user-main .pm-user-avatar {width: 170px;}
+.pm-user-main .pm-user-info {width: 470px; vertical-align: top;}
+.pm-user-main .pm-user-name a {font-size: 20px; font-weight: bold;}
+
+.pm-user-edit .pm-edit-item {padding: 10px 0;}
+.pm-user-edit .pm-edit-item .name {width: 80px; text-align: right; font-weight: bold; padding-right: 10px;}
+
+.pm-user-edit td {padding: 10px 0;}
+.pm-user-edit td.name {width: 80px; text-align: right; font-weight: bold; padding-right: 10px;}
+.pm-user-edit .pm-edit-group {display: none;}
+.pm-user-edit #sign {width: 560px;}
+/*.pm-user-edit textarea#sign {height: 10px;}*/
+.pm-user-edit textarea, .pm-user-edit .pm-edit-info textarea {padding: 5px; width: 558px;}
+
+.pm-invite-user {padding: 5px 0;}
+.pm-invite-user .pm-user-avatar {width: 70px; height: 70px; vertical-align: top;}
+.pm-invite-user .pm-user-info {width: 510px; vertical-align: top;}
+.pm-invite-user .pm-user-ctrl {width: 80px; padding: 10px 0; text-align: right; vertical-align: top;}
+
+.pm-user-list .pm-user-avatar {width: 70px;}
+.pm-user-list .pm-user-info {width: 440px; vertical-align: top;}
+.pm-user-list .pm-ctrl {width: 120px; vertical-align: top;}
+
+.pm-message {margin: 10px 0;}
+.pm-message .pm-message-avatar {width: 70px;  vertical-align: top;}
+.pm-message .pm-message-body   {width: 570px; vertical-align: top;}
+.pm-message .pm-message-body .content {padding: 5px 0;}
+
+.pm-message-reply {/*margin: 0 -20px; padding: 20px;*/ position: relative;}
+.pm-message-reply .pm-option {display: none;}
+.pm-message-edit .pm-message-reciever {margin-bottom: 10px;}
+.pm-message-edit .pm-message-reciever input {width: 400px; padding: 5px; outline: 0; border: 0;}
+.pm-message-edit .pm-message-content {border: 1px solid #aaa;}
+.pm-message-edit .pm-message-content textarea {width: 625px; height: 30px; padding: 5px; outline: 0; border: 0;}
+
+.pm-message-ctrl {margin: 10px 0;}
+.pm-message-delete .content {padding: 30px 0;}

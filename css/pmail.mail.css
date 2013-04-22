@@ -1,0 +1,222 @@
+/*
+    Document   : pmail.mail.css
+    Created on : 2011-11-30, 20:36:43
+    Author     : jiyu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.pm-mail {font-size: 14px; line-height: 22px; position: relative; z-index: 0; margin: 10px 0;}
+.pm-mail-top a, .pm-mail-bottom a, .pm-mail .pm-theme-ctrl a {color: #555;}
+
+.pm-mail-avatar {position: relative; width: 70px; height: 50px;}
+.pm-mail-body {width: 570px;}
+.pm-mail-body .pm-expan {padding: 1px 5px; font-weight: bold; color: #105cb6; display: inline-block; float: right;}
+.pm-mail-body .pm-icon-wrap {vertical-align: middle; padding: 2px;}
+.pm-mail-content textarea {width: 630px; height: 200px; padding: 4px;}
+
+.pm-mail-top {margin-bottom: 5px; clear: both;}
+.pm-mail-top .pm-icon {background-image: url(images/ui-icons_222222_256x240.png);}
+.pm-mail-bottom {clear: both;}
+.pm-mail-bottom a {margin-left: 10px;}
+.pm-mail-bottom .collected .pm-icon {background-image: url('images/ui-icons_eb4f01_256x240.png');}
+
+.pm-theme-title {margin: 5px 0;}
+.pm-theme-title .title {font-weight: bold; font-size: 18px;}
+.pm-theme-title textarea {width: 630px; padding: 2px 4px; height: 32px;}
+.pm-mail-release {float: right;}
+.pm-mail-weight {color: #14589c; font-weight: bold; font-size: 18px; margin: 0 5px;}
+
+.pm-mail-content-small .pm-photo {width: 100px; height: 100px; vertical-align: top;}
+.pm-mail-content-small .pm-photo img {max-height: 100px; max-width: 100px;}
+.pm-mail-content-small .pm-photo-desc {display: none;}
+.pm-mail-content-small .pm-shirt-v {height: 10px; vertical-align: top;}
+.pm-mail-content-small .pm-object-list {float: left; margin-bottom: 10px;}
+.pm-mail-content-small .pm-object-list .pm-border-line {display: none;}
+
+.pm-mail-content-big .pm-shirt-v {display: none;}
+.pm-mail-content-big .pm-photo img {max-width: 540px;}
+.pm-mail-content-big .pm-photo-desc {padding: 5px;}
+.pm-mail-content-big .pm-border-line {margin: 10px 0;}
+
+.pm-good-info {vertical-align: top; position: static;}
+.pm-good-price {font-size: 16px; line-height: 30px; text-align: center;}
+.pm-good-price span {font-size: 28px; color: #eb4f01;}
+.pm-good-source a {font-size: 16px; line-height: 30px;}
+.pm-good-title a {color: #444; font-weight: bold;}
+.pm-good-ctrl {padding: 10px 0;}
+.pm-good-publisher {text-align: right;}
+.pm-good-param span {font-size: 28px; color: #eb4f01;}
+
+.pm-good-small {margin-right: 2px; position: relative; vertical-align: top;}
+.pm-good-small .pm-good-info {display: none;}
+.pm-good-small .pm-good-photo {width: 100px; height: 100px;}
+.pm-good-small .pm-good-photo img {max-width: 100px; max-height: 100px;}
+.pm-good-small .pm-good-ctrl {padding: 10px 0; display: block;}
+.pm-good-small .pm-good-desc {display: none;}
+
+.pm-good-big {min-height: 340px; position: relative;}
+.pm-good-big .pm-good-photo {max-width: 340px; max-height: 340px; float: left; margin-right: 10px; position: relative;}
+.pm-good-big .pm-good-photo img {max-width: 340px; max-height: 340px;}
+
+.pm-add-list {margin-left: 60px; margin-bottom: -10px;}
+.pm-add-list .pm-mail-avatar {width: 40px;}
+.pm-add-list .pm-mail-body  {width: 500px;}
+.pm-add-list .pm-mail .pm-border-line {margin: 10px 0;}
+.pm-add-list .pm-mail-weight input {width: 60px;}
+
+.pm-reply-list .pm-base-mails {display: none; padding-top: 10px;}
+.pm-reply-list .pm-children-list {display: none;}
+.pm-reply-list .pm-mail-content textarea {width: 540px; height: 80px;}
+.pm-reply-list .pm-mail-weight input {width: 60px;}
+.pm-reply-list .pm-triangle-top {border: 10px solid transparent; border-bottom: 10px solid #e5e5e5; left: 150px; top: -20px;}
+
+.pm-special .pm-special .pm-good-big {min-height: 300px; padding: 0;}
+.pm-special .pm-special .pm-good-big .pm-good-photo {max-width: 300px; max-height: 300px;}
+.pm-special .pm-special .pm-good-big .pm-good-photo img {max-width: 300px; max-height: 300px;}
+.pm-special .pm-mail-content-big .pm-photo {width: 500px; padding: 0;}
+
+.pm-forward-dialog {padding: 15px;}
+.pm-forward-dialog .pm-ctrl-table {margin-top: 5px;}
+
+.pm-input-photo, .pm-mail-good {position: relative; display: inline-block;}
+.pm-input-photo .title {text-align: center; font-weight: bold; padding: 5px;}
+.pm-mail-good .title {font-size: 16px; font-weight: bold;}
+.pm-mail-good .price {font-size: 18px; color: #eb4f01; font-weight: bold;}
+.pm-mail-good .photo {width: 500px; height: 500px;}
+.pm-mail-good .photo img {max-width: 500px; max-height: 500px;}
+.pm-mail-good h1 {display: inline-block;}
+.pm-mail-good .info {padding: 10px;}
+
+.cart {position: absolute; top: 0; right: 0; width: 20px; height: 20px;}
+.cart img {width: 20px; height: 20px;}
+.pm-mail-good .cart {top: 5px; right: 5px;}
+
+.pm-ruler {position: relative; width: 460px; cursor: pointer; white-space: nowrap;}
+.pm-ruler .pm-mark-list {position: relative; height: 5px; font-size: 0; line-height: 0; border-bottom: 2px solid black; /*padding: 0; margin: 0; border-left: 2px solid black;*/}
+.pm-ruler .pm-mark-list .pm-mark {width: 88px; height: 5px; border-right: 2px solid black;}
+.pm-ruler .pm-mark-list .pm-first-mark {width: 8px; height: 5px; border-right: 2px solid black;}
+.pm-ruler .pm-tag-list {font-size: 12px; line-height: 12px; left: 7px; position: relative;}
+.pm-ruler .pm-tag-list .pm-tag {width: 75px; position: relative;}
+.pm-ruler .pm-ruler-line {background-color: #eb4f01; height: 7px; top: 14px; left: 0; position: absolute;}
+
+.pm-mail-target {margin: 5px 0;}
+.pm-mail-target .pm-channel-logo {width: 30px;}
+.pm-mail-target .pm-channel-add {width: 200px;}
+.pm-mail-weight input {width: 160px; padding: 2px 4px;}
+
+.pm-mail-edit {position: relative; font-size: 14px; text-align: left;}
+.pm-mail-edit .pm-ruler {float: right;}
+.pm-mail-edit .pm-mail-weight {margin: 0;}
+.pm-mail-edit .pm-util-tip {margin-bottom: 10px; display: block;}
+
+.pm-mail-edit .pm-channel-list {display: block; position: relative;}
+.pm-mail-edit .pm-channel-list #sortable {list-style: none; top: 0; position: relative;}
+.pm-mail-edit .pm-channel-list #sortable li {display: inline-block; list-style: none;}
+.pm-mail-edit .pm-channel-list .pm-channel-small {line-height: 20px; cursor: default; margin: 0;}
+
+.pm-drop-list {z-index: 299; position: absolute; top: 0; left: 0; border: 1px solid #aaa; background-color: red;}
+.pm-drop-list .item {padding: 5px; position: relative; vertical-align: middle; cursor: pointer; display: block;}
+.pm-drop-list .item:hover {background-color: gray;}
+.pm-drop-list .item .pm-drop-icon {width: 20px; height: 20px; vertical-align: middle; margin-right: 10px;}
+.pm-drop-list .item .pm-drop-icon img {max-width: 20px; max-height: 20px;}
+.pm-drop-list .item .pm-channel-name {white-space:  nowrap; overflow: hidden; width: 100px; vertical-align: middle;}
+
+.pm-channel-page .pm-theme .pm-channel-avatar {display: none;}
+.pm-channel-page .pm-theme-body {width: 650px;}
+.pm-theme-page .pm-reply-form {margin-bottom: 300px;}
+.pm-theme-page .pm-mail-content .content {white-space: pre-wrap;}
+
+/*.pm-theme-page .pm-theme-title {padding: 5px 0;}*/
+/*.pm-mail-body .pm-expan {padding: 1px 5px; font-weight: bold; color: #105cb6; display: block; margin: 10px 0;}*/
+/*.pm-mail-content {margin: 5px 0; overflow: hidden;}*/
+/*.pm-mail-content code {background-color: gray; border: 1px solid red;}*/
+/*.pm-mail-content #content {width: 95%;}*/
+/*.pm-mail-content .content {white-space: normal;}*/
+/*.pm-theme-title {margin-right: 15px;}*/
+
+/*.pm-good-big .pm-good-cart {display: none;}*/
+/*.pm-flow-weight {color: #14589c; font-weight: bold; margin: 0 5px; font-size: 18px;}*/
+/*.pm-add-list {margin-left: 70px; margin-bottom: -10px;}*/
+
+/*.pm-reply-list .pm-mail-good textarea {width: 350px;}*/
+/*.pm-reply-list .pm-mail-target {display: none;}*/
+/*.pm-reply-form .pm-mail-target {display: none;}*/
+
+/*.pm-input-photo, .pm-mail-good {position: relative; display: inline-block; border: 1px solid #cacaca;}*/
+/*.pm-mail-content .pm-mail-good {border: 1px solid #cacaca; background-color: #f1f5f8; width: 500px; clear: both;}*/
+/*.pm-mail-content .pm-input-photo{border: 1px solid #cacaca; background-color: #f1f5f8; width: 500px; clear: both;}*/
+
+/*.pm-good-cart {top: 0; right: 0; width: 24px; height: 24px; display: block; position: absolute; text-align: center; border: 1px solid red;}*/
+/*.pm-good-cart img {width: 20px; height: 20px; vertical-align: middle;}*/
+
+/*.pm-mail-content .pm-mail-good {background-color: #f1f5f8; width: 500px; clear: both; margin: 5px 0;}*/
+/*
+.pm-mail-good div {position: relative;}
+.pm-mail-good .pm-good-photo {width: 500px; height: 500px;}
+.pm-mail-good .pm-good-photo img {max-width: 500px; max-height: 500px;}
+.pm-mail-good .pm-good-info .price {color: #eb4f01; font-weight: bold;}
+.pm-mail-good .pm-good-info .price img {vertical-align: middle;}
+.pm-mail-good .pm-good-info .source {left: 200px; position: absolute;}
+.pm-mail-good .pm-good-info .location {left: 200px; position: absolute;}*/
+
+/*.pm-mail-good h4 {display: inline-block;}*/
+/*.pm-mail-good .source {font-size: 14px; font-weight: bold; color: gray;}*/
+
+/*.pm-mail-good div {position: relative;}*/
+/*.pm-mail-good .info .price img {vertical-align: middle;}*/
+/*.pm-mail-good .info .source {left: 200px; position: absolute;}*/
+/*.pm-mail-good a {background-color: #105cb6;}*/
+/*.pm-mail-good .info .location {left: 200px; position: absolute;}*/
+
+/*.good {position: relative; display: block;}
+.good photo {display: block; max-width: 500px; max-height: 500px;}
+.good photo img {max-width: 500px; max-height: 500px;}
+.good info {display: block;}
+.good info a#name {font-weight: bold; display: block;}
+.wysiwyg img {max-width: 500px; max-height: 500px;}*/
+
+/*.pm-mail-good .pm-good-photo {vertical-align: top; width: 150px; height: 150px; margin-right: 10px;}*/
+/*.pm-mail-good .pm-good-photo img {max-width: 150px; max-height: 150px;}*/
+/*.pm-mail-good .pm-good-info {vertical-align: top; width: 360px;}*/
+/*.pm-mail-good textarea {width: 400px; height: 40px; padding: 5px;}*/
+/*.pm-mail-good .pm-good-edit-desc {margin-top: 10px;}*/
+/*
+.pm-good-parse-ctrl {margin: 10px 0; padding: 10px; border: 1px solid #cbb; display: none;}
+.pm-good-parse-ctrl .pm-border {width: 460px;}
+.pm-good-parse-ctrl input#url {width: 400px;}
+.pm-good-parse-ctrl .pm-parse-good {float: right; padding: 0; height: 22px; line-height: 22px;}
+*/
+
+/*.pm-mail-edit .pm-mail-ctrl {padding: 0;}*/
+/*
+.pm-mail-edit .pm-mail-ctrl .text {vertical-align: middle;}
+.pm-mail-edit .pm-mail-ctrl .pm-ctrl-icon {vertical-align: middle;}
+.pm-mail-edit .pm-object-list {margin: 10px 0; display: none;}
+.pm-mail-edit .pm-object-list li {display: block; padding: 10px; margin: 5px 0; border: 1px solid #ccc; background-color: #f1f1f1;}*/
+
+/*
+.pm-mail-edit .pm-upload-photo-ctrl {padding: 10px; border: 1px solid #cbb; display: none;}
+.pm-mail-edit .pm-upload-photo-ctrl .pm-gray-button {margin-left: 20px;}
+.pm-mail-edit #pm-upload-file {width: 250px;}*/
+/*
+.pm-mail-edit .pm-input-photo .pm-photo {width: 100px; height: 100px; margin-right: 10px;}
+.pm-mail-edit .pm-input-photo .pm-photo img {max-width: 100px; max-height: 100px;}
+.pm-mail-edit .pm-input-photo-desc {vertical-align: top; padding: 0;}
+.pm-mail-edit .pm-input-photo-desc textarea {width: 380px; height: 80px; padding: 5px;}*/
+
+/*.pm-mail-edit .pm-option-ctrl {display: none; margin: 5px 0;}*/
+/*.pm-mail-edit .pm-mail-title {margin: 5px 0;}*/
+/*.pm-mail-edit .pm-mail-content {padding: 0;}*/
+/*.pm-mail-edit .pm-mail-content textarea {width: 540px; padding: 4px; height: 120px;}*/
+
+/*.pm-publish-mail .pm-mail-title textarea {width: 630px; padding: 2px 4px; height: 32px;}*/
+/*.pm-publish-mail .pm-mail-content textarea {width: 630px; height: 200px;}*/
+/*
+.pm-publish-theme .pm-edit-title {margin: -20px -20px 0 -20px; padding: 5px; text-align: center;}
+.pm-publish-theme .pm-theme-edit {width: 540px; padding: 0;}
+.pm-publish-theme .pm-edit-desc {width: 220px; margin-left: 20px; vertical-align: top;}
+.pm-publish-theme .pm-mail-title textarea {width: 520px; padding: 5px;}
+
+.pm-publish-theme .pm-option {border: 1px solid #aaa;}
+.pm-publish-theme .pm-option li {list-style: circle; display: block; margin: 10px 0;}
+.pm-publish-theme .pm-option #theme_type {padding: 2px 5px; border: 0; outline: 0; width: 200px;}*/

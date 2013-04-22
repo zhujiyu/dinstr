@@ -1,0 +1,87 @@
+/*
+    Document   : so.office
+    Created on : 2011-10-9, 20:37:08
+    Author     : jiyu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.pm-channel {position: relative; list-style: none;}
+.pm-channel-type {float: right;}
+
+.pm-channel-tip {font-weight: normal; text-align: left;}
+.pm-channel-tip .pm-loading {padding: 40px 0; text-align: center;}
+.pm-channel-tip .pm-channel-content {padding: 15px 15px 0; width: 320px;}
+.pm-channel-tip .pm-channel-logo {margin-right: 15px;}
+.pm-channel-tip .pm-avatar-middle {width: 64px; height: 64px;}
+.pm-channel-tip .pm-avatar-middle img {width: 64px; height: 64px;}
+
+.pm-channel-tip .pm-channel-info {width: 240px; vertical-align: top; line-height: 22px;}
+.pm-channel-tip .pm-channel-desc {padding: 5px 0;}
+.pm-channel-tip .pm-channel-ctrl {padding: 10px 15px;}
+.pm-channel-tip .pm-content-border {margin: 0 15px;}
+.pm-channel-tip .pm-add-mail {float: left;}
+
+.pm-dropchan-item .name  {font-weight: bold;}
+.pm-dropchan-item .param {margin-left: 20px;}
+.pm-dropchan-item .type {float: right; margin-left: 10px;}
+.pm-dropchan-item .pm-dropdown-icon {width: 40px; height: 40px; margin-right: 10px;}
+.pm-dropchan-item .pm-dropdown-icon img {max-width: 40px; max-height: 40px;}
+
+/*.pm-channel-list .pm-channel {margin: 5px 0;}*/
+.pm-channel-list .pm-weight-manage {width: 70px; vertical-align: top;}
+.pm-channel-list .pm-channel-title {margin-right: 20px;}
+.pm-channel-list .pm-object-info {width: 400px; vertical-align: top;}
+
+.pm-channel-small {width: 120px; padding: 0 5px; border: 1px solid #baa;}
+.pm-channel-small input {display: none;}
+.pm-channel-small .pm-channel-name {width: 80px; padding-left: 5px; white-space: nowrap; overflow: hidden; vertical-align: middle; cursor: pointer;}
+.pm-channel-small .pm-channel-logo {width: 20px; height: 20px; vertical-align: middle;}
+.pm-channel-small .pm-channel-logo img {max-width: 20px; max-height: 20px;}
+.pm-channel-small #close {top: 0; right: 0;}
+.pm-channel-selected {background-color: activecaption; color: #000;}
+
+.pm-channel-simple {width: 100%;}
+.pm-channel-simple .pm-channel-logo {width: 60px;}
+.pm-channel-simple .pm-channel-info {line-height: 22px;}
+.pm-channel-simple .pm-channel-detail {margin-top: 5px;}
+
+.pm-channel-big {text-align: center; vertical-align: top; width: 80px; padding: 5px;}
+.pm-channel-big .pm-channel-name {width: 80px; white-space: nowrap; overflow: hidden; padding: 5px 0; position: relative;}
+.pm-channel-big .pm-channel-img {width: 50px; height: 50px; margin: 0 auto; position: relative;}
+.pm-channel-big .pm-channel-img img {max-width: 50px; max-height: 50px; position: relative;}
+
+.pm-channel-global .name {font-size: 20px; font-weight: bold;}
+.pm-channel-global .pm-channel-info {width: 470px; vertical-align: top; padding-left: 20px;}
+.pm-channel-announce .pm-announce-edit {border: 1px solid #aaa;}
+.pm-channel-announce textarea {width: 235px; height: 80px; padding: 5px; outline: 0; border: 0;}
+
+.pm-weight-manage {height: 41px; font-size: 14px;}
+.pm-weight-manage .pm-weight {height: 20px; padding: 11px 10px; width: 20px; font-size: 16px; vertical-align: top; background-color: #14589c; color: #fff; font-weight: bold;}
+.pm-weight-manage .pm-shirt-h {height: 2px;}
+.pm-weight-manage .pm-weight-ctrl {width: 20px; height: 41px; color: #14589c;}
+.pm-weight-manage .pm-desc {padding-left: 10px; height: 21px; vertical-align: top; padding: 10px;}
+.pm-weight-manage .pm-arrow {width: 20px; height: 18px; line-height: 32px; overflow: hidden; cursor: pointer; text-align: center; margin: 0 auto;}
+.pm-weight-manage .pm-arrow-up .head {height: 20px; font-size: 32px; margin: 0 auto; text-align: center;}
+.pm-weight-manage .pm-arrow-dwon .head {height: 34px; top: -17px; font-size: 32px; margin: 0 auto;}
+.pm-weight-manage .pm-arrow-up  {top: -4px;}
+.pm-weight-manage .pm-arrow-dwon {top: 6px;}
+
+.pm-weight-manage .pm-weight-button {width: 20px; height: 20px; overflow: hidden; background-color: #e1f0f7;}
+.pm-weight-manage .pm-weight-button:hover {background-color: #14589c;}
+.pm-weight-manage .pm-weight-button:hover .head {color: #fff;}
+
+.pm-invite-dialog td {padding-bottom: 5px;}
+.pm-invite-dialog #invite .pm-border {width: 360px;}
+.pm-invite-dialog #invite .pm-err-text {padding: 0 5px;}
+.pm-invite-dialog input{padding: 0 5px; width: 350px;}
+.pm-invite-dialog textarea {padding: 3px 5px; width: 510px; height: 60px;}
+
+.pm-channel-navi {width: 110px; margin-right: 30px;}
+.pm-channel-navi .item {padding: 5px 0; text-align: right; padding-right: 20px;}
+.pm-avatar-plaza {width: 200px; margin-left: 30px;}
+.pm-channel-shirt {margin-bottom: 20px; border-bottom: 2px solid #ddd;}
+
+/*.pm-channel-tip .pm-channel-type {float: right;}*/
+/*.pm-channel-title, .pm-channel-title a {font-size: 18px;}*/
+/*.pm-channel-shirt {background-color: #e1e5e8; margin-bottom: 20px;}*/
+/*.pm-channel-list .pm-channel {margin: 0 -10px; padding: 10px;}*/

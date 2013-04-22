@@ -1,0 +1,51 @@
+.pm-navi .pm-manage-account {width: 320px;}
+
+.pm-user-login {background-color: #eee;}
+.pm-dialog .pm-user-login {background-color: #fff;}
+.pm-login-form {padding: 20px; width: 230px;}
+.pm-dialog .pm-login-form {padding: 0; width: 290px;}
+.pm-dialog .pm-login-form .pm-login-input {width: 246px;}
+
+.pm-login-form #pword {display: none;}
+.pm-login-form .pm-login-input {width: 226px; margin: 10px 0; line-height: 24px; font-size: 14px;}
+.pm-login-form .pm-login-button {float: right;}
+
+.error {color: #b94a48; background-color: #f2dede; border-color: #b94a48;}
+.error > label {color: #b94a48;}
+.error textarea {color: #b94a48; border-color: #b94a48;}
+.error textarea:focus {border-color: #953b39;
+  -webkit-box-shadow: 0 0 6px #d59392;
+     -moz-box-shadow: 0 0 6px #d59392;
+          box-shadow: 0 0 6px #d59392;}
+
+.pm-test-welcome ul {display: block; list-style: circle; text-transform: capitalize;}
+.pm-test-welcome li {display: block; list-style: circle; text-transform: capitalize;}
+
+.pm-button-down {position: relative; width: 18px; height: 18px; display: inline-block;}
+.pm-button-down .tear {top: 0; left: 7px; width: 4px; height: 9px; background-color: red; display: inline-block; position: absolute;}
+.pm-button-down .head {top: 9px; left: 0; width: 0px; height: 0px; border-top: 9px solid red; border-bottom: 9px solid transparent; border-left: 9px solid transparent; border-right: 9px solid transparent; display: inline-block; position: absolute;}
+
+.pm-button-up {position: relative; width: 18px; height: 18px; display: inline-block; vertical-align: middle;}
+.pm-button-up .tear {top: 9px; left: 7px; width: 4px; height: 9px; background-color: red; display: inline-block; position: absolute;}
+.pm-button-up .head {top: -9px; left: 0; width: 0px; height: 0px; border-top: 9px solid transparent; border-bottom: 9px solid red; border-left: 9px solid transparent; border-right: 9px solid transparent; display: inline-block; position: absolute;}
+
+.pm-app-desc {padding: 20px 0; text-align: center; font-size: 20px; margin-top: -10px;}
+.pm-app-desc .pm-button-up {vertical-align: middle; left: 10px; top: -2px;}
+.pm-app-desc .pm-button-down {vertical-align: middle; left: 10px; top: -2px;}
+
+.pm-pindao-desc {font-size: 18px;}
+.pm-pindao-desc .pm-module-title {font-size: 20px;}
+.pm-pindao-desc .pm-desc-img img {max-width: 450px;}
+.pm-pindao-desc .pm-desc-content {width: 440px; vertical-align: top; padding: 10px 20px;}
+
+.mail {width: 400px;}
+
+.pm-channel-manage {background-color: #eee;}
+.pm-channel-manage .pm-check {position: absolute; top: 34px; left: 44px;}
+.pm-channel-manage .pm-border-line {margin: 5px 0;}
+.pm-channel-manage .pm-logo-list {width: 670px;}
+.pm-channel-manage .pm-logo-list .pm-channel {width: 80px; text-align: center;}
+.pm-channel-manage .pm-logo-list .logo {margin: 0 auto 5px;}
+.pm-channel-manage .pm-right-list {width: 260px; position: relative;}
+.pm-channel-manage .pm-right-list .pm-module-title {width: 200px;}
+.pm-channel-manage .pm-right-list .pm-channel-info {font-size: 14px;}

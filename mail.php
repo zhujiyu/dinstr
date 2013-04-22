@@ -1,0 +1,139 @@
+<?php
+/**
+ * Pmail项目 PHP文件 v2.4.16
+ * @package: PMAIL.FILE
+ * @file   : ls.php
+ * 列出当前的各种信息
+ * @author    : zhujiyu , zhujiyu@139.com
+ * @Copyright : 2012 公众邮件网
+ * @Date      : 2012-4-11
+ * @encoding  : UTF-8
+ * @version   : 2.4.16
+ */
+require_once 'common.inc.php';
+
+function merge($notices)
+{
+    $mails = $replies = $approves = array();
+    $len = count($notices);
+
+    for( $i = 0; $i < $len; $i ++ )
+    {
+        if( $notices[$i][type] == 'mail' )
+            $mails[] = $notices[$i];
+        else if( $notices[$i][type] == 'reply' )
+            $replies[] = $notices[$i];
+        else if( $notices[$i][type] == 'approve' )
+            $approves[] = $notices[$i];
+    }
+
+    return array('mails'=>$mails, 'replies'=>$replies, 'approves'=>$approves);
+}
+
+ob_start();
+try
+{
+    if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 && DisUserCtrl::check_inline($_SESSION['userId']) )
+    {
+        $user_id = $_SESSION['userId'];
+        $user = DisUserCtrl::user($user_id);
+        $gSmarty->assign("user", $user->info());
+        DisUserCtrl::set_inline($user_id);
+    }
+    else //if( !isset($_GET['id']) )
+    {
+        $user_id = 0;
+    }
+
+    if( $_GET['id'] )
+    {
+//        $mail = pmCtrlMail::get_data($_GET['id']);
+        $mail = DisNoteCtrl::get_mail_view($_GET['id']);
+        $mail_id = $mail[ID];
+    }
+
+    if( $mail_id > 0 )
+    {
+        $view = $_GET['view'] ? $_GET['view'] : 'mail';
+        $gSmarty->assign("view", $view);
+
+        $theme_id = $mail['theme_id'];
+        $theme = DisHeadCtrl::theme($theme_id);
+        $theme_data = $theme->theme_view();
+
+        if( $user_id > 0 )
+        {
+            $theme_data['status'] = $theme->check_status($user_id);
+            if( $theme_data[channel] && $user_id > 0 )
+                $theme_data[channel][member] = $user->get_channel_status($theme_data[channel][ID]);
+        }
+        $gSmarty->assign("mail", $mail);
+        $gSmarty->assign("theme", $theme_data);
+
+        if( $_GET['notices'] )
+        {
+            $noti = new DisNoticeCtrl($user_id);
+            $notice_ids = DisNoticeCtrl::preg_notices($_GET['notices']);
+
+            $notilst = $noti->parse_notice_ids($notice_ids);
+            $notices = merge($notilst);
+            $gSmarty->assign("notices", $notices);
+
+            if( $user_id > 0 )
+                $noti->remove_notices($notice_ids);
+        }
+
+        if( isset($_GET['interest']) || $view == 'interest' || isset($_GET['approval']) || $view == 'approval' )
+        {
+            $file = "pmail.mail.user.tpl";
+            if( $_GET['interest'] || $view == 'interest' )
+                $user_ids  = $theme->list_interest_user_ids();
+            else //if( $_GET['approval'] || $view == 'approval' )
+                $user_ids  = $theme->list_approved_user_ids();
+
+            if( $user_id > 0 )
+                $user_list = $user->list_users($user_ids);
+            else
+                $user_list = DisUserCtrl::parse_users($user_ids);
+            $gSmarty->assign("user_list", $user_list);
+        }
+        else
+        {
+            $file = "pmail.mail.view.tpl";
+            $mail = DisNoteCtrl::mail ($mail_id);
+            $mail_ids = $mail->list_child_ids();
+
+            if( $user_id > 0 )
+                $mail_list = $user->list_mails($mail_ids);
+            else
+                $mail_list = DisNoteCtrl::parse_mails($mail_ids);
+            $gSmarty->assign("mail_list", $mail_list);
+        }
+    }
+    else if( $user_id > 0 )
+    {
+        $file = "pmail.mail.edit.tpl";
+        $ml = new DisMoneyLogCtrl($user_id);
+        $logs = $ml->list_logs();
+        $gSmarty->assign("money_list", $logs);
+        $charge = $ml->hasCharge();
+        $gSmarty->assign("charged", $charge);
+    }
+    else
+    {
+        ob_end_clean();
+        header('Location: guest?feed'); exit; // 转游客页
+    }
+}
+catch (DisException $ex)
+{
+    $ex->trace_stack();
+}
+
+$err = ob_get_contents();
+ob_end_clean();
+
+$gSmarty->assign("title", '写新邮件');
+$gSmarty->assign("err", $err);
+$gSmarty->display("pages/$file");
+?>
