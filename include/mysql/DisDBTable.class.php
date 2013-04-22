@@ -17,6 +17,7 @@ abstract class DisDBTable extends DisObject
 {
     public $ID;
     protected $table;
+
     public static $readPDO = null;
     public static $writePDO = null;
 

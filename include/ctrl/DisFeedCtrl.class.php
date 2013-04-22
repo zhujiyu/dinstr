@@ -297,7 +297,7 @@ class DisFeedCtrl extends DisFeedData
     function push_flow($flow_id)
     {
         array_unshift($this->follow_ids, $flow_id);
-        $flow = DisNoteFlowCtrl::get_data($flow_id);
+        $flow = DisStreamCtrl::get_data($flow_id);
         if( $flow )
             $this->insert($flow['ID'], $flow['flow_time']);
     }
@@ -427,7 +427,7 @@ class DisFeedCtrl extends DisFeedData
 
         for( $i = 0; $i < $len; $i ++ )
         {
-            $flow = DisNoteFlowCtrl::get_data($this->mem_flows[$i]);
+            $flow = DisStreamCtrl::get_data($this->mem_flows[$i]);
             if( !$flow )
                 continue;
             $this->insert($flow['ID'], $flow['flow_time']);

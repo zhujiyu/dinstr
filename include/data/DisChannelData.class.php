@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.DATA
- * @file  : pmDataChannel.php
+ * @file  : DisChannelData.class.php
  * @abstract  : 频道数据
  *
  * @author    : 朱继玉<zhuhz82@126.com>

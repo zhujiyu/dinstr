@@ -17,6 +17,7 @@ class DisChanApplicantData extends DisDBTable
 {
     function  __construct($id = null)
     {
+        $this->table = "channel_applicants";
         parent::__construct();
         if( $id && is_int($id) )
             $this->load($id);
@@ -25,7 +26,7 @@ class DisChanApplicantData extends DisDBTable
     function load($id)
     {
         $str = "select ID, channel_id, user_id, status, reason
-            from channel_applicants where ID = $id";
+            from $this->table where ID = $id";
         $data = parent::load_line_data($str);
 
         if( $data )
@@ -35,6 +36,7 @@ class DisChanApplicantData extends DisDBTable
         }
         else
             $this->ID = 0;
+
         return $this;
     }
 
@@ -42,17 +44,19 @@ class DisChanApplicantData extends DisDBTable
     {
         if( !$user_id || !$channel_id || !$reason )
             throw new DisParamException("参数不合法！");
-	    $str = "insert into channel_applicants (user_id, channel_id, reason)
+
+	    $str = "insert into $this->table (user_id, channel_id, reason)
 	        values ($user_id, $channel_id, '$reason')";
         if( parent::query($str) != 1 )
             throw new DisDBException("插入失败！");
+
         $this->ID = parent::last_insert_Id();
         return $this->ID;
     }
 
     function exist($user_id, $channel_id)
     {
-        $str = "from channel_applicants where user_id = $user_id and channel_id = $channel_id and status = 'untreated'";
+        $str = "from $this->table where user_id = $user_id and channel_id = $channel_id and status = 'untreated'";
         return parent::count($str) > 0;
     }
 
@@ -60,7 +64,7 @@ class DisChanApplicantData extends DisDBTable
     {
         if( !$this->ID )
             throw new DisParamException("参数不合法！");
-        $str = "delete from channel_applicants where ID = $this->ID";
+        $str = "delete from $this->table where ID = $this->ID";
         return parent::query($str) == 1;
     }
 

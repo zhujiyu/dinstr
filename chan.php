@@ -182,7 +182,7 @@ try
             if( $user_id > 0 )
                 $mail_list = $user->list_flows($flow_ids);
             else
-                $mail_list = DisNoteFlowCtrl::list_flows($flow_ids);
+                $mail_list = DisStreamCtrl::list_flows($flow_ids);
             $gSmarty->assign("mail_list", $mail_list);
         }
 

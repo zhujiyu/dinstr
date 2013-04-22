@@ -59,7 +59,7 @@ try
         DisGuestFeedCtrl::save_ctrler($feed);
     }
 
-    $flow_list = DisNoteFlowCtrl::list_flows($flow_ids);
+    $flow_list = DisStreamCtrl::list_flows($flow_ids);
     $gSmarty->assign("mail_list", $flow_list);
 
     $_ids = DisChannelCtrl::list_channel_ids();

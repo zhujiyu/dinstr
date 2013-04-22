@@ -250,13 +250,13 @@ try
         if( isset($_GET['important']) || $item == 'important' )
         {
             $flow_ids = important_flows($page, $count);
-            $flow_list = DisNoteFlowCtrl::list_flows($flow_ids);
+            $flow_list = DisStreamCtrl::list_flows($flow_ids);
             display_flows($flows, $gSmarty);
         }
         else if( isset($_GET['channel-mail']) || $item == 'channel-mail' )
         {
             $flow_ids = channel_flows($page, $count);
-            $flow_list = DisNoteFlowCtrl::list_flows($flow_ids);
+            $flow_list = DisStreamCtrl::list_flows($flow_ids);
             display_flows($flow_list, $gSmarty);
         }
         else if( isset($_GET['user-mail']) || $item == 'user-mail' )
@@ -288,7 +288,7 @@ try
     {
         if( isset($_GET['flow']) || $item == 'flow' )
         {
-            $flow_list = DisNoteFlowCtrl::list_flows($_GET['flow_ids']);
+            $flow_list = DisStreamCtrl::list_flows($_GET['flow_ids']);
             display_flows($flow_list, $gSmarty);
         }
         else if( isset($_GET['mail']) || $item == 'mail' )

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.CTRL
- * @file   : DisNoteFlowCtrl.class.php
+ * @file   : DisStreamCtrl.class.php
  * @abstract  :
  *
  * @author    : 朱继玉<zhuhz82@126.com>
@@ -13,7 +13,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisNoteFlowCtrl extends DisNoteFlowData
+class DisStreamCtrl extends DisStreamData
 {
     function  __construct($id = 0)
     {

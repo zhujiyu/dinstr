@@ -342,7 +342,7 @@ CREATE TABLE head_users
     user_id int,
     approve int default 0,
     create_time timestamp,
-    index (theme_id),
+    index (head_id),
     index (user_id)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
@@ -418,31 +418,6 @@ CREATE TABLE note_goods
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '邮件包含的商品表已经生成' as tip;
-
-DROP TABLE IF EXISTS note_keeps;
-CREATE TABLE note_keeps
-(
-    ID bigint AUTO_INCREMENT PRIMARY KEY,
-    note_id bigint,
-    user_id int,
-    keep_time timestamp,
-    index (user_id, mail_id)
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '收藏邮件表已经生成' as tip;
-
--- 收藏邮件标签表
-DROP TABLE IF EXISTS note_keep_tags;
-CREATE TABLE note_keep_tags
-(
-    ID bigint AUTO_INCREMENT PRIMARY KEY,
-    keep_id bigint,
-    tag_id bigint,
-    index (tag_id),
-    index (keep_id)
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '收藏邮件标签表已经生成' as tip;
 
 -- 业务2：用户消息表 完成用户之间的私信业务
 DROP TABLE IF EXISTS messages;
@@ -635,3 +610,29 @@ CREATE TABLE payments
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '付款表已经生成' as tip;
+/*
+DROP TABLE IF EXISTS note_keeps;
+CREATE TABLE note_keeps
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    note_id bigint,
+    user_id int,
+    keep_time timestamp,
+    index (user_id, mail_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '收藏邮件表已经生成' as tip;
+
+-- 收藏邮件标签表
+DROP TABLE IF EXISTS note_keep_tags;
+CREATE TABLE note_keep_tags
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    keep_id bigint,
+    tag_id bigint,
+    index (tag_id),
+    index (keep_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '收藏邮件标签表已经生成' as tip;
+*/

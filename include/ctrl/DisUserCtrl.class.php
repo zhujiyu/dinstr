@@ -103,7 +103,7 @@ class DisUserCtrl extends DisUserData
         $user = self::get_data($user_id);
         $flow_id = self::get_last_flow_id($user_id);
         if( $flow_id > 0 )
-            $user['news'] = DisNoteFlowCtrl::get_flow_view($flow_id);
+            $user['news'] = DisStreamCtrl::get_flow_view($flow_id);
         return $user;
     }
 
@@ -203,7 +203,7 @@ class DisUserCtrl extends DisUserData
         {
             try
             {
-                $flow = DisNoteFlowCtrl::get_flow_view($flow_ids[$i]);
+                $flow = DisStreamCtrl::get_flow_view($flow_ids[$i]);
                 $theme = DisHeadCtrl::theme($flow['theme_id']);
                 $flow['theme']['status'] = $theme->check_status($this->ID);
             }

@@ -21,11 +21,11 @@ class DisNoteData extends DisDBTable
     // 构造函数
     function __construct($mail_id = 0)
     {
-        $this->table = "mails";
+        $this->table = "notes";
         parent::__construct($mail_id);
     }
 
-    function init($mail_id, $slt = "ID, user_id, content, theme_id, parent, context, depth,
+    function init($mail_id, $slt = "ID, user_id, content, head_id, parent_id, context, depth,
             photo_num, good_num, channels, reply_num, publish_num, create_time")
     {
         return parent::init($mail_id, $slt);
@@ -41,8 +41,9 @@ class DisNoteData extends DisDBTable
                 break;
 //            case 'extend' :
             case 'status' :
-            case 'theme_id' :
-            case 'parent' :
+            case 'head_id' :
+            case 'root_id' :
+            case 'parent_id' :
             case 'depth' :
             case 'good_num' :
             case 'photo_num' :
@@ -72,14 +73,14 @@ class DisNoteData extends DisDBTable
         return in_array($param, array('publish_num', 'reply_num'));
     }
 
-    protected function insert($user_id, $content, $theme_id = 0, $photo_num = 0, $good_num = 0, $video = '',
-            $parent = 0, $depth = 0, $context = "")
+    protected function insert($user_id, $content, $head_id = 0, $photo_num = 0, $good_num = 0, $video = '',
+            $parent_id = 0, $depth = 0, $context = "")
     {
         if( !$user_id || !$content )
             throw new DisParamException('必须传入有效的参数。');
         return parent::insert(array('user_id'=>$user_id, 'content'=>$content,
             'photo_num'=>$photo_num, 'good_num'=>$good_num, 'video'=>$video,
-            'theme_id'=>$theme_id, 'parent'=>$parent, 'context'=>$context, 'depth'=>$depth,
+            'head_id'=>$head_id, 'parent_id'=>$parent_id, 'context'=>$context, 'depth'=>$depth,
             'create_time'=>time()));
     }
 
@@ -151,43 +152,43 @@ class DisNoteData extends DisDBTable
         return parent::query($str) == 1;
     }
 
-    static function load_mail_replies($parent, $slt = "ID, user_id, content, theme_id, parent, depth, context,
+    static function load_mail_replies($parent_id, $slt = "ID, user_id, content, head_id, parent_id, depth, context,
             photo_num, good_num, channels, reply_num, publish_num, create_time")
     {
-        if( !$parent )
+        if( !$parent_id )
             throw new DisParamException('参数不合法！');
-        $str = "select $slt from mails where parent = $parent order by ID desc";
+        $str = "select $slt from mails where parent_id = $parent_id order by ID desc";
         return parent::load_datas($str);
     }
 
-    static function load_theme_replies($theme_id, $slt = "ID, user_id, content, theme_id, parent, depth, context,
+    static function load_theme_replies($head_id, $slt = "ID, user_id, content, head_id, parent_id, depth, context,
             photo_num, good_num, channels, reply_num, publish_num, create_time")
     {
-        if( !$theme_id )
+        if( !$head_id )
             throw new DisParamException('参数不合法！');
-        $str = "select $slt from mails where theme_id = $theme_id and parent > 0 order by ID desc";
+        $str = "select $slt from mails where head_id = $head_id and parent_id > 0 order by ID desc";
         return parent::load_datas($str);
     }
 
-    static function load_theme_mails($theme_id, $slt = "ID, user_id, content, theme_id, parent, depth, context,
+    static function load_theme_mails($head_id, $slt = "ID, user_id, content, head_id, parent_id, depth, context,
             photo_num, good_num, channels, reply_num, publish_num, create_time")
     {
-        if( !$theme_id )
+        if( !$head_id )
             throw new DisParamException('参数不合法！');
-        $str = "select $slt from mails where theme_id = $theme_id order by ID desc";
+        $str = "select $slt from mails where head_id = $head_id order by ID desc";
         return parent::load_datas($str);
     }
 
-    static function last_theme_mail($theme_id)
+    static function last_theme_mail($head_id)
     {
-        $str = "select * from mails where theme_id = $theme_id
+        $str = "select * from mails where head_id = $head_id
             order by ID desc limit 1";
         return parent::load_line_data($str);
     }
 
     static function last_user_mail($user_id)
     {
-        $str = "select ID, user_id, content, theme_id, parent, depth, context,
+        $str = "select ID, user_id, content, head_id, parent_id, depth, context,
             photo_num, good_num, channels, reply_num, publish_num, create_time
             from mails where user_id = $user_id order by ID desc limit 1";
         return parent::load_line_data($str);
@@ -203,7 +204,7 @@ class DisNoteData extends DisDBTable
         else
             $whr = "";
 
-        $str = "select ID, user_id, content, theme_id, parent, depth, context,
+        $str = "select ID, user_id, content, head_id, parent_id, depth, context,
             photo_num, good_num, channels, reply_num, publish_num, create_time
             from mails where user_id = $user_id $whr
             order by ID desc limit $count";

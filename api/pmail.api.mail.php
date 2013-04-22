@@ -150,7 +150,7 @@ try
     {
         if( $item == 'delete' )
         {
-            $flow = new DisNoteFlowCtrl((int)$_REQUEST['flow_id']);
+            $flow = new DisStreamCtrl((int)$_REQUEST['flow_id']);
             $flow->delete($user_id);
             echo '<div class="pm-success">删除成功！</div>';
         }

@@ -14,9 +14,12 @@ if( !defined('IN_DIS') )
 
 class DisHeadData extends DisDBTable
 {
+    protected static $stable = "heads";
+
     function __construct($ID = null)
     {
-        $this->table = "themes";
+        //DisHeadData::$stable = "heads";
+        $this->table = "heads";
         parent::__construct($ID);
     }
 
@@ -25,7 +28,8 @@ class DisHeadData extends DisDBTable
         $detail['content'] = strip_tags($detail['content']);
     }
 
-    function init($id, $slt = "ID, mail_id, content, channel_id, interest_num, mail_num, approved_num, update_time")
+    function init($id, $slt = "ID, note_id, content, channel_id,
+        interest_num, note_num, approved_num, update_time")
     {
         parent::init($id, $slt);
     }
@@ -38,8 +42,8 @@ class DisHeadData extends DisDBTable
                 if( !is_string($value) )
                     return err(PMAIL_ERR_PARAM);
                 break;
-            case 'mail_id' :
-            case 'mail_num' :
+            case 'note_id' :
+            case 'note_num' :
             case 'channel_id' :
                 if( !is_integer($value) )
                     return err(PMAIL_ERR_PARAM);
@@ -52,23 +56,23 @@ class DisHeadData extends DisDBTable
 
     protected function _check_num_param($param)
     {
-        return in_array($param, array('interest_num', 'approved_num', 'mail_num'));
+        return in_array($param, array('interest_num', 'approved_num', 'note_num'));
     }
 
-    function insert($content, $mail_id = 0, $channel_id = 0)
+    function insert($content, $note_id = 0, $channel_id = 0)
     {
-        return parent::insert(array('content'=>$content, 'mail_id'=>$mail_id, 'channel_id'=>$channel_id));
+        return parent::insert(array('content'=>$content, 'note_id'=>$note_id, 'channel_id'=>$channel_id));
     }
 
     protected static function list_channel_themes($channel_id, $page = 0, $count = 40)
     {
-        $str = "select ID from themes where channel_id = $channel_id order by ID desc limit ".$page*$count.", $count";
+        $str = "select ID from ".DisHeadData::$stable." where channel_id = $channel_id order by ID desc limit ".$page*$count.", $count";
         return parent::load_datas($str);
     }
 
     static function list_themes($count = 10)
     {
-        $str = "select * from themes order by id desc limit $count";
+        $str = "select * from ".DisHeadData::$stable." order by id desc limit $count";
         return parent::load_datas($str);
     }
 }

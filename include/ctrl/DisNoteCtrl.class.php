@@ -289,7 +289,7 @@ class DisNoteCtrl extends DisNoteData
         $joined_ids = $cu->list_joined_ids( );
         if( !in_array($channel_id, $joined_ids) )
             throw new DisParamException('你没有加入这个频道，无权发送邮件');
-        $flow = new DisNoteFlowCtrl();
+        $flow = new DisStreamCtrl();
         $flow_id = $flow->insert($user_id, $this->ID, $channel_id, $weight);
 
         if( !$this->detail )
