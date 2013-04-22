@@ -14,8 +14,7 @@
  *    sOffice 项目正式更名为公众邮件系统，英文简写为Pmail项目。
  * 2013-4-21
  *    重组织PMAIL项目，简化成DIS。
-\*/
-
+ */
 DROP DATABASE IF EXISTS dinstr;
 CREATE DATABASE dinstr;
 use dinstr;
@@ -24,7 +23,8 @@ use dinstr;
  * 以下是基础数据模块，包括用户、频道两部分
  * 用户模块
 \*************************************/
--- 用户信息表
+-- 用户表
+-- 将用户资料，根据跟新的频率，拆分成两个表，更改频率较少的信息放在主表
 DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
@@ -59,7 +59,7 @@ CREATE TABLE users
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000;
 select '用户表已经生成' as tip;
 
--- 用户信息表
+-- 用户信息表 存放跟新频率较高的用户参数
 DROP TABLE IF EXISTS user_params;
 CREATE TABLE user_params
 (
@@ -72,9 +72,9 @@ CREATE TABLE user_params
     subscribe_num int default 0,
     applicant_num int default 0, -- 正在处理的加入频道申请的数目
     create_num int default 0, -- 创建频道数
-    mail_num int default 0, -- 发布邮件数
-    theme_num int default 0, -- 发起的邮件主题数
-    draft_num int default 0,
+    head_num int default 0, -- 信息头数
+    note_num int default 0, -- 信息数
+    draft_num int default 0, -- 草稿数
     interest_num int default 0,
     approved_num int default 0, -- 参与邮件主题活动数
     collect_num int default 0, -- 收藏邮件数量
@@ -83,13 +83,13 @@ CREATE TABLE user_params
     msg_num int default 0, -- 发送私信数
     -- 消息提醒
     reply_notice int default 0,
-    theme_notice int default 0,
+    note_notice int default 0,
     msg_notice int default 0,
     system_notice int default 0,
     fans_notice int default 0
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000;
-select '用户表已经生成' as tip;
+select '用户参数表已经生成' as tip;
 
 -- 领取金币表
 DROP TABLE IF EXISTS imoney_logs;
@@ -206,7 +206,7 @@ CREATE TABLE channels
     member_num int default 0,
     subscriber_num int default 0,
 --    theme_num bigint default 0,
-    mail_num bigint default 0,
+    head_num bigint default 0,
     applicant_num int default 0,
     create_time int,
     unique key (`name`),
@@ -234,8 +234,8 @@ DROP TABLE IF EXISTS channel_users;
 CREATE TABLE channel_users
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
-    channel_id int not null,
     user_id int not null,
+    channel_id int not null,
     `role` int default 0, -- 0 表示订阅 1 表示成员 2 表示管理员 3 表示创建者 4 表示超级用户
 --    `role` enum('subscriber', 'member', 'editor') default 'subscriber',
     weight int default 1, -- 频道的权值，这里值表示权重值的数量级
@@ -322,13 +322,15 @@ CREATE TABLE heads
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     content varchar(255),
-    channel_id int, -- 发起该主题的频道，通常为该主题的讨论提供了分析角度
     note_id bigint, -- 发起给主题的邮件
     note_num int default 0,
     interest_num int default 0,
     approved_num int default 0,
-    update_time timestamp,
-    index (channel_id)
+    update_time timestamp
+--    channel_id int default 0, -- 发起该主题的频道，通常为该主题的讨论提供了分析角度
+--    weight int default 0,
+--    flow_time  timestamp,
+--    index (channel_id, weight)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息头表已经生成' as tip;
@@ -355,23 +357,22 @@ CREATE TABLE notes
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null,
     head_id bigint default 0,
-    content varchar(5120),     -- 邮件内容
-    video varchar(255),
-    root_id bigint default 0,
     parent_id bigint default 0,
-    context varchar(255) default "", -- 记录15条前文背景
-    `depth` int default 0, -- 深度
-    channels varchar(255),
+    content varchar(5120), -- 邮件内容
+    video varchar(255),
+--    root_id bigint default 0,
+--    context varchar(255) default "", -- 记录15条前文背景
+--    `depth` int default 0, -- 深度
+--    channels varchar(255),
     -- 参数
     good_num smallint default 0,
     photo_num smallint default 0,
     reply_num int default 0,
-    publish_num int default 0, -- 发表次数
-    create_time int,
     status tinyint default 0, -- 0 表示正常，1表示已经删除
-    index (user_id, publish_num),
+    create_time int,
+--    publish_num int default 0, -- 发表次数
+--    index (user_id, publish_num),
     index (head_id),
-    index (root_id),
     index (parent_id)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
@@ -385,13 +386,13 @@ CREATE TABLE note_keywords
     note_id bigint,
     keyword varchar(32),
     create_time timestamp,
-    unique (keyword, mail_id),
+    unique (keyword, note_id),
     index (create_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息关键字表已经生成' as tip;
 
--- 邮件包含的图片表
+-- 信息图片表
 DROP TABLE IF EXISTS note_photos;
 CREATE TABLE note_photos
 (
@@ -400,12 +401,12 @@ CREATE TABLE note_photos
     photo_id bigint,
     `desc` varchar(255),
     `rank` tinyint, -- 表示在邮件中的显示次序
-    index (mail_id)
+    index (note_id)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '邮件包含的图片表已经生成' as tip;
+select '信息图片表已经生成' as tip;
 
--- 邮件包含的商品表
+-- 信息商品表
 DROP TABLE IF EXISTS note_goods;
 CREATE TABLE note_goods
 (
@@ -414,10 +415,10 @@ CREATE TABLE note_goods
     good_id bigint,
     `desc` varchar(255),
     `rank` tinyint, -- 表示在邮件中的显示次序
-    index (mail_id)
+    index (note_id)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '邮件包含的商品表已经生成' as tip;
+select '信息商品表已经生成' as tip;
 
 -- 业务2：用户消息表 完成用户之间的私信业务
 DROP TABLE IF EXISTS messages;
@@ -431,19 +432,6 @@ CREATE TABLE messages
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '私信表已经生成' as tip;
-
-DROP TABLE IF EXISTS message_forms;
-CREATE TABLE message_forms
-(
-    ID bigint AUTO_INCREMENT PRIMARY KEY,
-    relation_id bigint,
-    message_id bigint,
-    `read` tinyint default 0,
-    index (`read`),
-    index (relation_id, message_id)
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '私信组织表已经生成' as tip;
 
 DROP TABLE IF EXISTS message_users;
 CREATE TABLE message_users
@@ -460,6 +448,19 @@ CREATE TABLE message_users
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '私信统计表已经生成' as tip;
+
+DROP TABLE IF EXISTS message_forms;
+CREATE TABLE message_forms
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    relation_id bigint,
+    message_id bigint,
+    `read` tinyint default 0,
+    index (`read`),
+    index (relation_id, message_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '私信组织表已经生成' as tip;
 
 -- 业务3：通知信息表
 -- 系统通知
@@ -495,21 +496,21 @@ select '未读通知表已经生成' as tip;
 /*************************************\
  * 信息流 feed算法
 \*************************************/
--- 邮件发送表
+-- 信息流表
 DROP TABLE IF EXISTS streams;
 CREATE TABLE streams
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    user_id int, -- 发布者，不一定是邮件的原作者，可能是转发者
-    channel_id int,
+--    user_id int, -- 发布者，不一定是邮件的原作者，可能是转发者
     note_id bigint,
+    channel_id int,
     weight int default 0,
-    flow_time  timestamp,
+    flow_time timestamp,
     index (channel_id, weight),
     index (flow_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '邮件发送表已经生成' as tip;
+select '信息流表已经生成' as tip;
 
 -- 邮件发送表
 DROP TABLE IF EXISTS stream_back;
@@ -525,65 +526,77 @@ CREATE TABLE stream_back
     index (flow_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '邮件发送表已经生成' as tip;
+select '信息流表已经生成' as tip;
 
 DROP TABLE IF EXISTS note_replies;
 CREATE TABLE note_replies
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    mail_id bigint,
+    note_id bigint,
     user_id int,
-    index (mail_id),
+--    index (note_id),
     index (user_id)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '回复邮件表已经生成' as tip;
+select '回复信息表已经生成' as tip;
 
 DROP TABLE IF EXISTS note_collects;
 CREATE TABLE note_collects
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    mail_id bigint,
+    note_id bigint,
     user_id int,
     collect_time timestamp,
-    index (mail_id),
+--    index (note_id),
     index (user_id, collect_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '收藏邮件表已经生成' as tip;
+select '收藏信息表已经生成' as tip;
 
--- 用户收到邮件表
-DROP TABLE IF EXISTS mail_feeds;
-CREATE TABLE mail_feeds
+-- 留言表
+DROP TABLE IF EXISTS note_leaves;
+CREATE TABLE note_leaves
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    flow_id bigint,
+    note_id bigint,
     user_id int,
-    flow_time int,
-    index (user_id),
-    index (flow_time)
+    index (user_id)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '用户收到邮件表已经生成' as tip;
-
--- 用户收到邮件表
-DROP TABLE IF EXISTS mail_values;
-CREATE TABLE mail_values
+select '留言表已经生成' as tip;
+/*
+-- 用户收到信息表
+DROP TABLE IF EXISTS note_feeds;
+CREATE TABLE note_feeds
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    flow_id bigint,
+    user_id int,
+    stream_id bigint,
+    stream_time  int,
+    index (user_id),
+    index (stream_time)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '用户收到信息表已经生成' as tip;
+
+-- 用户收到邮件表
+DROP TABLE IF EXISTS note_values;
+CREATE TABLE note_values
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    stream_id bigint,
     user_id int,
     weight  int,
-    flow_time int,
+    stream_time int,
     index (user_id, weight),
-    index (flow_time)
+    index (stream_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '用户收到邮件表已经生成' as tip;
 
 /*************************************\
  * 资金运转
-\*************************************/
+\*************************************
 -- 充值表
 DROP TABLE IF EXISTS recharges;
 CREATE TABLE recharges
@@ -610,7 +623,7 @@ CREATE TABLE payments
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '付款表已经生成' as tip;
-/*
+
 DROP TABLE IF EXISTS note_keeps;
 CREATE TABLE note_keeps
 (

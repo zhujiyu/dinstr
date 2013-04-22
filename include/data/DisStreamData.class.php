@@ -49,7 +49,7 @@ class DisStreamData extends DisDBTable
     {
         $str = "select ID, user_id, note_id, channel_id, flow_time
             from ".DisStreamData::$stable."
-            where channel_id = $channel_id
+            where channel_id = $channel_id 
             order by ID desc limit $count";
         return parent::load_datas($str);
     }
