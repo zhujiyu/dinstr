@@ -68,19 +68,19 @@ CREATE TABLE user_params
     imoney float default 0,
     online_times bigint default 0,
     -- 统计参数
-    join_num int default 0, -- 加入的频道数
+    join_num int default 0,    -- 加入的频道数
     subscribe_num int default 0,
     applicant_num int default 0, -- 正在处理的加入频道申请的数目
-    create_num int default 0, -- 创建频道数
-    head_num int default 0, -- 信息头数
-    note_num int default 0, -- 信息数
-    draft_num int default 0, -- 草稿数
+    create_num int default 0,  -- 创建频道数
+    head_num int default 0,    -- 信息头数
+    note_num int default 0,    -- 信息数
+    draft_num int default 0,   -- 草稿数
+    collect_num int default 0, -- 收藏邮件数量
     interest_num int default 0,
     approved_num int default 0, -- 参与邮件主题活动数
-    collect_num int default 0, -- 收藏邮件数量
+    msg_num int default 0,    -- 发送私信数
     follow_num int default 0, -- 关注人数
-    fans_num int default 0, -- 粉丝数
-    msg_num int default 0, -- 发送私信数
+    fans_num int default 0,   -- 粉丝数
     -- 消息提醒
     reply_notice int default 0,
     note_notice int default 0,
@@ -198,9 +198,9 @@ CREATE TABLE channels
     ID int AUTO_INCREMENT PRIMARY KEY,
     `name` varchar(32),
     logo bigint default 0,
---    `type` enum('social', 'business', 'info', 'news') default 'social', --  社会交往social 商品交易business 商务资讯info 社会新闻news
-    description varchar(256),
-    announce varchar(512),
+    `type` enum('social', 'business', 'info', 'news') default 'social', --  社会交往social 商品交易business 商务资讯info 社会新闻news
+    description varchar(256), -- 介绍
+    announce varchar(512),    -- 公告
     creater int, -- 创建者
     -- 参数
     member_num int default 0,

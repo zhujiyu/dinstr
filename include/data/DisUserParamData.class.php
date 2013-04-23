@@ -39,10 +39,11 @@ class DisUserParamData extends DisDBTable
 
     protected function _check_num_param($num_param)
     {
-        return in_array($num_param, array('imoney', 'online_times', 'follow_num', 'fans_num', 'msg_num',
-            'mail_num', 'theme_num', 'interest_num', 'approved_num', 'reply_num', 'collect_num',
+        return in_array($num_param, array('imoney', 'online_times',
+            'follow_num', 'fans_num', 'msg_num',
+            'note_num', 'head_num', 'interest_num', 'approved_num', 'collect_num',
             'join_num', 'subscribe_num', 'applicant_num', 'create_num',
-            'reply_notice', 'theme_notice', 'msg_notice', 'system_notice', 'fans_notice'));
+            'reply_notice', 'head_notice', 'msg_notice', 'system_notice', 'fans_notice'));
     }
 
     // 更新用户信息时，检验各字段的值是否合法
@@ -52,18 +53,16 @@ class DisUserParamData extends DisDBTable
         {
             case 'ID' :
                 if ( !is_integer($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'imoney' :
-            case 'finance' :
-            case 'freezed' :
                 if ( !is_numeric($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             default :
-                return err(PMAIL_ERR_PARAM);
+                return err(DIS_ERR_PARAM);
         }
-        return err(PMAIL_SUCCEEDED);
+        return err(DIS_SUCCEEDED);
     }
 
     function insert($id)
@@ -75,7 +74,8 @@ class DisUserParamData extends DisDBTable
 
     function pay_money($imoney)
     {
-        $str = "update user_params set imoney = imoney - $imoney where ID = $this->ID";
+        $str = "update user_params set imoney = imoney - $imoney
+            where ID = $this->ID";
         if( parent::query($str) != 1 )
             throw new DisDBException('支付金币失败');
         $this->detail['imoney'] = (int)$this->detail['imoney'] - (int)$imoney;
