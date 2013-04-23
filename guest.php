@@ -1,22 +1,37 @@
 <?php
 /**
- * Pmail项目 PHP文件 v2.4.16
- * @package: PMAIL.FILE
- * @file   : home.php
+ * @package: DIS.PAGE
+ * @file   : guest.php
  * 个人首页
- * @author    : zhujiyu , zhujiyu@139.com
- * @Copyright : 2012 公众邮件网
- * @Date      : 2012-4-11
+ *
+ * @author    : 朱继玉<zhuhz82@126.com>
+ * @Copyright : 2013 DIS(有向信息流)
+ * @Date      : 2013-04-16
  * @encoding  : UTF-8
- * @version   : 2.4.16
+ * @version   : 1.0.0
  */
 require_once 'common.inc.php';
+
+$gSmarty = init_smarty();
+$gSmarty->caching = false;
+//DisObject::print_array($gSmarty);
+$tpl_file = "pages/guest.page.tpl";
+
+$gSmarty->display($tpl_file);
+exit();
+
+if( $gSmarty->is_cached($tpl_file) )
+{
+    $gSmarty->display($tpl_file);
+    exit();
+}
 
 ob_start();
 try
 {
     $view = $_GET['view'] ? $_GET['view'] : $_POST['view'];
-    if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 && DisUserCtrl::check_inline($_SESSION['userId']) )
+    if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0
+            && DisUserCtrl::check_inline($_SESSION['userId']) )
     {
         ob_end_clean();
         header('Location: home?important'); exit; // 转用户页面
@@ -39,7 +54,8 @@ try
         $len = count($chanids);
         for( $i = 0; $i < $len; $i ++ )
         {
-            $weights[$chanids[$i]] = array('weight'=>$cuCookie->weights[$i], 'rank'=>$cuCookie->ranks[$i]);
+            $weights[$chanids[$i]] = array('weight'=>$cuCookie->weights[$i],
+                'rank'=>$cuCookie->ranks[$i]);
         }
 
         $value = DisValueCtrl::read_ctrler($period);

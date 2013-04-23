@@ -25,8 +25,9 @@ class DisNoteData extends DisDBTable
         parent::__construct($mail_id);
     }
 
-    function init($mail_id, $slt = "ID, user_id, content, head_id, parent_id, context, depth,
-            photo_num, good_num, channels, reply_num, publish_num, create_time")
+    // context, depth, channels, publish_num,
+    function init($mail_id, $slt = "ID, user_id, content, head_id, parent_id,
+            photo_num, good_num, reply_num, create_time")
     {
         return parent::init($mail_id, $slt);
     }
@@ -42,9 +43,8 @@ class DisNoteData extends DisDBTable
 //            case 'extend' :
             case 'status' :
             case 'head_id' :
-            case 'root_id' :
             case 'parent_id' :
-            case 'depth' :
+//            case 'depth' :
             case 'good_num' :
             case 'photo_num' :
             case 'reply_num' :
@@ -53,8 +53,8 @@ class DisNoteData extends DisDBTable
                     return err(PMAIL_ERR_PARAM);
                 break;
             case 'content' :
-            case 'context' :
-            case 'channels' :
+//            case 'context' :
+//            case 'channels' :
                 if( !is_string($value) )
                     return err(PMAIL_ERR_PARAM);
                 break;

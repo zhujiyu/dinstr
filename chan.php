@@ -13,6 +13,7 @@
 require_once 'common.inc.php';
 
 $uri = $_SERVER["REQUEST_URI"];
+$matches = null;
 if( preg_match('/chan\/(\d+)/', $uri, $matches) )
 {
     $_GET['id'] = $matches[1];
@@ -51,6 +52,7 @@ function list_channel_role(&$members, $channel_id)
 ob_start();
 try
 {
+    $gSmarty = init_smarty();
     if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 && DisUserCtrl::check_inline($_SESSION['userId']) )
     {
         $user_id = $_SESSION['userId'];
@@ -173,6 +175,7 @@ try
                 $sort = 'value';
                 $flag = (int)(time() / DisConfigAttr::$intervals['quarter']);
                 $period = $_GET['period'] ? $_GET['period'] : '1d';
+
                 $flows = DisChannelCtrl::list_value_flows($channel_id, $flag, $period);
                 $flow_ids = list_slice($flows[flow_ids], 0, 20);
                 $gSmarty->assign("flag", $flag);

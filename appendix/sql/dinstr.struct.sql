@@ -322,15 +322,11 @@ CREATE TABLE heads
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     content varchar(255),
-    note_id bigint, -- 发起给主题的邮件
+    note_id bigint,
     note_num int default 0,
     interest_num int default 0,
     approved_num int default 0,
     update_time timestamp
---    channel_id int default 0, -- 发起该主题的频道，通常为该主题的讨论提供了分析角度
---    weight int default 0,
---    flow_time  timestamp,
---    index (channel_id, weight)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息头表已经生成' as tip;
@@ -340,8 +336,8 @@ DROP TABLE IF EXISTS head_users;
 CREATE TABLE head_users
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    head_id bigint,
     user_id int,
+    head_id bigint,
     approve int default 0,
     create_time timestamp,
     index (head_id),
@@ -358,20 +354,21 @@ CREATE TABLE notes
     user_id int not null,
     head_id bigint default 0,
     parent_id bigint default 0,
-    content varchar(5120), -- 邮件内容
+    content varchar(2560), -- 信息内容
     video varchar(255),
 --    root_id bigint default 0,
 --    context varchar(255) default "", -- 记录15条前文背景
 --    `depth` int default 0, -- 深度
 --    channels varchar(255),
     -- 参数
-    good_num smallint default 0,
+    good_num  smallint default 0,
     photo_num smallint default 0,
     reply_num int default 0,
-    status tinyint default 0, -- 0 表示正常，1表示已经删除
+    status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
     create_time int,
 --    publish_num int default 0, -- 发表次数
 --    index (user_id, publish_num),
+    index (user_id, status),
     index (head_id),
     index (parent_id)
 )
@@ -501,11 +498,12 @@ DROP TABLE IF EXISTS streams;
 CREATE TABLE streams
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
---    user_id int, -- 发布者，不一定是邮件的原作者，可能是转发者
+    user_id int, -- 发布者，不一定是邮件的原作者，可能是转发者
     note_id bigint,
     channel_id int,
     weight int default 0,
     flow_time timestamp,
+    index (user_id),
     index (channel_id, weight),
     index (flow_time)
 )
@@ -521,7 +519,8 @@ CREATE TABLE stream_back
     channel_id int,
     note_id bigint,
     weight int default 0,
-    flow_time  timestamp,
+    flow_time timestamp,
+    index (user_id),
     index (channel_id, weight),
     index (flow_time)
 )
@@ -534,7 +533,6 @@ CREATE TABLE note_replies
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     note_id bigint,
     user_id int,
---    index (note_id),
     index (user_id)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
@@ -547,7 +545,6 @@ CREATE TABLE note_collects
     note_id bigint,
     user_id int,
     collect_time timestamp,
---    index (note_id),
     index (user_id, collect_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;

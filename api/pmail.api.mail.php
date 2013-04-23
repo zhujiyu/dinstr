@@ -66,6 +66,7 @@ try
     $item = $_GET['item'] ? $_GET['item']: $_POST['item'];
     $mail_id = (int)($_POST['mail_id'] ? $_POST['mail_id'] : $_GET['mail_id']);
 
+
     if( !isset($_SESSION['userId']) || $_SESSION['userId'] == 0 || !DisUserCtrl::check_inline($_SESSION['userId']) )
     {
         if( $p != 'load' )
@@ -91,6 +92,7 @@ try
                 $_REQUEST['photos'], $_REQUEST['goods']);
         $flow_id = $mail->send($user_id, $channel_id, (int)$_REQUEST['weight']);
 
+        $gSmarty = init_smarty();
         $user = DisUserCtrl::user($user_id);
         $flows = $user->list_flows(array($flow_id));
         display_flows($flows, $gSmarty);
@@ -109,12 +111,15 @@ try
             $parent_id = (int)$_REQUEST['parent'];
 
         $parent = DisNoteCtrl::mail($parent_id);
-        $reply = $parent->reply($user_id, $_REQUEST['content'], $_REQUEST['photos'], $_REQUEST['goods']);
-
+        $reply = $parent->reply($user_id, $_REQUEST['content'],
+                $_REQUEST['photos'], $_REQUEST['goods']);
+        $gSmarty = init_smarty();
         $gSmarty->assign('user', DisUserCtrl::get_data($user_id));
+
         if( isset($_REQUEST['channel_id']) && (int)$_REQUEST['channel_id'] > 0 )
         {
-            $flow_id = $reply->send($user_id, (int)$_REQUEST['channel_id'], (int)$_REQUEST['weight']);
+            $flow_id = $reply->send($user_id, (int)$_REQUEST['channel_id'],
+                    (int)$_REQUEST['weight']);
             $user = DisUserCtrl::user($user_id);
             $flows = $user->list_flows(array($flow_id));
             display_flows($flows, $gSmarty);
@@ -126,6 +131,7 @@ try
     }
     else if( $p == 'load' )
     {
+        $gSmarty = init_smarty();
         if( $user_id > 0 )
             $gSmarty->assign('user', DisUserCtrl::get_data($user_id));
         else

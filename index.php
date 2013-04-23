@@ -35,7 +35,7 @@ function _login($name, $pwrd)
 }
 
 ob_start();
-try//
+try
 {
 //    if( $_GET['v'] && $_GET['v'] == 'test' )
 //    {
@@ -74,6 +74,7 @@ try//
         setcookie('pm-login', '', time() -1);
 
         $themes = DisHeadCtrl::list_themes(10);
+        $gSmarty = init_smarty();
         $gSmarty->assign("themes", $themes);
 
         $navi = array
@@ -110,23 +111,8 @@ if( $p == 'logout' )
 }
 else if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 && DisUserCtrl::check_inline($_SESSION['userId']) )
     header('Location: home?important'); // 转用户首页
-//else if( $p == 'logout' )
-//{
-//    $file = "pmail.logout.tpl";
-//    $gSmarty->assign("err", $err);
-//    $gSmarty->assign("title", "退出天鹅镇");
-//    $gSmarty->display( "pages/$file");
-//}
 else
     header('Location: guest?important'); // 转游客首页
-
-//if( $login )
-//    header('Location: home?important'); // 转用户首页
-//else
-//    header('Location: guest?important'); // 转游客首页
-//exit;
-
-//header('Location: home'); exit; // 转首页
 
 //echo "该网站尚未开通，我们正在努力地建设中...";
 //exit;

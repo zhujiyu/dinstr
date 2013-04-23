@@ -90,26 +90,24 @@ class DisUserParamData extends DisDBTable
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
 
-        $str = "select reply_notice, fans_notice, msg_notice, theme_notice, system_notice
-            from users where ID = $this->ID";
+        $str = "select reply_notice, fans_notice, msg_notice, note_notice, system_notice
+            from user_params where ID = $this->ID";
         $notices = parent::load_line_data($str);
 
-        foreach ( $notices as $name => $value )
-        {
+        foreach( $notices as $name => $value )
             $this->detail[$name] = $value;
-        }
         return $notices;
     }
 
-    static function notice_name($name, $notice, $count = 1)
-    {
-        if( !in_array($notice, array('reply_notice', 'theme_notice', 'system_notice',
-            'fans_notice', 'msg_notice')) || $count == 0 )
-            throw new DisParamException('参数不合法！');
-
-        $str = "update users set $notice = $notice + $count where username = '$name'";
-        return self::query($str) == 1;
-    }
+//    static function notice_name($name, $notice, $count = 1)
+//    {
+//        if( !in_array($notice, array('reply_notice', 'theme_notice', 'system_notice',
+//            'fans_notice', 'msg_notice')) || $count == 0 )
+//            throw new DisParamException('参数不合法！');
+//
+//        $str = "update users set $notice = $notice + $count where username = '$name'";
+//        return self::query($str) == 1;
+//    }
 
     /**
      * 通知用户

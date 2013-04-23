@@ -4,11 +4,12 @@
  * @package: PMAIL.FILE
  * @file   : ls.php
  * 列出当前的各种信息
- * @author    : zhujiyu , zhujiyu@139.com
- * @Copyright : 2012 公众邮件网
- * @Date      : 2012-4-11
+ *
+ * @author    : 朱继玉<zhuhz82@126.com>
+ * @Copyright : 2013 有向信息流
+ * @Date      : 2013-04-16
  * @encoding  : UTF-8
- * @version   : 2.4.16
+ * @version   : 1.0.0
  */
 require_once 'common.inc.php';
 
@@ -33,6 +34,7 @@ function merge($notices)
 ob_start();
 try
 {
+    $gSmarty = init_smarty();
     if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 && DisUserCtrl::check_inline($_SESSION['userId']) )
     {
         $user_id = $_SESSION['userId'];
@@ -40,10 +42,8 @@ try
         $gSmarty->assign("user", $user->info());
         DisUserCtrl::set_inline($user_id);
     }
-    else //if( !isset($_GET['id']) )
-    {
+    else
         $user_id = 0;
-    }
 
     if( $_GET['id'] )
     {

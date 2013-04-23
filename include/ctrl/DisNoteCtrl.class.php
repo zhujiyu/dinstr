@@ -189,6 +189,7 @@ class DisNoteCtrl extends DisNoteData
             if( $good->ID )
                 $good->increase('quote');
         }
+
         self::insert_keywords($mail->ID, $title);
         self::insert_keywords($mail->ID, $content);
 
@@ -274,7 +275,7 @@ class DisNoteCtrl extends DisNoteData
     /**
      * 新版的发布信息
      * @param <integer> $user_id 用户ID
-     * @param <array> $channel_ids 频道ID列表
+     * @param <integer> $channel_id 频道ID
      * @param <integer> $weight 邮件的优先级
      * @return <integer> 发布ID
      */
@@ -285,32 +286,31 @@ class DisNoteCtrl extends DisNoteData
         if( !$user_id || !$channel_id )
             throw new DisParamException("参数不合法！");
 
-        $cu = new DisChanUserCtrl($user_id);
+        $cu = new DisChanUserCtrl( $user_id );
         $joined_ids = $cu->list_joined_ids( );
         if( !in_array($channel_id, $joined_ids) )
             throw new DisParamException('你没有加入这个频道，无权发送邮件');
         $flow = new DisStreamCtrl();
         $flow_id = $flow->insert($user_id, $this->ID, $channel_id, $weight);
 
-        if( !$this->detail )
-            $this->detail = self::get_data($this->ID);
-        $num = (int)$this->detail["publish_num"] + 1;
-        $channels = $this->detail['channels']."$channel_id|$weight#";
-        $this->update(array("publish_num"=>$num, "channels"=>$channels));
+//        if( !$this->detail )
+//            $this->detail = self::get_data($this->ID);
+//        $num = (int)$this->detail["publish_num"] + 1;
+//        $channels = $this->detail['channels']."$channel_id|$weight#";
+//        $this->update(array("publish_num"=>$num, "channels"=>$channels));
+//        $channel = DisChannelCtrl::channel($channel_id);
+//        $channel->increase("mail_num");
 
         if( $weight > 0 )
         {
             $param = new DisUserParamCtrl($user_id);
             $param->pay_money($weight);
         }
-        $channel = DisChannelCtrl::channel($channel_id);
-        $channel->increase("mail_num");
-
         $feed = DisFeedCtrl::read_ctrler($user_id);
         $feed->push_flow($flow_id);
         DisFeedCtrl::save_ctrler($feed);
 
-        DisNoteVectorCache::set_mail_ids($this->detail[theme_id], null);
+        DisNoteVectorCache::set_mail_ids($this->detail[head_id], null);
         DisNoteDataCache::set_mail_data($this->ID, null);
         DisUserVectorCache::set_publish_mail_ids($user_id, null);
         return $flow_id;

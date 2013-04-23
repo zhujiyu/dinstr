@@ -30,9 +30,9 @@ class DisConfigAttr
 
     // 读写分离，用一台服务器记录及时更新，用多台服务器负责读取
     public static $dbread = array('host'=>'localhost', 'username'=>'jiyu', 'password'=>'jiyu',
-        'dbname'=>'pmail', 'connect'=>1);
+        'dbname'=>'dinstr', 'connect'=>1);
     public static $dbwrite = array('host'=>'localhost', 'username'=>'jiyu', 'password'=>'jiyu',
-        'dbname'=>'pmail', 'connect'=>1);
+        'dbname'=>'dinstr', 'connect'=>1);
 
     public static $taobaoAPI = array('url'=>'http://gw.api.taobao.com/router/rest?',
         'key'=>'12176383', 'secret'=>'916193de4c10e511cf141363aac4adf0', 'nick'=>'zhujiyuhappy',
@@ -111,9 +111,9 @@ class DisConfigAttr
         'DisNotePhotoData'  =>'include/data/DisNotePhotoData.class.php',
         'DisNoteReplyData'  =>'include/data/DisNoteReplyData.class.php',
         'DisNoteKeywordData'=>'include/data/DisNoteKeywordData.class.php',
-        'DisNoteFlowData'=>'include/data/DisNoteFlowData.class.php',
-        'DisNoteCtrl'    =>'include/ctrl/DisNoteCtrl.class.php',
-        'DisNoteFlowCtrl'=>'include/ctrl/DisNoteFlowCtrl.class.php',
+        'DisStreamData'=>'include/data/DisStreamData.class.php',
+        'DisNoteCtrl'  =>'include/ctrl/DisNoteCtrl.class.php',
+        'DisStreamCtrl'=>'include/ctrl/DisStreamCtrl.class.php',
 
         'DisHeadData'    =>'include/data/DisHeadData.class.php',
         'DisHeadUserData'=>'include/data/DisHeadUserData.class.php',

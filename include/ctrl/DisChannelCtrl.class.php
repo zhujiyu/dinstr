@@ -95,6 +95,7 @@ class DisChannelCtrl extends DisChannelData
             $vflows['info'] = array('id'=>$channel_id, 'flag'=>$flag);
             DisChanVectorCache::set_channel_flows($channel_id, $period, $flag, $vflows);
         }
+
         return $vflows;
     }
 
@@ -489,12 +490,13 @@ class DisChannelCtrl extends DisChannelData
             $newlogo = (int)$logo;
             $update['logo'] = (int)$logo;
         }
+
         if( isset($name) && $name != $this->detail['name'] )
             $update['name'] = $name;
         if( isset($desc) && $desc != $this->detail['description'] )
             $update['description'] = $desc;
-
         parent::update($update);
+
         if( isset($oldlogo) && $oldlogo > 0 )
         {
             $photo = new DisPhotoCtrl($oldlogo);
