@@ -119,8 +119,8 @@ a .pm-icon {background-image: url("images/ui-icons_2e83ff_256x240.png");}
 .pm-dialog .pm-dialog-content .pm-err {padding: 0; border: 0;}
 
 .pm-logo {font-size: 16px; vertical-align: middle;}
-.pm-logo .pm-logo-img {height: 22px;}
-.pm-logo .pm-logo-img img {height: 22px; width: 22px;}
+.pm-logo .pm-logo-img {height: 32px;}
+.pm-logo .pm-logo-img img {height: 32px; width: 32px;}
 .pm-logo .name {line-height: 22px; font-size: 20px;}
 .pm-logo .status {vertical-align: top; font-size: 12px; line-height: 14px; padding-left: 3px;}
 .pm-logo .pm-logo-text {padding: 2px 0; height: 22px; font-weight: bold; position: relative;}
@@ -128,48 +128,3 @@ a .pm-icon {background-image: url("images/ui-icons_2e83ff_256x240.png");}
 .pm-foot .pm-logo {font-size: 12px; line-height: 16px;}
 .pm-foot .pm-logo .name {color: #105cb6; font-size: 14px; line-height: 16px; font-weight: normal;}
 .pm-foot .pm-logo .pm-logo-img img {height: 14px;}
-
-/* 三栏结构 */
-/*.pm-wrap {width: 980px;}
-.pm-page-main {width: 600px;}
-.pm-page-aidl {width: 140px;}
-.pm-page-aidr {width: 200px;}
-.pm-page-shirt {width: 20px;}
-
-.pm-page-main .pm-mail-body {width: 540px;}
-.pm-page-main .pm-mail-avatar {width: 60px;}
-.pm-content-navi .pm-module-title {padding: 5px; background-color: #f1f5fa;}
-.pm-page-main .pm-add-list {margin-left: 50px;}
-.pm-page-main .pm-reply-list .pm-mail-weight input {width: 40px;}
-.pm-page-main .pm-channel .pm-object-info {width: 430px;}*/
-/* 三栏结构 */
-
-/*.pm-page-ctrl .pm-user-param {padding-top: 20px;}*/
-/*.pm-page-manage {text-align: right; padding: 5px 0;}*/
-
-/*.pm-foot {bottom: 0; position: absolute;}*/
-/*.pm-light-button, .pm-gray-button {display: inline; padding: 4px 10px;}*/
-/*.pm-icon-wrap .pm-icon {margin-top: 3px;}*/
-/*.pm-icon-wrap .pm-icon {top: 50%; margin-top: -8px;}*/
-/*.pm-icon-wrap .pm-icon {top: 50%;}*/
-
-/*.pm-light-button:hover {background-color: #357AE8;}*/
-/*.pm-light-button .pm-inline-block, .pm-gray-button .pm-inline-block {vertical-align: middle;}*/
-/*.pm-light-button .pm-icon, .pm-gray-button .pm-icon {top: 2px; position: relative;}*/
-/*.pm-icon-wrap {vertical-align: middle; position: relative; display: inline-block;}*/
-/*.pm-icon-wrap {vertical-align: middle; padding: 2px 0; position: relative;}*/
-/*.pm-gray-button .pm-inline-block, .pm-light-button .pm-inline-block {width: 20px; height: 20px;}*/
-/*.pm-gray-button .pm-inline-block .pm-icon, .pm-light-button .pm-inline-block .pm-icon {position: absolute; top: 50%; margin-top: -4px;}*/
-
-/*.pm-layout-table td {background-color: gray;}*/
-/*.pm-dialog #close:hover {padding: 4px;}*/
-/*
-.pm-gray-button:hover  {background-color: #f1f1f1;
-                        background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
-                        background-image: -moz-linear-gradient(top,#f8f8f8,#f1f1f1);
-                        background-image: -ms-linear-gradient(top,#f8f8f8,#f1f1f1);
-                        background-image: -o-linear-gradient(top,#f8f8f8,#f1f1f1);
-                        background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
-                        text-decoration: none; border: 1px solid #cacaca; color: #222;}*/
-
-/*.pm-light-button:hover {text-decoration: none;}*/

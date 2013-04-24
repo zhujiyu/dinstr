@@ -1,5 +1,10 @@
-.pm-navi {padding: 0; position: fixed; z-index: 10; top: 0; left: 0; width: 100%; border-bottom: 1px solid #c1c1c1; background-color: #14589c;}
-.pm-navi-content {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px; margin: 0 auto; width: 940px; position: relative; text-align: left; height: 36px;}
+.pm-navi {padding: 0; position: fixed; z-index: 10; top: 0; left: 0; width: 100%;
+         border-bottom: 1px solid #c1c1c1;
+         background-color: #545256;
+         /*background-color: #14589c;*/
+}
+.pm-navi-content {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;
+                 margin: 0 auto; width: 940px; position: relative; text-align: left; height: 36px;}
 .pm-navi-content a {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;}
 .pm-navi-content a:hover {color: #fff; text-decoration: none;}
 .pm-navi-content .pm-icon-wrap {vertical-align: middle;}
@@ -62,18 +67,3 @@
 .pm-fixed-notices {margin: 0 auto; width: 940px; position: relative;}
 .pm-fixed-notices .pm-close {float: right; position: relative;}
 .pm-fixed-notices .pm-notice-item {position: relative; width: 920px; padding: 5px 0;}
-
-/*.pm-manage-account .pm-user-name span {vertical-align: middle;}*/
-/*.pm-dropdown-list {color: #555; position: absolute; top: 40px; left: 0; padding: 5px; min-width: 80px; display: none; z-index: 100; background-color: #fff; border: 1px solid #858585;}*/
-/*.pm-dropdown-list {background-color: #14589c;}*/
-
-/*.pm-manage-account {text-align: right;}*/
-/*.pm-navi-list {width: 270px;}*/
-/*.pm-navi-list #add-mail {display: none;}*/
-/*.pm-navi {background-color: #1c7bd9;}*/
-/*#add-mail .pm-icon-wrap .pm-icon {top: 2px; position: relative;}*/
-
-/*.pm-navi-item .pm-icon-wrap {vertical-align: middle; position: relative;}*/
-/*.pm-navi-item:hover .pm-dropdown-list {display: block;}*/
-/*.pm-dropdown-list .pm-drop-subitem {padding: 5px; position: relative;}*/
-/*.pm-dropdown-list .pm-drop-subitem:hover {background-color: #1f4974;}*/

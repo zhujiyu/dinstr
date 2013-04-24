@@ -54,9 +54,9 @@ function __autoload($class_name)
 function init_smarty()
 {
     $gSmarty = new Smarty;
-    $gSmarty->template_dir = DIS_ROOT.'templates/';
     $gSmarty->config_dir   = DIS_ROOT.'configs/';
     $gSmarty->cache_dir    = DIS_ROOT.'cache/';
+    $gSmarty->template_dir = DIS_ROOT.'templates/';
     $gSmarty->compile_dir  = DIS_ROOT.'templates_c/';
 //    $gSmarty->compile_check = true;
 

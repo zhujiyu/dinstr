@@ -15,9 +15,9 @@ if( !defined('IN_DIS') )
 
 class DisConfigAttr
 {
-    public static $app = array('name'=>'天鹅镇公邮', 'version'=>'1.0', 'status'=>'内测',
+    public static $app = array('name'=>'海报板', 'version'=>'1.0', 'status'=>'内测',
         'goal'=>"无噪音的实用资讯", 'locate'=>'定向有序资讯引擎', //'面向大众的精准化网络资讯平台',
-        'logo'=>'css/logo/swanws.png', 'icon'=>'css/logo/swanwbs.png',
+        'logo'=>'css/logo/haibao.png', 'icon'=>'css/logo/haibao.png',
         'url'=>'tianezhen.com', 'icp'=>'京ICP备12012934号-1',
         'keywords'=>'公众邮件，邮件系统，资讯平台，资讯，商务，精准化，主动式，信息技术，信息检索，智能，信息流技术',
         'desc'=>'天鹅镇是一款定向信息流引擎，
