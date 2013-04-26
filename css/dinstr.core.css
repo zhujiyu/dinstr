@@ -14,7 +14,7 @@ a, .pm-a, .pm-am {text-decoration: none; font-size: 14px; font-family: "宋体";
 a, .pm-a, .pm-am {cursor: pointer; color: #105cb6;}
 a:hover, .pm-a:hover, .pm-am-hover {color: #444; text-decoration: underline;}
 
-.pm-wrap {position: relative; padding-top: 45px; margin: 0 auto 20px;}
+.pm-wrap {position: relative; padding-top: 10px; margin: 0 auto 20px;}
 .pm-page {position: relative; min-height: 600px; font-size: 14px;}
 
 /* 两栏结构 */
