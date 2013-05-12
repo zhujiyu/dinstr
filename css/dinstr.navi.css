@@ -1,28 +1,28 @@
-.pm-navi {padding: 0; width: 100%;
-         border-bottom: 1px solid #c1c1c1;
-}
+.pm-navi {padding: 0; width: 100%; z-index: 0; top: 0; position: absolute;}
 .dis-top-navi {background-color: #545256;}
-.dis-main-navi {padding: 10px;}
-
+.dis-main-navi {padding: 10px 0;}
 .pm-navi-content {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;
                  margin: 0 auto; width: 940px; position: relative; text-align: left;}
+/*.dis-main-navi .pm-navi-content {background-color: gray;}*/
+
 .dis-top-navi a {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;}
 .dis-top-navi a:hover {color: #fff; text-decoration: none;}
 .dis-top-navi .pm-icon-wrap {vertical-align: middle;}
 .dis-top-navi .pm-icon, .dis-top-navi a:hover .pm-icon {background-image: url('images/ui-icons_ffffff_256x240.png');}
 
-.pm-navi-logo {width: 170px; vertical-align: middle;}
-.pm-navi-list {width: 500px; vertical-align: middle;}
-.pm-search-bar {width: 230px; vertical-align: middle;}
+.pm-navi-item {padding: 3px 10px; font-weight: bold; position: relative;
+              vertical-align: middle; display: inline-block;}
+.dis-top-navi .pm-navi-item:hover {background-color: #1f4974;}
+
+.pm-navi-logo  {width: 170px; vertical-align: middle;}
+.pm-navi-list  {width: 400px; vertical-align: middle;}
+.pm-search-bar {width: 370px; vertical-align: middle;}
+.pm-search-form {vertical-align: middle;}
 
 /*.pm-navi-logo {width: 170px; color: #fff;}*/
 /*.pm-navi-logo a {color: #fff;}*/
 .pm-manage-account {width: 220px; text-align: right;}
-
 #add-mail {padding: 3px 10px; vertical-align: middle; position: relative;}
-.pm-navi-item {padding: 3px 10px; font-weight: bold; position: relative;
-              vertical-align: middle; display: inline-block;}
-.pm-navi-item:hover {background-color: #1f4974;}
 .pm-search-form #keyword {width: 200px; padding: 2px 4px; position: relative;}
 .pm-search-form #search {width: 16px; height: 16px; height: 16px; border: 0; background: url("images/find.png") no-repeat; left: -10px; position: relative;}
 

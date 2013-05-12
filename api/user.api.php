@@ -1,9 +1,9 @@
 <?php
 /**
- * @package: PMAIL.INTE.API
- * @file   : pmail.api.user.php
+ * @package: DINSTR.API
+ * @file   : user.api.php
  * 用户API
- * 
+ *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 DIS(有向信息流)
  * @Date      : 2013-04-16

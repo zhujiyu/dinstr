@@ -118,12 +118,11 @@ class DisUserData extends DisDBTable
             $str = "update $this->table set impassword ='$password' where ID = $this->ID";
         else
             $str = "update $this->table set password ='$password' where ID = $this->ID";
-        $r = parent::query($str) == 1;
-        return $r;
+        return parent::check_query($str, 1);
     }
 
     // 更新用户信息时，检验各字段的值是否合法
-    function _check_param($name, $value)
+    protected function _check_param($name, $value)
     {
         switch($name)
         {

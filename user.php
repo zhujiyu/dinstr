@@ -32,6 +32,7 @@ try
 {
     $p = $_GET['p'] ? $_GET['p'] : $_POST['p'];
     $view = $_GET['view'] ? $_GET['view'] : $_POST['view'];
+    $gSmarty = init_smarty();
 
     if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 && DisUserCtrl::check_inline($_SESSION['userId']) )
     {

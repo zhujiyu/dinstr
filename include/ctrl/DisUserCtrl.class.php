@@ -15,8 +15,6 @@ if( !defined('IN_DIS') )
 
 class DisUserCtrl extends DisUserData
 {
-    var $param;
-
     function  __construct($usr = null)
     {
         parent::__construct($usr);

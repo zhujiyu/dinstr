@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.DATA
- * @file  : DisChannelData.class.php
+ * @file   : DisChannelData.class.php
  * @abstract  : 频道数据
  *
  * @author    : 朱继玉<zhuhz82@126.com>
@@ -31,8 +31,8 @@ class DisChannelData extends DisDBTable
         $detail[description] = strip_tags($detail[description]);
     }
 
-    function init($channel, $slt = "ID, name, logo, `type`, description, announce,
-            mail_num, member_num, subscriber_num, applicant_num, create_time")
+    function init($channel, $slt = "ID, name, logo, `type`, description, announce, creater,
+            info_num, member_num, subscriber_num, applicant_num, create_time")
     {
         if( uid_check($channel) )
             parent::init($channel, $slt);
@@ -48,19 +48,19 @@ class DisChannelData extends DisDBTable
         switch($name)
         {
             case 'name' :
-                if ( !name_check($value) )
+                if( !name_check($value) )
                     return err(PMAIL_ERR_PARAM);
                 break;
-            case 'domain' :
-                if ( !domain_check($value) )
-                    return err(PMAIL_ERR_PARAM);
-                break;
+//            case 'domain' :
+//                if( !domain_check($value) )
+//                    return err(PMAIL_ERR_PARAM);
+//                break;
             case 'type' :
-                if ( !in_array($value, array('social', 'business', 'info', 'news')) )
+                if( !in_array($value, array('social', 'business', 'info', 'news')) )
                     return err(PMAIL_ERR_PARAM);
                 break;
             case 'creater' :
-                if ( !uid_check($value) )
+                if( !uid_check($value) )
                     return err(PMAIL_ERR_PARAM);
                 break;
             case 'logo' :
@@ -82,7 +82,7 @@ class DisChannelData extends DisDBTable
     {
 //        if( in_array($param, array('mail_num', 'member_num', 'subscriber_num', 'applicant_num')) )
 //            echo $param;
-        return in_array($param, array('mail_num', 'member_num', 'subscriber_num', 'applicant_num'));
+        return in_array($param, array('info_num', 'member_num', 'subscriber_num', 'applicant_num'));
     }
 
     protected function _name_exist($name)
@@ -132,7 +132,7 @@ class DisChannelData extends DisDBTable
 
     static function list_latest_channels($date, $page = 0, $count = 20,
         $slt = "ID, name, logo, `type`, description, announce, creater,
-        mail_num, member_num, applicant_num, subscriber_num, create_time")
+        info_num, member_num, applicant_num, subscriber_num, create_time")
     {
         $str = "select $slt
             from channels where create_time > $date
@@ -142,7 +142,7 @@ class DisChannelData extends DisDBTable
 
     static function list_channels($page = 0, $count = 20,
             $slt = "ID, name, logo, `type`, description, announce, creater,
-            mail_num, member_num, applicant_num, subscriber_num, create_time")
+            info_num, member_num, applicant_num, subscriber_num, create_time")
     {
         $str = "select $slt from channels as c
             order by ID desc limit ".$page * $count.", $count";

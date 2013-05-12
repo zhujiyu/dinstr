@@ -122,7 +122,6 @@ try
         else
             $channels = DisChannelCtrl::parse_channels($_ids);
         $gSmarty->assign("channels", $channels);
-//        echo "123";
     }
     else if( $channel_id > 0 ) //if( $p == 'disp' || $p == 'notice' )
     {

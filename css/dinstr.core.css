@@ -14,14 +14,12 @@ a, .pm-a, .pm-am {text-decoration: none; font-size: 14px; font-family: "宋体";
 a, .pm-a, .pm-am {cursor: pointer; color: #105cb6;}
 a:hover, .pm-a:hover, .pm-am-hover {color: #444; text-decoration: underline;}
 
-.pm-wrap {position: relative; padding-top: 10px; margin: 0 auto 20px;}
-.pm-page {position: relative; min-height: 600px; font-size: 14px;}
-
 /* 两栏结构 */
-.pm-wrap {width: 940px;}
-.pm-page-ctrl {padding: 10px 0;}
+.pm-wrap {position: relative; width: 940px; padding-top: 10px; margin: 0 auto 20px; z-index: 1; top: 80px;}
+.pm-page {position: relative; min-height: 600px; font-size: 14px;}
 .pm-page-left {width: 640px; padding-right: 30px; vertical-align: top; position: relative;}
 .pm-page-right {width: 270px; min-height: 600px; vertical-align: top; position: relative;}
+.pm-page-ctrl {padding: 10px 0;}
 
 /* ui */
 .pm-inline-block {position: relative; vertical-align: top; display: inline-block; zoom: 1;}
@@ -119,12 +117,13 @@ a .pm-icon {background-image: url("images/ui-icons_2e83ff_256x240.png");}
 .pm-dialog .pm-dialog-content .pm-err {padding: 0; border: 0;}
 
 .pm-logo {font-size: 16px; vertical-align: middle;}
-.pm-logo .pm-logo-img {height: 44px; vertical-align: middle;}
-.pm-logo .pm-logo-img img {height: 44px; width: 44px;}
+.pm-logo .pm-logo-img {vertical-align: middle; height: 32px;}
+.pm-logo .pm-logo-img img {height: 32px; width: 32px;}
 .pm-logo .name {line-height: 22px; font-size: 20px;}
 .pm-logo .status {vertical-align: top; font-size: 12px; line-height: 14px; padding-left: 3px;}
 .pm-logo .pm-logo-text {padding: 2px 0; height: 22px; font-weight: bold; position: relative; vertical-align: middle;}
 
 .pm-foot .pm-logo {font-size: 12px; line-height: 16px;}
 .pm-foot .pm-logo .name {color: #105cb6; font-size: 14px; line-height: 16px; font-weight: normal;}
-.pm-foot .pm-logo .pm-logo-img img {height: 14px;}
+.pm-foot .pm-logo .pm-logo-img {height: 18px;}
+.pm-foot .pm-logo .pm-logo-img img {width: 18px; height: 18px;}

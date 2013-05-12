@@ -24,9 +24,10 @@ class DisChannelCtrl extends DisChannelData
     static function get_data($channel_id)
     {
 //        pmCacheChanData::set_channel_data($channel_id, null);
-        $channel_data = DisChanDataCache::get_channel_data($channel_id);
+        $channel_data = DisChanDataCache::get_chan_data($channel_id);
         if( !$channel_data )
         {
+            echo "$channel_id<br>";
             $channel = new DisChannelCtrl((int)$channel_id);
             if( !$channel->ID )
                 throw new DisException("无法读取到数据！$channel_id");
@@ -45,7 +46,7 @@ class DisChannelCtrl extends DisChannelData
             }
 
 //            $channel_data['logo'] = array('ID'=>0, 'small'=>'css/logo/chanbgs.png', 'big'=>'css/logo/chanbgb.png');
-            DisChanDataCache::set_channel_data($channel_id, $channel_data);
+            DisChanDataCache::set_chan_data($channel_id, $channel_data);
         }
         return $channel_data;
     }
@@ -66,7 +67,7 @@ class DisChannelCtrl extends DisChannelData
             $this->detail = self::get_data($this->ID);
 
         parent::increase($param, $step);
-        DisChanDataCache::set_channel_data($this->ID, null);
+        DisChanDataCache::set_chan_data($this->ID, null);
     }
 
     function reduce($param, $step = 1)
@@ -77,7 +78,7 @@ class DisChannelCtrl extends DisChannelData
             $this->detail = self::get_data($this->ID);
 
         parent::reduce($param, $step);
-        DisChanDataCache::set_channel_data($this->ID, null);
+        DisChanDataCache::set_chan_data($this->ID, null);
     }
 
     static function list_value_flows($channel_id, $flag, $period)
@@ -86,14 +87,14 @@ class DisChannelCtrl extends DisChannelData
         $period = DisConfigAttr::$periods[$period];
 
 //        pmVectorMemcached::set_channel_flows($channel_id, $flag, $period, null);
-        $vflows = DisChanVectorCache::get_channel_flows($channel_id, $period, $flag);
+        $vflows = DisChanVectorCache::get_chan_flows($channel_id, $period, $flag);
         if( !$vflows )
         {
             $flows = DisStreamData::load_value_mails($channel_id, $end - $period, $end);
             $vflows['flow_ids'] = chunk_array($flows, 'ID');
             $vflows['weights']  = chunk_array($flows, 'weight');
             $vflows['info'] = array('id'=>$channel_id, 'flag'=>$flag);
-            DisChanVectorCache::set_channel_flows($channel_id, $period, $flag, $vflows);
+            DisChanVectorCache::set_chan_flows($channel_id, $period, $flag, $vflows);
         }
 
         return $vflows;
@@ -144,7 +145,7 @@ class DisChannelCtrl extends DisChannelData
         $start = $page * $count;
         $hope = $start + $count;
 //        pmVectorMemcached::set_channel_flow_ids($this->ID, null);
-        $flow_ids = DisChanVectorCache::get_channel_flow_ids($this->ID);
+        $flow_ids = DisChanVectorCache::get_chan_flow_ids($this->ID);
 
         if( !$flow_ids )
         {
@@ -153,7 +154,7 @@ class DisChannelCtrl extends DisChannelData
             $len = count($flows);
             for( $i = 0; $i < $len; $i ++ )
                 $flow_ids[$i] = $flows[$i]['ID'];
-            DisChanVectorCache::set_channel_flow_ids($this->ID, $flow_ids);
+            DisChanVectorCache::set_chan_flow_ids($this->ID, $flow_ids);
         }
         else if( $flow_ids[0] != "#E#" )
         {
@@ -164,7 +165,7 @@ class DisChannelCtrl extends DisChannelData
                 $len2 = count($flows);
                 for( $i = 0; $i < $len2; $i ++ )
                     array_push($flow_ids, $flows[$i]['ID']);
-                DisChanVectorCache::set_channel_flow_ids($this->ID, $flow_ids);
+                DisChanVectorCache::set_chan_flow_ids($this->ID, $flow_ids);
             }
         }
 
@@ -269,20 +270,20 @@ class DisChannelCtrl extends DisChannelData
         if( !$cu->ID )
             throw new DisDBException('订阅频道操作失败！');
 
-        DisUserVectorCache::set_subscribed_channel_ids($user_id, null);
+        DisUserVectorCache::set_subscribed_chan_ids($user_id, null);
         DisUserVectorCache::set_follow_flow_ids($user_id, null);
-        DisUserVectorCache::set_channel_roles($user_id, null);
+        DisUserVectorCache::set_chan_roles($user_id, null);
         DisChanVectorCache::set_subscribed_user_ids($this->ID, null);
-        DisChanDataCache::set_channel_user_data($this->ID, $user_id, null);
+        DisChanDataCache::set_chan_user_data($this->ID, $user_id, null);
 
         $param = new DisUserParamCtrl();
         $param->ID = $user_id;
         $param->increase("subscribe_num");
         $this->increase("subscriber_num");
 
-        $feed = DisFeedCtrl::read_ctrler((int)$user_id);
-        $feed->subscribe((int)$this->ID);
-        DisFeedCtrl::save_ctrler($feed);
+//        $feed = DisFeedCtrl::read_ctrler((int)$user_id);
+//        $feed->subscribe((int)$this->ID);
+//        DisFeedCtrl::save_ctrler($feed);
         return $cu;
     }
 
@@ -307,15 +308,15 @@ class DisChannelCtrl extends DisChannelData
         $param->reduce('subscribe_num');
         $this->reduce("subscriber_num");
 
-        DisUserVectorCache::set_subscribed_channel_ids($user_id, null);
+        DisUserVectorCache::set_subscribed_chan_ids($user_id, null);
         DisUserVectorCache::set_follow_flow_ids($user_id, null);
-        DisUserVectorCache::set_channel_roles($user_id, null);
+        DisUserVectorCache::set_chan_roles($user_id, null);
         DisChanVectorCache::set_subscribed_user_ids($this->ID, null);
-        DisChanDataCache::set_channel_user_data($this->ID, $user_id, null);
+        DisChanDataCache::set_chan_user_data($this->ID, $user_id, null);
 
-        $feed = DisFeedCtrl::read_ctrler((int)$user_id);
-        $feed->cancel_subscribe((int)$this->ID);
-        DisFeedCtrl::save_ctrler($feed);
+//        $feed = DisFeedCtrl::read_ctrler((int)$user_id);
+//        $feed->cancel_subscribe((int)$this->ID);
+//        DisFeedCtrl::save_ctrler($feed);
         return $cu;
     }
 
@@ -338,8 +339,8 @@ class DisChannelCtrl extends DisChannelData
         $param->increase("subscribe_num");
 
         DisChanVectorCache::set_joined_user_ids($this->ID, null);
-        DisUserVectorCache::set_joined_channel_ids($user_id, null);
-        DisUserVectorCache::set_channel_roles($user_id, null);
+        DisUserVectorCache::set_joined_chan_ids($user_id, null);
+        DisUserVectorCache::set_chan_roles($user_id, null);
         return $cu;
     }
 
@@ -353,7 +354,7 @@ class DisChannelCtrl extends DisChannelData
         $cu = new DisChanUserCtrl($user_id);
         $cu->load((int)$this->ID);
         if( !$cu->ID )
-            return ;
+            return;
         $cu->change_role('subscriber');
 
         $param = new DisUserParamCtrl();
@@ -362,8 +363,8 @@ class DisChannelCtrl extends DisChannelData
         $this->reduce("member_num");
 
         DisChanVectorCache::set_joined_user_ids($this->ID, null);
-        DisUserVectorCache::set_joined_channel_ids($user_id, null);
-        DisUserVectorCache::set_channel_roles($user_id, null);
+        DisUserVectorCache::set_joined_chan_ids($user_id, null);
+        DisUserVectorCache::set_chan_roles($user_id, null);
         return $cu;
     }
 
@@ -377,7 +378,8 @@ class DisChannelCtrl extends DisChannelData
      * @param string $tags 标签列表
      * @return DisChannelCtrl 对象
      */
-    static function create_new_channel($creater_id, $name, $type = 'social', $logo = 0, $description = '对该频道进行简短描述', $tags = null)
+    static function create_new_channel($creater_id, $name, $type = 'social',
+            $description = '对该频道进行简短描述', $logo = 0, $tags = null)
     {
         $channel = new DisChannelCtrl();
         $channel->insert((int)$creater_id, $name, $type, (int)$logo, $description);
@@ -391,7 +393,7 @@ class DisChannelCtrl extends DisChannelData
                 $photo->increase('quote');
         }
 
-        if( $tags )
+        if( $tags != null )
         {
             $tags = keyword_parse($tags);
             $count = count($tags);
@@ -410,8 +412,8 @@ class DisChannelCtrl extends DisChannelData
         $param->ID = $creater_id;
         $param->increase('create_num');
         $param->increase("join_num");
-        DisUserVectorCache::set_joined_channel_ids($creater_id, null);
-        DisUserVectorCache::set_channel_roles($creater_id, null);
+        DisUserVectorCache::set_joined_chan_ids($creater_id, null);
+        DisUserVectorCache::set_chan_roles($creater_id, null);
 
         $channel->increase('member_num');
         return $channel;
@@ -509,7 +511,7 @@ class DisChannelCtrl extends DisChannelData
             if( $photo->ID )
                 $photo->increase('quote');
         }
-        DisChanDataCache::set_channel_data($this->ID, null);
+        DisChanDataCache::set_chan_data($this->ID, null);
     }
 
     function edit_announce($announce)
@@ -517,7 +519,7 @@ class DisChannelCtrl extends DisChannelData
         if( !$this->ID )
             throw new DisParamException('参数不合法！');
         parent::update(array('announce'=>$announce));
-        DisChanDataCache::set_channel_data($this->ID, null);
+        DisChanDataCache::set_chan_data($this->ID, null);
     }
 
     static function invite_user($channel_id, $user_id, $reason)
@@ -530,7 +532,7 @@ class DisChannelCtrl extends DisChannelData
         if( !$this->ID )
             throw new DisParamException('参数不合法！');
         $id = DisChanTagData::insert($this->ID, $tag);
-        DisChanDataCache::set_channel_data($this->ID, null);
+        DisChanDataCache::set_chan_data($this->ID, null);
         return $id;
     }
 
@@ -539,7 +541,7 @@ class DisChannelCtrl extends DisChannelData
         if( !$this->ID )
             throw new DisParamException('参数不合法！');
         DisChanTagData::delete($tag_id);
-        DisChanDataCache::set_channel_data($this->ID, null);
+        DisChanDataCache::set_chan_data($this->ID, null);
     }
 
     static function list_channel_ids($tag = null, $page = 0, $count = 40)

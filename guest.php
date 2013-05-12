@@ -13,18 +13,18 @@
 require_once 'common.inc.php';
 
 $gSmarty = init_smarty();
-$gSmarty->caching = false;
-//DisObject::print_array($gSmarty);
+$gSmarty->caching = true;
+//$gSmarty->caching = false;
 $tpl_file = "pages/guest.page.tpl";
-
-$gSmarty->display($tpl_file);
-exit();
 
 if( $gSmarty->is_cached($tpl_file) )
 {
     $gSmarty->display($tpl_file);
-    exit();
+    exit ();
 }
+
+$gSmarty->display($tpl_file);
+exit();
 
 ob_start();
 try

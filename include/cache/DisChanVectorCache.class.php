@@ -22,25 +22,25 @@ class DisChanVectorCache extends DisVectorCache
         return parent::set('mail-'.$key, $value);
     }
 
-    static function get_channel_flow_ids($channel_id)
+    static function get_chan_flow_ids($channel_id)
     {
         $key = "oafs-$channel_id";
         return self::get($key);
     }
 
-    static function set_channel_flow_ids($channel_id, $flow_ids)
+    static function set_chan_flow_ids($channel_id, $flow_ids)
     {
         $key = "oafs-$channel_id";
         self::set($key, $flow_ids);
     }
 
-    static function get_channel_flows($channel_id, $period, $flag)
+    static function get_chan_flows($channel_id, $period, $flag)
     {
         $key = "vcfs-$channel_id-$period-$flag";
         return self::get($key);
     }
 
-    static function set_channel_flows($channel_id, $period, $flag, $vflows)
+    static function set_chan_flows($channel_id, $period, $flag, $vflows)
     {
         $key = "vcfs-$channel_id-$period-$flag";
 //        $key = "vcfs-$channel_id-$flag-$period";

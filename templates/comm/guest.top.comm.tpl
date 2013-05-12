@@ -1,4 +1,5 @@
-<div class="pm-navi dis-top-navi">
+<div class="pm-navi">
+<div class="dis-top-navi">
     <table class="pm-layout-table pm-navi-content"><tr><td class="pm-navi-list">
         <span class="pm-navi-item"><a href="guest?feed">购物</a></span>
         <span class="pm-navi-item"><a href="chan?plaza">生活</a></span>
@@ -6,10 +7,10 @@
         <span class="pm-navi-item"><a href="chan?plaza">游戏</a></span>
         <span class="pm-navi-item"><a href="chan?plaza">社交</a></span>
     </td><td class="pm-manage-account">游客模式，访问受限&nbsp;{*登录后拥有更多权限*}
-        <a class="pm-light-button pm-login">登录</a>&nbsp;|&nbsp;<a class="pm-light-button" href="regi">注册</a>
+        <a class="pm-login">登录</a>&nbsp;|&nbsp;<a href="regi">注册</a>
     </td></tr></table>
 </div>
-<div class="pm-navi dis-main-navi">
+<div class="dis-main-navi">
     <div class="pm-navi-content">
         <div class="pm-navi-logo pm-inline-block">
             <a href="guest">{include file="comm/logo.comm.tpl"}</a>
@@ -19,12 +20,16 @@
             <span class="pm-navi-item"><a href="guest?feed">订阅更新</a></span>
             <span class="pm-navi-item"><a href="guest?feed">我的海报</a></span>
         </div><div class="pm-search-bar pm-inline-block">
-            <form class="pm-search-form pm-border pm-corner-all" method="get" action="search">
+            <form class="pm-search-form pm-border pm-inline-block pm-corner-all" method="get" action="search">
                 <input type="text" name="keyword" id="keyword" value="搜频道、邮件" class="pm-no-border">
                 </input><input type="submit" id="search" value=""></input>
             </form>
+            <a id="add-mail" class="pm-light-button" href="mail">
+                <span class="pm-icon-wrap"><span class="pm-icon ui-icon-pencil"></span></span>发件
+            </a>
         </div>
     </div>
+</div>
 </div>
 
 <link type="text/css" title="style" href="css/jquery.ui.core.css" rel="stylesheet"/>

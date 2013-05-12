@@ -160,61 +160,61 @@ class DisUserVectorCache extends DisVectorCache
         self::set($key, $notices);
     }
 
-    static function get_joined_channel_ids($user_id)
+    static function get_joined_chan_ids($user_id)
     {
         $key = "jcid-".$user_id;
         return self::get($key);
     }
 
-    static function set_joined_channel_ids($user_id, $channel_ids)
+    static function set_joined_chan_ids($user_id, $channel_ids)
     {
         $key = "jcid-".$user_id;
         self::set($key, $channel_ids);
     }
 
-    static function get_subscribed_channel_ids($user_id)
+    static function get_subscribed_chan_ids($user_id)
     {
         $key = "scid-".$user_id;
         return self::get($key);
     }
 
-    static function set_subscribed_channel_ids($user_id, $channel_ids)
+    static function set_subscribed_chan_ids($user_id, $channel_ids)
     {
         $key = "scid-".$user_id;
         self::set($key, $channel_ids);
     }
 
-    static function get_subscribed_channel_asc_ids($user_id)
+    static function get_subscribed_chan_asc_ids($user_id)
     {
         $key = "scascid-".$user_id;
         return self::get($key);
     }
 
-    static function set_subscribed_channel_asc_ids($user_id, $channel_ids)
+    static function set_subscribed_chan_asc_ids($user_id, $channel_ids)
     {
         $key = "scascid-".$user_id;
         self::set($key, $channel_ids);
     }
 
-    static function get_subscribed_channel_weights($user_id)
+    static function get_subscribed_chan_weights($user_id)
     {
         $key = "scws-".$user_id;
         return self::get($key);
     }
 
-    static function set_subscribed_channel_weights($user_id, $weights)
+    static function set_subscribed_chan_weights($user_id, $weights)
     {
         $key = "scws-".$user_id;
         self::set($key, $weights);
     }
 
-    static function get_channel_roles($user_id)
+    static function get_chan_roles($user_id)
     {
         $key = "crs-".$user_id;
         return self::get($key);
     }
 
-    static function set_channel_roles($user_id, $roles)
+    static function set_chan_roles($user_id, $roles)
     {
         $key = "crs-".$user_id;
         self::set($key, $roles);

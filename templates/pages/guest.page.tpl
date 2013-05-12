@@ -1,6 +1,5 @@
 {include file="comm/header.comm.tpl"}
 <body>
-{include file="comm/guest.top.comm.tpl"}
 <div class="pm-wrap"><div class="pm-page">
     {if $err}
         <div class="pm-err">{$err}</div>
@@ -24,6 +23,7 @@
     {include file="comm/pmail.footer.tpl"}
 </div> <!-- end of page --> </div> <!-- end of wrap -->
 
+{include file="comm/guest.top.comm.tpl"}
 <link type="text/css" title="style" href="css/pmail.page.css" rel="stylesheet"/>
 <link type="text/css" title="style" href="css/pmail.mail.css" rel="stylesheet"/>
 <link type="text/css" title="style" href="css/pmail.chan.css" rel="stylesheet"/>

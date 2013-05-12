@@ -34,25 +34,25 @@ class DisChanDataCache extends DisRowCache
         self::set($key, $data);
     }
 
-    static function get_channel_user_data($channel_id, $user_id)
+    static function get_chan_user_data($channel_id, $user_id)
     {
         $key = "curd-$channel_id-$user_id";
         return self::get($key);
     }
 
-    static function set_channel_user_data($channel_id, $user_id, $member_data)
+    static function set_chan_user_data($channel_id, $user_id, $member_data)
     {
         $key = "curd-$channel_id-$user_id";
         self::set($key, $member_data);
     }
 
-    static function get_channel_data($channel_id)
+    static function get_chan_data($channel_id)
     {
         $key = "odd-".$channel_id;
         return self::get($key);
     }
 
-    static function set_channel_data($channel_id, $data)
+    static function set_chan_data($channel_id, $data)
     {
         $key = "odd-".$channel_id;
         self::set($key, $data);

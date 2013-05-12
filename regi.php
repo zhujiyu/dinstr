@@ -1,15 +1,17 @@
 <?php
 /**
- * Encoding     :   UTF-8
- * Author       :   zhujiyu , zhujiyu@139.com
- * Created on   :   2011-10-7 4:20:36
- * Copyright    :   2011 社交化协同服务办公系统项目
+ * @author    : 朱继玉<zhuhz82@126.com>
+ * @Copyright : 2013 DIS(有向信息流)
+ * @Date      : 2013-04-16
+ * @encoding  : UTF-8
+ * @version   : 1.0.0
  */
 require_once 'common.inc.php';
 
 ob_start();
 try
 {
+    $gSmarty = init_smarty();
     $val = preg_match('/regi\/([0-9a-z]{12})$/i', $url, $matches);
     if( $val )
     {
@@ -30,7 +32,8 @@ try
     }
     else
         $user_id = $_GET['id'] ? $_GET['id'] : $_POST['id'];
-    $file = "pmail.register.tpl";
+//    $file = "pmail.register.tpl";
+    $file = "register.page.tpl";
 
     if( $invi )
     {

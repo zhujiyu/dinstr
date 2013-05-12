@@ -26,6 +26,7 @@ abstract class DisDBTable extends DisObject
     {
         $this->ID = 0;
         parent::__construct();
+
         if( (int)$id > 0 && is_integer($id) )
         {
             $this->init((int)$id);
@@ -33,7 +34,23 @@ abstract class DisDBTable extends DisObject
         }
     }
 
-    protected function _strip_tags() { }
+//    abstract protected function _strip_tags();
+//    protected function _check_param() {}
+
+//    abstract protected function _check_param($name, $value);
+//    abstract protected function _check_num_param($param);
+
+    protected function _strip_tags() {}
+    
+    protected function _check_num_param($param)
+    {
+        return 0;
+    }
+
+    protected function _check_param($name, $value)
+    {
+        return 0;
+    }
 
     // 以自增ID列为主键的数据行的标准加载方式
     function init($obj, $slt = '*')
@@ -75,9 +92,10 @@ abstract class DisDBTable extends DisObject
         return $this;
     }
 
-    protected function _check_param($name, $value)
+    protected function check_query($str, $count = 1)
     {
-        return 0;
+        $r = self::query($str) == $count;
+        return $r;
     }
 
     function row_exist($info)
@@ -89,14 +107,16 @@ abstract class DisDBTable extends DisObject
         foreach ($info as $name=>$value)
         {
             if( $value != null && $value != ''
-                && $this->_check_param($name, $value) != PMAIL_SUCCEEDED )
+                && $this->_check_param($name, $value) != DIS_SUCCEEDED )
                 throw new DisParamException("参数 $name 的格式不正确");
             $prms .= "$name = '$value' and ";
         }
 
 //        $prms = substr($prms, 0, strlen($prms) - 5);
+//        return (self::count($str) == 1);
         $str = "from $this->table where ".substr($prms, 0, strlen($prms) - 5);
-        return self::count($str) == 1;
+        $r = self::count($str) == 1;
+        return $r;
     }
 
     /**
@@ -117,7 +137,7 @@ abstract class DisDBTable extends DisObject
         foreach ($info as $name=>$value)
         {
             if( $value != null && $value != ''
-                && $this->_check_param($name, $value) != PMAIL_SUCCEEDED )
+                && $this->_check_param($name, $value) != DIS_SUCCEEDED )
                 throw new DisParamException("参数 $name 的格式不正确, $value");
 
             if( $value != null && $value != '' )
@@ -128,9 +148,11 @@ abstract class DisDBTable extends DisObject
             }
         }
 
-        $prms = substr($prms, 0, strlen($prms) - 2);
-        $vlus = substr($vlus, 0, strlen($vlus) - 2);
-        $str = "insert into $this->table ($prms) values ($vlus)";
+        $str = "insert into $this->table (".substr($prms, 0, strlen($prms) - 2).")
+            values (".substr($vlus, 0, strlen($vlus) - 2).")";
+//        $prms = substr($prms, 0, strlen($prms) - 2);
+//        $vlus = substr($vlus, 0, strlen($vlus) - 2);
+//        $str = "insert into $this->table ($prms) values ($vlus)";
 
 //echo $str;
 //echo '<br>';
@@ -162,13 +184,11 @@ abstract class DisDBTable extends DisObject
 
         foreach ($info as $name=>$value)
         {
-            if( $value != null && $value != '' && $this->_check_param($name, $value) != PMAIL_SUCCEEDED )
+            if( $value != null && $value != ''
+                    && $this->_check_param($name, $value) != DIS_SUCCEEDED )
                 throw new DisParamException("参数 $name 的格式不正确");
-
             if( $this->detail[$name] != $value )
-            {
                 $setting .= "`$name` = '$value', ";
-            }
         }
 
         if( strlen($setting) > 2 )
@@ -261,7 +281,7 @@ abstract class DisDBTable extends DisObject
         $data = $statement->fetch(PDO::FETCH_ASSOC);
         if( $strip_tags && is_array($strip_tags) )
         {
-            foreach ( $strip_tags as $key => $name )
+            foreach( $strip_tags as $name )
                 $data[$name] = strip_tags($data[$name]);
         }
         return $data;
@@ -302,20 +322,18 @@ abstract class DisDBTable extends DisObject
         for ($i = 0; $i < $count; $i ++)
         {
             $datas[$i] = $statement->fetch(PDO::FETCH_ASSOC);
-            if( $strip_tags )
+        }
+        if( $strip_tags )
+        {
+            for ($i = 0; $i < $count; $i ++)
             {
-                foreach ( $strip_tags as $key => $name )
+                foreach ( $strip_tags as $name )
                 {
                     $datas[$i][$name] = strip_tags($datas[$i][$name]);
                 }
             }
         }
         return $datas;
-    }
-
-    protected function _check_num_param($param)
-    {
-        return 0;
     }
 
     function increase($param, $step = 1)
@@ -332,7 +350,7 @@ abstract class DisDBTable extends DisObject
             (int)$this->detail[$param] += $step;
         else
             $this->detail[$param] = $step;
-        return $r == 1;
+//        return $r == 1;
     }
 
     function reduce($param, $step = 1)
@@ -357,7 +375,7 @@ abstract class DisDBTable extends DisObject
         if( $r != 1 )
             throw new DisDBException('更新参数失败。');
         $this->detail[$param] = $value;
-        return $r == 1;
+//        return $r == 1;
     }
 
     /**

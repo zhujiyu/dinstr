@@ -20,7 +20,7 @@ class DisFeedData extends DisObject
 
     function  __construct($user_id)
     {
-        $this->table = "mail_feeds";
+        $this->table = "info_feeds";
         $this->user_id = $user_id;
     }
 
