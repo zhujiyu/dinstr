@@ -41,7 +41,7 @@ abstract class DisDBTable extends DisObject
 //    abstract protected function _check_num_param($param);
 
     protected function _strip_tags() {}
-    
+
     protected function _check_num_param($param)
     {
         return 0;

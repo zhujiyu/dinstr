@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.CACHE
- * @file   : DisIMemcached.class.php
+ * @file   : DisMemcached.class.php
  * @abstract  : memcached 基础类
  *
  * @author    : 朱继玉<zhuhz82@126.com>
@@ -13,7 +13,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisIMemcached extends DisObject
+class DisMemcached extends DisObject
 {
     static $_memcached = null;
 

@@ -1,7 +1,7 @@
 <?php
 /**
- * @package: PMAIL.DB
- * @file   : pmDBIAdapter.php
+ * @package: DIS.TEST.CORE
+ * @file   : DisIAdapter.class.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流

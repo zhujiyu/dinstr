@@ -24,20 +24,20 @@ class DisChannelData extends DisDBTable
             $this->init($id);
     }
 
-    protected function _strip_tags($detail)
+    protected function _strip_tags(&$detail)
     {
-        $detail[name] = strip_tags($detail[name]);
-        $detail[announce] = strip_tags($detail[announce]);
-        $detail[description] = strip_tags($detail[description]);
+        $detail['name'] = strip_tags($detail['name']);
+        $detail['description'] = strip_tags($detail['description']);
+        $detail['announce'] = strip_tags($detail['announce']);
     }
 
-    function init($channel, $slt = "ID, name, logo, `type`, description, announce, creater,
+    function init($chan, $slt = "ID, name, logo, `type`, description, announce, creater,
             info_num, member_num, subscriber_num, applicant_num, create_time")
     {
-        if( uid_check($channel) )
-            parent::init($channel, $slt);
-        else if( name_check($channel) )
-            $this->select("name = '$channel'", $slt);
+        if( uid_check($chan) )
+            parent::init($chan, $slt);
+        else if( name_check($chan) )
+            $this->select("name = '$chan'", $slt);
         else
             throw new DisParamException('参数类型不正确！');
         return $this;
@@ -80,9 +80,8 @@ class DisChannelData extends DisDBTable
 
     protected function _check_num_param($param)
     {
-//        if( in_array($param, array('mail_num', 'member_num', 'subscriber_num', 'applicant_num')) )
-//            echo $param;
-        return in_array($param, array('info_num', 'member_num', 'subscriber_num', 'applicant_num'));
+        return in_array($param,
+                array('info_num', 'member_num', 'subscriber_num', 'applicant_num'));
     }
 
     protected function _name_exist($name)
@@ -106,7 +105,8 @@ class DisChannelData extends DisDBTable
      * @param string $description 介绍说明
      * @return DisChannelData 对象
      */
-    function insert($creater, $name, $type = 'social', $logo = 0, $description = '对该频道进行简短描述')
+    function insert($creater, $name, $type = 'social', $logo = 0,
+            $description = '对该频道进行简短描述')
     {
         if ( !$creater || !$name )
             throw new DisParamException('名称不能为空！');

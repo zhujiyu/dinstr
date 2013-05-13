@@ -13,7 +13,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisVectorCache extends DisIMemcached
+class DisVectorCache extends DisMemcached
 {
     static function get($key)
     {
@@ -26,7 +26,7 @@ class DisVectorCache extends DisIMemcached
     }
 }
 
-if( !DisVectorCache::$_memcached )
-    DisVectorCache::$_memcached = memcache_connect(DisConfigAttr::$vector_memcached['host'],
-            DisConfigAttr::$vector_memcached['port']);
+//if( !DisVectorCache::$_memcached )
+//    DisVectorCache::$_memcached = memcache_connect(DisConfigAttr::$vector_memcached['host'],
+//            DisConfigAttr::$vector_memcached['port']);
 ?>

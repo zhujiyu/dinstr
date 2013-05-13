@@ -62,14 +62,17 @@ class DisConfigAttr
         'DisDBException'   =>'include/core/DisException.class.php',
         'DisParamException'=>'include/core/DisException.class.php',
 
-        'DisMysqlAdapter' =>'include/mysql/DisMysqlAdapter.class.php',
-        'DisDBTable'      =>'include/mysql/DisDBTable.class.php',
-        'DisDBStaticTable'=>'include/mysql/DisDBStaticTable.class.php',
+        'DisMysqlAdapter'  =>'include/mysql/DisMysqlAdapter.class.php',
+        'DisDBTable'       =>'include/mysql/DisDBTable.class.php',
+        'DisDBStaticTable' =>'include/mysql/DisDBStaticTable.class.php',
         'DisMysqlStatement'=>'include/mysql/DisMysqlStatement.class.php',
 
-        'DisIMemcached'  =>'include/cache/DisIMemcached.class.php',
+        'DisMemcached'   =>'include/cache/DisMemcached.class.php',
         'DisVectorCache' =>'include/cache/DisVectorCache.class.php',
         'DisRowCache'    =>'include/cache/DisRowCache.class.php',
+
+        'DisDataBaseTest' =>'include/test/core/DisDataBaseTest.class.php',
+        'DisMemcachedMock'=>'include/test/core/DisMemcachedMock.class.php',
 
         'DisFeedVectorCache' =>'include/cache/DisFeedVectorCache.class.php',
         'DisUserVectorCache' =>'include/cache/DisUserVectorCache.class.php',
@@ -120,9 +123,9 @@ class DisConfigAttr
         'DisHeadCtrl'    =>'include/ctrl/DisHeadCtrl.class.php',
         'DisHeadUserCtrl'=>'include/ctrl/DisHeadUserCtrl.class.php',
 
-        'pmDataMailCollect' =>'include/data/pmDataMailExt.php',
-        'pmCtrlMailCollect' =>'include/ctrl/pmCtrlMailExt.php',
-        'pmDataMailCollectTag'=>'include/data/pmDataMailExt.php',
+//        'pmDataMailCollect' =>'include/data/pmDataMailExt.php',
+//        'pmCtrlMailCollect' =>'include/ctrl/pmCtrlMailExt.php',
+//        'pmDataMailCollectTag'=>'include/data/pmDataMailExt.php',
 
         'DisValueData'    =>'include/data/DisValueData.class.php',
         'DisFeedData'     =>'include/data/DisFeedData.class.php',
@@ -152,11 +155,11 @@ class DisConfigAttr
     );
 }
 
-function start_phpunit_test()
-{
-    DisVectorCache::$_memcached = new pmMemcachedMock();
-    DisRowCache::$_memcached = new pmMemcachedMock();
-    DisDBTable::$readPDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
-    DisDBTable::$writePDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
-}
+//function start_phpunit_test()
+//{
+//    DisVectorCache::$_memcached = new pmMemcachedMock();
+//    DisRowCache::$_memcached = new pmMemcachedMock();
+//    DisDBTable::$readPDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
+//    DisDBTable::$writePDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
+//}
 ?>

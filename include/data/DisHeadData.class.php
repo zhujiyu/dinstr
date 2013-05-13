@@ -14,12 +14,12 @@ if( !defined('IN_DIS') )
 
 class DisHeadData extends DisDBTable
 {
-    protected static $stable = "heads";
+    protected static $stable = "info_heads";
 
     function __construct($ID = null)
     {
         //DisHeadData::$stable = "heads";
-        $this->table = "heads";
+        $this->table = "info_heads";
         parent::__construct($ID);
     }
 

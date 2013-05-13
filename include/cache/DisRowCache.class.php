@@ -13,7 +13,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisRowCache extends DisIMemcached
+class DisRowCache extends DisMemcached
 {
     static function get($key)
     {
@@ -25,44 +25,44 @@ class DisRowCache extends DisIMemcached
         parent::set('r-'.$key, $value);
     }
 
-    static function get_good_data($good_id)
-    {
-        $key = "gn-$good_id";
-        return self::get($key);
-    }
-
-    static function set_good_data($good_id, $good)
-    {
-        $key = "gn-$good_id";
-        self::set($key, $good);
-    }
-
-    static function get_photo_data($photo_id)
-    {
-        $key = "pn-$photo_id";
-        return self::get($key);
-    }
-
-    static function set_photo_data($photo_id, $photo)
-    {
-        $key = "pn-$photo_id";
-        self::set($key, $photo);
-    }
-
-    static function get_notice($notice_id)
-    {
-        $key = "ns-$notice_id";
-        return self::get($key);
-    }
-
-    static function set_notice($notice_id, $notices)
-    {
-        $key = "ns-$notice_id";
-        self::set($key, $notices);
-    }
+//    static function get_good_data($good_id)
+//    {
+//        $key = "gn-$good_id";
+//        return self::get($key);
+//    }
+//
+//    static function set_good_data($good_id, $good)
+//    {
+//        $key = "gn-$good_id";
+//        self::set($key, $good);
+//    }
+//
+//    static function get_photo_data($photo_id)
+//    {
+//        $key = "pn-$photo_id";
+//        return self::get($key);
+//    }
+//
+//    static function set_photo_data($photo_id, $photo)
+//    {
+//        $key = "pn-$photo_id";
+//        self::set($key, $photo);
+//    }
+//
+//    static function get_notice($notice_id)
+//    {
+//        $key = "ns-$notice_id";
+//        return self::get($key);
+//    }
+//
+//    static function set_notice($notice_id, $notices)
+//    {
+//        $key = "ns-$notice_id";
+//        self::set($key, $notices);
+//    }
 }
 
-if( !DisRowCache::$_memcached )
-    DisRowCache::$_memcached = memcache_connect(DisConfigAttr::$row_memcached['host'],
-            DisConfigAttr::$row_memcached['port']);
+//if( !DisRowCache::$_memcached )
+//    DisRowCache::$_memcached = memcache_connect(DisConfigAttr::$row_memcached['host'],
+//            DisConfigAttr::$row_memcached['port']);
 ?>

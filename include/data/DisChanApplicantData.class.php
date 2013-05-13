@@ -65,7 +65,8 @@ class DisChanApplicantData extends DisDBTable
         if( !$this->ID )
             throw new DisParamException("参数不合法！");
         $str = "delete from $this->table where ID = $this->ID";
-        return parent::query($str) == 1;
+        return parent::check_query($str, 1);
+//        return (parent::query($str) === 1);
     }
 
     function accept()
@@ -73,7 +74,8 @@ class DisChanApplicantData extends DisDBTable
         if( !$this->ID )
             throw new DisParamException("参数不合法！");
         $str = "update $this->table set status = 'accept' where ID = $this->ID";
-        return parent::query($str) == 1;
+        return parent::check_query($str, 1);
+//        return parent::query($str) == 1;
     }
 
     function refuse()

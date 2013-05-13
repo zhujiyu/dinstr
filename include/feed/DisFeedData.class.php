@@ -127,7 +127,8 @@ class DisFeedData extends DisObject
         $str = "insert into $this->table (flow_id, user_id, flow_time)
             select ID as flow_id, $this->user_id as user_id, unix_timestamp(flow_time) as flow_time
             from mail_flows
-            where channel_id = $channel_id and flow_time > from_unixtime($start) and flow_time <= from_unixtime($end)";
+            where channel_id = $channel_id and flow_time > from_unixtime($start)
+                and flow_time <= from_unixtime($end)";
         return DisDBTable::query($str);
     }
 

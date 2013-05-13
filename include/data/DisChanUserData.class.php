@@ -116,7 +116,8 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
 
     function count_rank($weight, $rank)
     {
-        return parent::count("from $this->table where user_id = $this->user_id and weight = $weight and `rank` = $rank");
+        return parent::count("from $this->table
+            where user_id = $this->user_id and weight = $weight and `rank` = $rank");
     }
 
     function incr_rank($weight, $rank)

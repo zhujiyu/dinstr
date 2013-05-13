@@ -1,7 +1,7 @@
 <?php
 /**
- * @package: PMAIL.DB
- * @file   : pmDBMysqlMock
+ * @package: DIS.TEST.CORE
+ * @file   : DisMysqlMock.class.php
  * @abstract   :  Mock of database adapter for PHPUnit testing.
  *
  * @author    : 朱继玉<zhuhz82@126.com>

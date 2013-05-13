@@ -1,6 +1,6 @@
 <?php
 /**
- * @package: PMAIL.DB
+ * @package: DIS.DB
  * @file   : DisMysqlStatement.class.php
  * @abstract  : PHPUnit 测试数据库
  *

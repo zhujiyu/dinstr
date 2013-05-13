@@ -128,27 +128,27 @@ class DisUserData extends DisDBTable
         {
             case 'avatar' :
                 if( !is_integer($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'username' :
                 if( !name_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'password' :
             case 'impassword' :
-                return err(PMAIL_SUCCEEDED);
+                return err(DIS_SUCCEEDED);
                 break;
             case 'email' :
                 if( !email_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'msg_setting' :
                 if( !in_array($value, array('all', 'follow', 'channeler', 'none')) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'phone' :
                 if( !telephone_check($value) && !phone_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'salt' :
             case 'sign' :
@@ -159,16 +159,16 @@ class DisUserData extends DisDBTable
             case 'ID_type' :
             case 'ID_number' :
                 if( !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'introducer' :
                 if( !uid_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             default :
-                return err(PMAIL_ERR_PARAM);
+                return err(DIS_ERR_PARAM);
         }
-        return err(PMAIL_SUCCEEDED);
+        return err(DIS_SUCCEEDED);
     }
 
     static function verify_code($user_id)

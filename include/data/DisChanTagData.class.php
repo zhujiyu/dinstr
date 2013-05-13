@@ -17,7 +17,8 @@ class DisChanTagData extends DisObject
 {
     static function load($channel_id)
     {
-        $str = "select ID, channel_id, tag from chan_tags where channel_id = $channel_id";
+        $str = "select ID, channel_id, tag from chan_tags
+            where channel_id = $channel_id";
 	    return DisDBTable::load_datas($str);
     }
 
