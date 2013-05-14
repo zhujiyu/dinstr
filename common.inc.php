@@ -39,11 +39,10 @@ function __autoload($class_name)
 {
     try
     {
-        if( !isset(DisConfigAttr::$autoLoad) || !isset(DisConfigAttr::$autoLoad[$class_name]) )
+        if( !isset(DisConfigAttr::$autoLoad)
+                || !isset(DisConfigAttr::$autoLoad[$class_name]) )
             throw new DisException("找不到类 $class_name 的定义。");
         include_once DisConfigAttr::$autoLoad[$class_name];
-//        echo $class_name."<br>";
-//        echo DisConfigAttr::$autoLoad[$class_name]."<br>";
     }
     catch (DisException $ex)
     {

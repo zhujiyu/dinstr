@@ -155,6 +155,11 @@ class DisConfigAttr
     );
 }
 
+function start_app()
+{
+    
+}
+
 //function start_phpunit_test()
 //{
 //    DisVectorCache::$_memcached = new pmMemcachedMock();

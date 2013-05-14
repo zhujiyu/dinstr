@@ -18,18 +18,6 @@ if( !defined('IN_DIS') )
 require_once 'PHPUnit/Extensions/Database/TestCase.php';
 require_once 'PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
 
-//$file = "common.inc.php";
-//for( $i = 0; $i < 5; $i ++ )
-//{
-//    if( file_exists($file) )
-//    {
-//        require_once ( $file );
-//        break;
-//    }
-//    $file = "../".$file;
-//}
-//start_phpunit_test();
-
 DisVectorCache::$_memcached = new DisMemcachedMock();
 DisRowCache::$_memcached = new DisMemcachedMock();
 DisDBTable::$readPDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
@@ -37,10 +25,10 @@ DisDBTable::$writePDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'roo
 
 abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
 {
-    protected $mock;
+//    protected $mock;
+//    protected $columns;
+//    protected $table;
     protected $pdo;
-    protected $table;
-    protected $columns;
     protected $default_data_file;
 
     function  __construct()
@@ -69,6 +57,27 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
         else
             throw new DisException('文件不存在');
         return $this->createFlatXMLDataSet($path);
+    }
+
+//    protected function _getDatabaseTable($table = null, $query = null)
+//    {
+//        if( $table == null )
+//            $table = $this->table;
+//        if( $query == null )
+//            $query = "select $this->columns from $table";
+//        return new PHPUnit_Extensions_Database_DataSet_QueryTable($table, $query,
+//            $this->getConnection());
+//    }
+//
+//    protected function _getXmlTable($file = null, $table = null)
+//    {
+//        if( !$file )
+//            $file = $this->default_data_file;
+//        if( !$table )
+//            $table = $this->table;
+//        return $this->_getDataSet($file)->getTable($table);
+//    }
+}
 
 //        if( !$file )
 //            $file = $this->default_data_file;
@@ -78,25 +87,17 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
 //            return $this->createFlatXMLDataSet(dirname(__FILE__).'/res/'.$file);
 //        else
 //            return null;
-    }
 
-    protected function _getDatabaseTable($table = null, $query = null)
-    {
-        if( $table == null )
-            $table = $this->table;
-        if( $query == null )
-            $query = "select $this->columns from $table";
-        return new PHPUnit_Extensions_Database_DataSet_QueryTable($table, $query,
-            $this->getConnection());
-    }
+//$file = "common.inc.php";
+//for( $i = 0; $i < 5; $i ++ )
+//{
+//    if( file_exists($file) )
+//    {
+//        require_once ( $file );
+//        break;
+//    }
+//    $file = "../".$file;
+//}
+//start_phpunit_test();
 
-    protected function _getXmlTable($file = null, $table = null)
-    {
-        if( !$file )
-            $file = $this->default_data_file;
-        if( !$table )
-            $table = $this->table;
-        return $this->_getDataSet($file)->getTable($table);
-    }
-}
 ?>

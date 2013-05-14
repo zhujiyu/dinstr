@@ -62,7 +62,9 @@ class DisRowCache extends DisMemcached
 //    }
 }
 
-//if( !DisRowCache::$_memcached )
-//    DisRowCache::$_memcached = memcache_connect(DisConfigAttr::$row_memcached['host'],
-//            DisConfigAttr::$row_memcached['port']);
+if( !DisRowCache::$_memcached && function_exists("memcache_connect") )
+{
+    DisRowCache::$_memcached = memcache_connect(DisConfigAttr::$row_memcached['host'],
+            DisConfigAttr::$row_memcached['port']);
+}
 ?>

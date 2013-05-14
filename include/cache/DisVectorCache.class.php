@@ -26,7 +26,10 @@ class DisVectorCache extends DisMemcached
     }
 }
 
-//if( !DisVectorCache::$_memcached )
-//    DisVectorCache::$_memcached = memcache_connect(DisConfigAttr::$vector_memcached['host'],
-//            DisConfigAttr::$vector_memcached['port']);
+if( !DisVectorCache::$_memcached && function_exists("memcache_connect") )
+{
+//    echo __FILE__.":".__LINE__."\n";
+    DisVectorCache::$_memcached = memcache_connect(DisConfigAttr::$vector_memcached['host'],
+            DisConfigAttr::$vector_memcached['port']);
+}
 ?>

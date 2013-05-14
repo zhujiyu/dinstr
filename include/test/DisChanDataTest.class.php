@@ -26,10 +26,11 @@ class DisChanDataTest extends DisDataBaseTest
     function  __construct()
     {
         parent::__construct();
+        $this->default_data_file = "channels.xml";
 
-        $this->columns = "ID, name, logo, `type`, description";
-        $this->table = "channels";
-        $this->mock = new DisChannelData();
+//        $this->columns = "ID, name, logo, `type`, description";
+//        $this->table = "channels";
+//        $this->mock = new DisChannelData();
 
         $str = "
 CREATE TABLE channels
@@ -54,24 +55,31 @@ CREATE TABLE channels
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
 ";
         $this->pdo->exec($str);
-    }
 
-    protected function getDataSet()
-    {
-        return $this->_getDataSet('channels.xml');
     }
 
     function testLoadData()
     {
-        $this->mock->init(1234861);
-        $this->assertEquals('游戏海报', $this->mock->attr('name'));
-        $this->mock->init(1593490);
-        $this->assertEquals('这副海报是新的 高战 ', $this->mock->attr('description'));
+        $mock = new DisChannelData();
+        $mock->init(1234861);
+        $this->assertEquals('游戏海报', $mock->attr('name'));
+        $mock->init(1593490);
+        $this->assertEquals('这副海报是新的 高战 ', $mock->attr('description'));
+
+//        $this->mock->init(1234861);
+//        $this->assertEquals('游戏海报', $this->mock->attr('name'));
+//        $this->mock->init(1593490);
+//        $this->assertEquals('这副海报是新的 高战 ', $this->mock->attr('description'));
 //        $r1 = $this->mock->name_exist('测试帐号');
 //        $this->assertTrue($r1);
 //        $r2 = $this->mock->name_exist('新加网寨');
 //        $this->assertTrue(!$r2);
     }
+
+//    protected function getDataSet()
+//    {
+//        return $this->_getDataSet('channels.xml');
+//    }
 
 //    protected function _getDataSet($file)
 //    {

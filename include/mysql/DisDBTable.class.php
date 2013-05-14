@@ -52,6 +52,12 @@ abstract class DisDBTable extends DisObject
         return 0;
     }
 
+    protected function check_query($str, $count = 1)
+    {
+        $r = self::query($str) == $count;
+        return $r;
+    }
+
     // 以自增ID列为主键的数据行的标准加载方式
     function init($obj, $slt = '*')
     {
@@ -92,18 +98,12 @@ abstract class DisDBTable extends DisObject
         return $this;
     }
 
-    protected function check_query($str, $count = 1)
-    {
-        $r = self::query($str) == $count;
-        return $r;
-    }
-
     function row_exist($info)
     {
         if( !is_array($info) || count($info) == 0 )
             throw new DisParamException('参数不是数组类型');
-
         $prms = '';
+
         foreach ($info as $name=>$value)
         {
             if( $value != null && $value != ''
@@ -112,11 +112,170 @@ abstract class DisDBTable extends DisObject
             $prms .= "$name = '$value' and ";
         }
 
-//        $prms = substr($prms, 0, strlen($prms) - 5);
-//        return (self::count($str) == 1);
         $str = "from $this->table where ".substr($prms, 0, strlen($prms) - 5);
         $r = self::count($str) == 1;
         return $r;
+    }
+
+    static function getReadPDO($pdo = null)
+    {
+        if( $pdo == null )
+            $pdo = self::$readPDO;
+        if( $pdo == null )
+            throw new DisException('没有建立数据库连接');
+        return $pdo;
+    }
+
+    /**
+     * 读取符合条件的数据行数
+     * @param string $frmwhr from和where子句
+     * @param PDO $pdo 数据库连接
+     * @return integer 满足条件的行数
+     */
+    static function count($frmwhr, PDO $pdo = null)
+    {
+        if( !$frmwhr )
+            throw new DisParamException('读取数据的SQL语句不能为空');
+        $pdo = self::getReadPDO($pdo);
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$readPDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+
+        $statement = $pdo->query("select count(1) as size $frmwhr");
+        if( $statement == null )
+            return 0;
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        return $data['size'];
+    }
+
+    /**
+     * 加载单行数据，读取不到数据时，返回NULL
+     * @param string $str 要执行的SQL语句
+     * @param array $strip_tags 剥离html标记的字段列表
+     * @param array $params 当要执行的SQL语句含有参数时，参数列表
+     * @param PDO $pdo 数据库连接
+     * @return array 读取的一行数据，或者NULL
+     */
+    static function load_line_data($str, $strip_tags = null, $params = null, PDO $pdo = null)
+    {
+        if( !$str )
+            throw new DisParamException('读取数据的SQL语句不能为空');
+        if( $params != null && !is_array($params) )
+            throw new DisParamException('读取数据的SQL语句不能为空');
+        $pdo = self::getReadPDO($pdo);
+//        if( $pdo == null )
+//            $pdo = self::$readPDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+
+        if( $params != null )
+        {
+            $statement = $pdo->prepare($str);
+            $statement->execute($params);
+        }
+        else
+            $statement = $pdo->query($str);
+
+        if( $statement == null )
+            throw new DisDBException('读取数据失败！');
+
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        if( $strip_tags && is_array($strip_tags) )
+        {
+            foreach( $strip_tags as $name )
+                $data[$name] = strip_tags($data[$name]);
+        }
+        return $data;
+    }
+
+    /**
+     * 加载数据列表，读取不到数据时，返回NULL
+     * @param string $str 读取数据的SQL语句
+     * @param array $strip_tags 剥离html标记的字段列表
+     * @param array $params 当要执行的SQL语句含有参数时，参数列表
+     * @param PDO $pdo 数据库连接
+     * @return array 读取的数据列表，或者NULL
+     */
+    static function load_datas($str, $strip_tags = null, $params = null, PDO $pdo = null)
+    {
+        if( !$str )
+            throw new DisParamException('读取数据的SQL语句不能为空');
+        if( $params != null && !is_array($params) )
+            throw new DisParamException('读取数据的SQL语句不能为空');
+        $pdo = self::getReadPDO($pdo);
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$readPDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+
+        if( $params )
+        {
+            $statement = $pdo->prepare($str);
+            $statement->execute($params);
+        }
+        else
+            $statement = $pdo->query($str);
+
+        if( $statement == null )
+            throw new DisDBException('读取数据失败！');
+        $datas = array();
+
+        $count = $statement->rowCount();
+        for ($i = 0; $i < $count; $i ++)
+        {
+            $datas[$i] = $statement->fetch(PDO::FETCH_ASSOC);
+        }
+
+        if( $strip_tags )
+        {
+            for ($i = 0; $i < $count; $i ++)
+            {
+                foreach ( $strip_tags as $name )
+                {
+                    $datas[$i][$name] = strip_tags($datas[$i][$name]);
+                }
+            }
+        }
+
+        return $datas;
+    }
+
+    static function getWritePDO(PDO $pdo = null)
+    {
+        if( $pdo == null )
+            $pdo = DisDBTable::$writePDO;
+        if( $pdo == null )
+            throw new DisException('没有建立数据库连接');
+        return $pdo;
+    }
+
+    /**
+     * 执行一条写数据库语句
+     * @param string SQL语句
+     * @param PDO $pdo
+     * @return integer 更新的行数
+     */
+    static function query($str, PDO $pdo = null)
+    {
+        if( !$str )
+            throw new DisParamException('执行的SQL语句不能为空！');
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+        $pdo = self::getWritePDO($pdo);
+        return $pdo->exec($str);
+    }
+
+    static function last_insert_Id(PDO $pdo = null)
+    {
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+        $pdo = self::getWritePDO($pdo);
+        return $pdo->lastInsertId();
     }
 
     /**
@@ -128,10 +287,11 @@ abstract class DisDBTable extends DisObject
     {
         if( !is_array($info) || !count($info) )
             throw new DisParamException('参数不是数组类型');
-        if( $pdo == null )
-            $pdo = DisDBTable::$writePDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
+        $pdo = self::getWritePDO($pdo);
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
 
         $prms = $vlus = "";
         foreach ($info as $name=>$value)
@@ -150,13 +310,6 @@ abstract class DisDBTable extends DisObject
 
         $str = "insert into $this->table (".substr($prms, 0, strlen($prms) - 2).")
             values (".substr($vlus, 0, strlen($vlus) - 2).")";
-//        $prms = substr($prms, 0, strlen($prms) - 2);
-//        $vlus = substr($vlus, 0, strlen($vlus) - 2);
-//        $str = "insert into $this->table ($prms) values ($vlus)";
-
-//echo $str;
-//echo '<br>';
-
         $count = $pdo->exec($str);
         if( $count == false || $count != 1 )
             throw new DisDBException('执行失败！');
@@ -173,10 +326,11 @@ abstract class DisDBTable extends DisObject
             throw new DisParamException('对象没有初始化');
         if( !is_array($info) || !count($info) )
             throw new DisParamException('参数不是数组类型');
-        if( $pdo == null )
-            $pdo = DisDBTable::$writePDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
+        $pdo = self::getWritePDO($pdo);
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
 
         $setting = '';
         $count = 0;
@@ -214,126 +368,17 @@ abstract class DisDBTable extends DisObject
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化');
-        if( $pdo == null )
-            $pdo = DisDBTable::$writePDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
+        $pdo = self::getWritePDO($pdo);
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
 
         $str = "delete from $this->table where ID = $this->ID";
         $count = $pdo->exec($str);
         if( $count == 0 )
             throw new DisDBException('执行删除操作失败！');
         return $count;
-    }
-
-    /**
-     * 读取符合条件的数据行数
-     * @param string $frmwhr from和where子句
-     * @param PDO $pdo 数据库连接
-     * @return integer 满足条件的行数
-     */
-    static function count($frmwhr, PDO $pdo = null)
-    {
-        if( !$frmwhr )
-            throw new DisParamException('读取数据的SQL语句不能为空');
-        if( $pdo == null )
-            $pdo = DisDBTable::$readPDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
-
-        $statement = $pdo->query("select count(1) as size $frmwhr");
-        if( $statement == null )
-            return 0;
-        $data = $statement->fetch(PDO::FETCH_ASSOC);
-        return $data['size'];
-    }
-
-    /**
-     * 加载单行数据，读取不到数据时，返回NULL
-     * @param string $str 要执行的SQL语句
-     * @param array $strip_tags 剥离html标记的字段列表
-     * @param array $params 当要执行的SQL语句含有参数时，参数列表
-     * @param PDO $pdo 数据库连接
-     * @return array 读取的一行数据，或者NULL
-     */
-    static function load_line_data($str, $strip_tags = null, $params = null, PDO $pdo = null)
-    {
-        if( !$str )
-            throw new DisParamException('读取数据的SQL语句不能为空');
-        if( $params != null && !is_array($params) )
-            throw new DisParamException('读取数据的SQL语句不能为空');
-        if( $pdo == null )
-            $pdo = self::$readPDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
-
-        if( $params != null )
-        {
-            $statement = $pdo->prepare($str);
-            $statement->execute($params);
-        }
-        else
-            $statement = $pdo->query($str);
-
-        if( $statement == null )
-            throw new DisDBException('读取数据失败！');
-
-        $data = $statement->fetch(PDO::FETCH_ASSOC);
-        if( $strip_tags && is_array($strip_tags) )
-        {
-            foreach( $strip_tags as $name )
-                $data[$name] = strip_tags($data[$name]);
-        }
-        return $data;
-    }
-
-    /**
-     * 加载数据列表，读取不到数据时，返回NULL
-     * @param string $str 读取数据的SQL语句
-     * @param array $strip_tags 剥离html标记的字段列表
-     * @param array $params 当要执行的SQL语句含有参数时，参数列表
-     * @param PDO $pdo 数据库连接
-     * @return array 读取的数据列表，或者NULL
-     */
-    static function load_datas($str, $strip_tags = null, $params = null, PDO $pdo = null)
-    {
-        if( !$str )
-            throw new DisParamException('读取数据的SQL语句不能为空');
-        if( $params != null && !is_array($params) )
-            throw new DisParamException('读取数据的SQL语句不能为空');
-        if( $pdo == null )
-            $pdo = DisDBTable::$readPDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
-
-        if( $params )
-        {
-            $statement = $pdo->prepare($str);
-            $statement->execute($params);
-        }
-        else
-            $statement = $pdo->query($str);
-
-        if( $statement == null )
-            throw new DisDBException('读取数据失败！');
-        $datas = array();
-
-        $count = $statement->rowCount();
-        for ($i = 0; $i < $count; $i ++)
-        {
-            $datas[$i] = $statement->fetch(PDO::FETCH_ASSOC);
-        }
-        if( $strip_tags )
-        {
-            for ($i = 0; $i < $count; $i ++)
-            {
-                foreach ( $strip_tags as $name )
-                {
-                    $datas[$i][$name] = strip_tags($datas[$i][$name]);
-                }
-            }
-        }
-        return $datas;
     }
 
     function increase($param, $step = 1)
@@ -377,38 +422,27 @@ abstract class DisDBTable extends DisObject
         $this->detail[$param] = $value;
 //        return $r == 1;
     }
-
-    /**
-     * 执行一条写数据库语句
-     * @param string SQL语句
-     * @param PDO $pdo
-     * @return integer 更新的行数
-     */
-    static function query($str, PDO $pdo = null)
-    {
-        if( !$str )
-            throw new DisParamException('执行的SQL语句不能为空！');
-        if( $pdo == null )
-            $pdo = DisDBTable::$writePDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
-        return $pdo->exec($str);
-    }
-
-    static function last_insert_Id(PDO $pdo = null)
-    {
-        if( $pdo == null )
-            $pdo = DisDBTable::$writePDO;
-        if( $pdo == null )
-            throw new DisException('没有建立数据库连接');
-        return $pdo->lastInsertId();
-    }
 }
 
 if( !DisDBTable::$readPDO )
+{
+//    echo __FILE__.":".__LINE__."\n";
     DisDBTable::$readPDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbread['host'].';dbname='.DisConfigAttr::$dbread['dbname'],
             DisConfigAttr::$dbread['username'], DisConfigAttr::$dbread['password']);
+}
 if( !DisDBTable::$writePDO )
+{
+//    echo __FILE__.":".__LINE__."\n";
     DisDBTable::$writePDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbwrite['host'].';dbname='.DisConfigAttr::$dbwrite['dbname'],
             DisConfigAttr::$dbwrite['username'], DisConfigAttr::$dbwrite['password']);
+}
+
+//        $prms = substr($prms, 0, strlen($prms) - 2);
+//        $vlus = substr($vlus, 0, strlen($vlus) - 2);
+//        $str = "insert into $this->table ($prms) values ($vlus)";
+
+//echo $str;
+//echo '<br>';
+//        $prms = substr($prms, 0, strlen($prms) - 5);
+//        return (self::count($str) == 1);
 ?>
