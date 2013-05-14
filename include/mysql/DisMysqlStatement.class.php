@@ -1,6 +1,6 @@
 <?php
 /**
- * @package: DIS.DB
+ * @package: DIS.MYSQL
  * @file   : DisMysqlStatement.class.php
  * @abstract  : PHPUnit 测试数据库
  *
@@ -61,9 +61,9 @@ class DisMysqlStatement
             throw new DisException("数据库操作失败！");
 
         $_sql = $this->sql_statment;
+        $count = count($bound_input_params);
 
-        $c = count($bound_input_params);
-        for( $i = 0; $i < $c && preg_match('/\?/', $_sql) > 0; $i ++ )
+        for( $i = 0; $i < $count && preg_match('/\?/', $_sql) > 0; $i ++ )
         {
             $_sql = preg_replace('/\?/', $bound_input_params[$i], $_sql, 1);
         }

@@ -49,33 +49,33 @@ class DisChannelData extends DisDBTable
         {
             case 'name' :
                 if( !name_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
 //            case 'domain' :
 //                if( !domain_check($value) )
-//                    return err(PMAIL_ERR_PARAM);
+//                    return err(DIS_ERR_PARAM);
 //                break;
             case 'type' :
                 if( !in_array($value, array('social', 'business', 'info', 'news')) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'creater' :
                 if( !uid_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'logo' :
                 if( !is_integer($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'announce' :
             case 'description' :
                 if( !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             default :
-                return err(PMAIL_ERR_PARAM);
+                return err(DIS_ERR_PARAM);
         }
-        return err(PMAIL_SUCCEEDED);
+        return err(DIS_SUCCEEDED);
     }
 
     protected function _check_num_param($param)

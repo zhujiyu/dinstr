@@ -27,6 +27,7 @@ class DisUserParamData extends DisDBTable
     {
         $str = "select * from user_params where ID = $user_id";
         $data = parent::load_line_data($str);
+
         if( $data )
         {
             $this->ID = $data['ID'];
@@ -34,6 +35,7 @@ class DisUserParamData extends DisDBTable
         }
         else
             $this->ID = 0;
+        
         return $this;
     }
 

@@ -270,16 +270,16 @@ class DisChannelCtrl extends DisChannelData
         if( !$cu->ID )
             throw new DisDBException('订阅频道操作失败！');
 
+        $param = new DisUserParamCtrl();
+        $param->ID = $user_id;
+        $param->increase("subscribe_num");
+        $this->increase("subscriber_num");
+
         DisUserVectorCache::set_subscribed_chan_ids($user_id, null);
         DisUserVectorCache::set_follow_flow_ids($user_id, null);
         DisUserVectorCache::set_chan_roles($user_id, null);
         DisChanVectorCache::set_subscribed_user_ids($this->ID, null);
         DisChanDataCache::set_chan_user_data($this->ID, $user_id, null);
-
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
-        $param->increase("subscribe_num");
-        $this->increase("subscriber_num");
 
 //        $feed = DisFeedCtrl::read_ctrler((int)$user_id);
 //        $feed->subscribe((int)$this->ID);
@@ -331,6 +331,12 @@ class DisChannelCtrl extends DisChannelData
         $cu->load($this->ID);
         if( !$cu->ID )
             $cu = $this->add_subscriber($user_id);
+//        echo $cu->ID;
+//        if( !$cu->ID )
+//        {
+//            echo __CLASS__.":".__LINE__;
+//            $cu = $this->add_subscriber($user_id);
+//        }
         $cu->change_role('member');
 
         $this->increase('member_num');
@@ -392,7 +398,6 @@ class DisChannelCtrl extends DisChannelData
             if( $photo->ID )
                 $photo->increase('quote');
         }
-
         if( $tags != null )
         {
             $tags = keyword_parse($tags);

@@ -57,11 +57,14 @@ class DisChanUserCtrl extends DisChanUserData
         else if( !is_int($role) || $role < 0 || $role > 4 )
             throw new DisException('无效的角色类型');
 
-        $r = parent::change_role($role);
-        if( !$r )
+//        $r = parent::change_role($role);
+//        DisObject::print_array($this->detail);
+//        echo $role;
+        if( !parent::change_role($role) )
             throw new DisException("修改失败！");
-        $this->detail[role] = $role;
-        DisChanDataCache::set_chan_user_data($this->detail[chan_id], $this->user_id, $this->info());
+        $this->detail['role'] = $role;
+        DisChanDataCache::set_chan_user_data($this->detail['chan_id'], $this->user_id, $this->info());
+//        return $r;
     }
 
     protected function set_rank($rank)

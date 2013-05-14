@@ -22,6 +22,7 @@ class DisUserParamCtrl extends DisUserParamData
 
     static function get_data($user_id)
     {
+//        echo __CLASS__.":".__LINE__.'\n';
 //        pmCacheUserData::set_user_param($user_id, null);
         $param = DisUserDataCache::get_user_param($user_id);
         if( !$param )

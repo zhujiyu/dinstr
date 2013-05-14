@@ -15,8 +15,9 @@ if( !defined('IN_DIS') )
 
 class DisChanUserData extends DisDBTable //pmDBStaticTable
 {
+    static $role_param = array('subscriber', 'member', 'editor', 'creator',
+        'superuser');
     var $user_id = 0;
-    static $role_param = array('subscriber', 'member', 'editor', 'creator', 'superuser');
 
     function __construct($user_id, $chan_id = 0)
     {
@@ -24,23 +25,30 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
         $this->table = 'chan_users';
         $this->user_id = $user_id;
         if( (int)$user_id > 0 && (int)$chan_id > 0 )
+        {
             $this->load($chan_id);
+//            $this->detail['role'] = self::$role_param[$this->detail['role']];
+        }
     }
 
-    function init($id, $slt = 'ID, chan_id, user_id, weight, `rank`, `role`, join_time')
+    function init($id, $slt = "ID, chan_id, user_id, weight, `rank`, `role`, join_time")
     {
         $this->select("ID = $id", $slt);
-        if ( !$this->ID )
+        if( !$this->ID )
             throw new DisParamException("不存在该数据");
-        $this->detail['role'] = self::$role_param[$data['role']];
+//        $this->detail['role'] = self::$role_param[$this->detail['role']];
+//        DisObject::print_array($this->detail);
         return $this;
     }
 
-    function load($chan_id, $slt = 'ID, chan_id, user_id, weight, `rank`, `role`, join_time')
+    function load($chan_id, $slt = 'ID, chan_id, user_id, weight, `rank`, `role`,
+        join_time')
     {
-        if ( !$this->user_id || !$chan_id )
+        if( !$this->user_id || !$chan_id )
             throw new DisParamException('参数不合法');
         $this->select("chan_id = $chan_id and user_id = $this->user_id", $slt);
+//        DisObject::print_array($this);
+//        $this->detail['role'] = self::$role_param[$this->detail['role']];
         return $this;
     }
 
@@ -64,7 +72,7 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
         {
             case 'user_id' :
                 if( !uid_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'chan_id' :
             case 'weight' :
@@ -73,11 +81,11 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
             case 'role' :
             case 'join_time' :
                 if( !is_integer($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
-            default : return err(PMAIL_ERR_PARAM);
+            default : return err(DIS_ERR_PARAM);
         }
-        return err(PMAIL_SUCCEEDED);
+        return err(DIS_SUCCEEDED);
     }
 
     protected function _check_num_param($param)
@@ -97,7 +105,7 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
     function change_role($role)
     {
         if( $this->detail['role'] == $role )
-            return 0;
+            return true;
         $str = "update $this->table set `role` = $role where ID = $this->ID";
         return parent::check_query($str, 1);
     }
@@ -132,10 +140,7 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
         $str = "select max(`rank`) as max_rank from $this->table
             where user_id = $this->user_id and weight = $weight";
         $data = parent::load_line_data($str);
-        if( $data )
-            return $data[max_rank];
-        else
-            return 0;
+        return $data ? $data['max_rank'] : 0;
     }
 
     protected function set_rank($rank)

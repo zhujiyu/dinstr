@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-	<channels ID="1234861" name="游戏海报"   type="business" logo="0" description="first" announce="121981" creater="200"/>
+	<channels ID="1234861" name="游戏海报"   type="business" logo="0" description="first" announce="121981" creater="200" info_num="41"/>
 	<channels ID="1593490" name="新建海报板" type="business" logo="0" description="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" announce="kuke.com" creater='0'/>
 	<channels ID="1593648" name="生活海报"   type="business" logo="0" description="test" announce="gou86.com" creater='0'/>
+    
+    <users ID="1000000" username="zhujiyu" email="zhujiyu@126.com"/>
+    <user_params ID="1000000" create_num="0"/>
+    <users ID="1000012" username="zhuhz82" email="zhuhz82@126.com"/>
+    <user_params ID="1000012" create_num="0"/>
 </dataset>

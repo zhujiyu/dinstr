@@ -1,7 +1,7 @@
 <?php
 /**
- * @package: PMAIL.DB
- * @file   :  pmDBTable
+ * @package: DIS.MYSQL
+ * @file   : DisDBTable.class.php
  * @abstract  : 数据库表/视图基类
  *
  * @author    : 朱继玉<zhuhz82@126.com>
@@ -17,6 +17,7 @@ abstract class DisDBTable extends DisObject
 {
     public $ID;
     protected $table;
+    protected static $_table;
 
     public static $readPDO = null;
     public static $writePDO = null;
@@ -34,13 +35,7 @@ abstract class DisDBTable extends DisObject
         }
     }
 
-//    abstract protected function _strip_tags();
-//    protected function _check_param() {}
-
-//    abstract protected function _check_param($name, $value);
-//    abstract protected function _check_num_param($param);
-
-    protected function _strip_tags() {}
+    protected function _strip_tags(&$param) {}
 
     protected function _check_num_param($param)
     {
@@ -137,10 +132,6 @@ abstract class DisDBTable extends DisObject
         if( !$frmwhr )
             throw new DisParamException('读取数据的SQL语句不能为空');
         $pdo = self::getReadPDO($pdo);
-//        if( $pdo == null )
-//            $pdo = DisDBTable::$readPDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
 
         $statement = $pdo->query("select count(1) as size $frmwhr");
         if( $statement == null )
@@ -164,10 +155,6 @@ abstract class DisDBTable extends DisObject
         if( $params != null && !is_array($params) )
             throw new DisParamException('读取数据的SQL语句不能为空');
         $pdo = self::getReadPDO($pdo);
-//        if( $pdo == null )
-//            $pdo = self::$readPDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
 
         if( $params != null )
         {
@@ -204,10 +191,6 @@ abstract class DisDBTable extends DisObject
         if( $params != null && !is_array($params) )
             throw new DisParamException('读取数据的SQL语句不能为空');
         $pdo = self::getReadPDO($pdo);
-//        if( $pdo == null )
-//            $pdo = DisDBTable::$readPDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
 
         if( $params )
         {
@@ -260,20 +243,12 @@ abstract class DisDBTable extends DisObject
     {
         if( !$str )
             throw new DisParamException('执行的SQL语句不能为空！');
-//        if( $pdo == null )
-//            $pdo = DisDBTable::$writePDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
         $pdo = self::getWritePDO($pdo);
         return $pdo->exec($str);
     }
 
     static function last_insert_Id(PDO $pdo = null)
     {
-//        if( $pdo == null )
-//            $pdo = DisDBTable::$writePDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
         $pdo = self::getWritePDO($pdo);
         return $pdo->lastInsertId();
     }
@@ -288,10 +263,6 @@ abstract class DisDBTable extends DisObject
         if( !is_array($info) || !count($info) )
             throw new DisParamException('参数不是数组类型');
         $pdo = self::getWritePDO($pdo);
-//        if( $pdo == null )
-//            $pdo = DisDBTable::$writePDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
 
         $prms = $vlus = "";
         foreach ($info as $name=>$value)
@@ -327,10 +298,6 @@ abstract class DisDBTable extends DisObject
         if( !is_array($info) || !count($info) )
             throw new DisParamException('参数不是数组类型');
         $pdo = self::getWritePDO($pdo);
-//        if( $pdo == null )
-//            $pdo = DisDBTable::$writePDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
 
         $setting = '';
         $count = 0;
@@ -369,10 +336,6 @@ abstract class DisDBTable extends DisObject
         if( !$this->ID )
             throw new DisParamException('对象没有初始化');
         $pdo = self::getWritePDO($pdo);
-//        if( $pdo == null )
-//            $pdo = DisDBTable::$writePDO;
-//        if( $pdo == null )
-//            throw new DisException('没有建立数据库连接');
 
         $str = "delete from $this->table where ID = $this->ID";
         $count = $pdo->exec($str);
@@ -383,66 +346,103 @@ abstract class DisDBTable extends DisObject
 
     function increase($param, $step = 1)
     {
-        if( !$this->ID || !$this->table )
+        if( !$this->ID )
             throw new DisParamException('对象没有初始化。');
         if( !$this->_check_num_param($param) )
             throw new DisParamException("无效的参数 $param");
 
-        $r = self::query("update $this->table set $param = $param + $step where ID = $this->ID");
-        if( $r != 1 )
-            throw new DisDBException('更新参数失败。');
+        $r = self::query("update $this->table set $param = $param + $step
+            where ID = $this->ID") == 1;
+        if( !$r )
+            throw new DisDBException("更新参数 $param 失败。");
         if( $this->detail[$param] )
             (int)$this->detail[$param] += $step;
         else
             $this->detail[$param] = $step;
-//        return $r == 1;
+        return $r;
     }
 
     function reduce($param, $step = 1)
     {
-        if( !$this->ID || !$this->table )
+        if( !$this->ID )
             throw new DisParamException('对象没有初始化。');
         if( !$this->_check_num_param($param) )
-            throw new DisParamException('无效的参数。');
+            throw new DisParamException("无效的参数 $param 。");
 
         if( !array_key_exists($param, $this->detail) )
         {
-            $r = $this->init($this->ID);
+            $this->init($this->ID);
             if( !array_key_exists($param, $this->detail) )
                 throw new DisException("无效的参数 $param ");
         }
+
         $value = max($this->detail[$param] - $step, 0);
         if( $value == $this->detail[$param] )
-            return 0;
+            return false;
 
         $r = self::query("update $this->table set $param = $value
-            where ID = $this->ID");
-        if( $r != 1 )
+            where ID = $this->ID") == 1;
+        if( !$r )
             throw new DisDBException('更新参数失败。');
         $this->detail[$param] = $value;
-//        return $r == 1;
+        return $r;
     }
 }
 
+//    static function get_data($id)
+//    {
+//        echo __CLASS__.":".__LINE__.'\n';
+//        return null;
+//    }
+
+//    abstract protected function _strip_tags();
+//    protected function _check_param() {}
+
+//    abstract protected function _check_param($name, $value);
+//    abstract protected function _check_num_param($param);
+
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$readPDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+//        if( $pdo == null )
+//            $pdo = self::$readPDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$readPDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+//        if( $pdo == null )
+//            $pdo = DisDBTable::$writePDO;
+//        if( $pdo == null )
+//            throw new DisException('没有建立数据库连接');
+
 if( !DisDBTable::$readPDO )
 {
-//    echo __FILE__.":".__LINE__."\n";
     DisDBTable::$readPDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbread['host'].';dbname='.DisConfigAttr::$dbread['dbname'],
             DisConfigAttr::$dbread['username'], DisConfigAttr::$dbread['password']);
 }
 if( !DisDBTable::$writePDO )
 {
-//    echo __FILE__.":".__LINE__."\n";
     DisDBTable::$writePDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbwrite['host'].';dbname='.DisConfigAttr::$dbwrite['dbname'],
             DisConfigAttr::$dbwrite['username'], DisConfigAttr::$dbwrite['password']);
 }
 
-//        $prms = substr($prms, 0, strlen($prms) - 2);
-//        $vlus = substr($vlus, 0, strlen($vlus) - 2);
-//        $str = "insert into $this->table ($prms) values ($vlus)";
-
-//echo $str;
-//echo '<br>';
-//        $prms = substr($prms, 0, strlen($prms) - 5);
-//        return (self::count($str) == 1);
 ?>

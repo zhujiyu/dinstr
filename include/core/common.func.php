@@ -208,6 +208,7 @@ function list_slice($list, $start, $count)
 function keyword_parse($keyword)
 {
     $reg = '/[\w\x{4e00}-\x{9fa5}]+/u';
+    $matches = array();
     if( preg_match_all($reg, $keyword, $matches) )
         return $matches[0];
     else
@@ -225,6 +226,7 @@ function reg_uid_list($uidlist)
 function get_first_uid($uidlist)
 {
     $rsg = '/^[1-9][0-9]{2,}/';
+    $matches = array();
     if( preg_match($rsg, $uidlist, $matches) )
         return $matches[0];
     return null;
@@ -239,6 +241,7 @@ function reg_name_list($unamelist)
 function get_first_name($unamelist)
 {
     $rsgsingle = '/^[\w\x{4e00}-\x{9fa5}]+/u';
+    $matches = array();
     if( preg_match($rsgsingle, $unamelist, $matches) )
         return $matches[0];
     return null;
@@ -249,6 +252,7 @@ function get_name_list($unamelist, $atnames = null)
     if( $atnames && !is_array($atnames) )
         $atnames = array($atnames);
     $rsgsingle = '/[@＠]([\w\x{4e00}-\x{9fa5}]+)/u';
+    $matches = array();
     if( !preg_match_all($rsgsingle, $unamelist, $matches) )
         return $atnames;
 
@@ -282,16 +286,16 @@ function err($err, $info = '')
     {
         switch($err)
         {
-            case PMAIL_ERR_TIMEOUT: $errInfo = "操作超时！"; break;
-            case PMAIL_ERR_CUSTOM: $errInfo = "用户定义错误！"; break;
-            case PMAIL_ERR_MYSQL: $errInfo = "MYSQL操作错误！"; break;
-            case PMAIL_ERR_NOINIT: $errInfo = "对象没有初始化！"; break;
-            case PMAIL_ERR_PARAM: $errInfo = "传入的参数不正确！"; break;
-            case PMAIL_ERR_STRFMT: $errInfo = "字符串格式错误！"; break;
-            case PMAIL_ERR_EXIST: $errInfo = "对象存在性错误！"; break;
-            case PMAIL_ERR_DENIED: $errInfo = "权限不足！"; break;
-            case PMAIL_ERR_OTHER: $errInfo = "其他错误！"; break;
-            case PMAIL_SUCCEEDED: $errInfo = "操作成功！"; break;
+            case DIS_ERR_TIMEOUT: $errInfo = "操作超时！"; break;
+            case DIS_ERR_CUSTOM: $errInfo = "用户定义错误！"; break;
+            case DIS_ERR_MYSQL: $errInfo = "MYSQL操作错误！"; break;
+            case DIS_ERR_NOINIT: $errInfo = "对象没有初始化！"; break;
+            case DIS_ERR_PARAM: $errInfo = "传入的参数不正确！"; break;
+            case DIS_ERR_STRFMT: $errInfo = "字符串格式错误！"; break;
+            case DIS_ERR_EXIST: $errInfo = "对象存在性错误！"; break;
+            case DIS_ERR_DENIED: $errInfo = "权限不足！"; break;
+            case DIS_ERR_OTHER: $errInfo = "其他错误！"; break;
+            case DIS_SUCCEEDED: $errInfo = "操作成功！"; break;
             default: break;
         }
     }
@@ -308,7 +312,7 @@ function get_err_info()
 function _index($variable, $arr)
 {
     if( !$variable || !$arr || !is_array($arr) )
-        return err(PMAIL_ERR_PARAM);
+        return err(DIS_ERR_PARAM);
     foreach ($arr as $name=>$value)
 	{
 	    if( $variable == $value )

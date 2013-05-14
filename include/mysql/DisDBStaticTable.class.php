@@ -1,7 +1,7 @@
 <?php
 /**
- * @package: PMAIL.DB
- * @file   : pmDBStaticTable
+ * @package: DIS.MYSQL
+ * @file   : DisDBStaticTable.class.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流

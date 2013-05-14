@@ -79,25 +79,4 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
 //    }
 }
 
-//        if( !$file )
-//            $file = $this->default_data_file;
-//        if( file_exists($file) )
-//            return $this->createFlatXMLDataSet($file);
-//        else if( file_exists(dirname(__FILE__).'/res/'.$file) )
-//            return $this->createFlatXMLDataSet(dirname(__FILE__).'/res/'.$file);
-//        else
-//            return null;
-
-//$file = "common.inc.php";
-//for( $i = 0; $i < 5; $i ++ )
-//{
-//    if( file_exists($file) )
-//    {
-//        require_once ( $file );
-//        break;
-//    }
-//    $file = "../".$file;
-//}
-//start_phpunit_test();
-
 ?>
