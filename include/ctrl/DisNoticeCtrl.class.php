@@ -152,6 +152,7 @@ class DisNoticeCtrl extends DisNoticeData
             $user = DisUserCtrl::get_data($notice[data_id]);
             $notice[fan_user_id] = $notice[data_id];
             $notice[fan_username] = $user[username];
+            
 //            $relation = pmCtrlUserRelation::get_data($notice[data_id]);
 //            $user = pmCtrlUser::get_data($relation[from_user]);
 //            $notice[fan_user_id] = $relation[from_user];

@@ -27,9 +27,9 @@ class DisUserData extends DisDBTable
     protected function _strip_tags($detail)
     {
         $detail['username'] = strip_tags($detail['username']);
+        $detail['sign'] = strip_tags($detail['sign']);
         $detail['live_city'] = strip_tags($detail['live_city']);
         $detail['contact'] = strip_tags($detail['contact']);
-        $detail['sign'] = strip_tags($detail['sign']);
         $detail['self_intro'] = strip_tags($detail['self_intro']);
     }
 
@@ -60,7 +60,7 @@ class DisUserData extends DisDBTable
     protected function _get_salt($type = null)
     {
         if( $type && $type == 'imoney' )
-            $str = "select ID, salt, impassword as password, errs, last_pw_check
+            $str = "select ID, salt, impassword as password, check_errs, last_check
                 from $this->table where ID = $this->ID";
         else
             $str = "select ID, salt, password from $this->table where ID = $this->ID";
@@ -68,8 +68,8 @@ class DisUserData extends DisDBTable
 
         if( $data == null )
             throw new DisDBException('读取数据失败');
-        if( $type && $type == 'imoney' && $data['errs'] >= 5 && $data['last_pw_check'] + 3600 * 4 > time() )
-            throw new DisException('密码已经被锁定。');
+        if( $type == 'imoney' && $data['check_errs'] >= 5 && $data['last_check'] + 3600 * 4 > time() )
+            throw new DisPWException('密码已经被锁定。');
         return $data;
     }
 
@@ -87,16 +87,19 @@ class DisUserData extends DisDBTable
         $data = $this->_get_salt($type);
         if( $data['password'] != md5($password.md5($data['salt'])) )
         {
-            if( $type && $type == 'imoney' )
+            if( $type == 'imoney' )
             {
-                $str = "update $this->table set last_pw_check = ".time().", errs = errs + 1 where ID = $this->ID";
-                parent::query($str);
+                $str = "update $this->table set last_check = ".time().", check_errs = check_errs + 1
+                    where ID = $this->ID";
+                if( !parent::check_query($str, 1) )
+                    throw  new DisDBException("验证安全密码失败。");
+//                parent::query($str);
             }
             return false;
         }
 
-        if( $type && $type == 'imoney' && $data['errs'] > 0 )
-            parent::query("update $this->table set errs = 0 where ID = $this->ID");
+        if( $type == 'imoney' && $data['check_errs'] > 0 )
+            parent::query("update $this->table set check_errs = 0 where ID = $this->ID");
         return true;
     }
 

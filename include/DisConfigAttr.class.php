@@ -48,19 +48,13 @@ class DisConfigAttr
     public static $periods = array('3h'=>10800, '6h'=>21600, '1d'=>86400, '3d'=>259200,
         'week'=>604800, 'month'=>2592000);
 
-    public static $guest_chans = array
-    (
-        'ids'=>array(100040, 100041, 100044, 100045, 100043),
-        'weights'=>array(1, 1, 1, 1, 1),
-        'ranks'=>array(5, 4, 3, 2, 1),
-    );
-
     public static $autoLoad = array
     (
         'DisObject'        =>'include/core/DisObject.class.php',
         'DisException'     =>'include/core/DisException.class.php',
         'DisDBException'   =>'include/core/DisException.class.php',
         'DisParamException'=>'include/core/DisException.class.php',
+        'DisPWException'   =>'include/core/DisException.class.php',
 
         'DisMysqlAdapter'  =>'include/mysql/DisMysqlAdapter.class.php',
         'DisDBTable'       =>'include/mysql/DisDBTable.class.php',
@@ -157,8 +151,15 @@ class DisConfigAttr
 
 function start_app()
 {
-    
+
 }
+
+//    public static $guest_chans = array
+//    (
+//        'ids'=>array(100040, 100041, 100044, 100045, 100043),
+//        'weights'=>array(1, 1, 1, 1, 1),
+//        'ranks'=>array(5, 4, 3, 2, 1),
+//    );
 
 //function start_phpunit_test()
 //{

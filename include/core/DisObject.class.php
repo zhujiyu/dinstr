@@ -45,13 +45,11 @@ class DisObject
     function __get($attri)
     {
         throw new DisException("读取属性 $attri 不存在或不可见！");
-        //echo "<br>读取属性 $attri <b>不存在或不可见！</b><br>";
     }
 
     function __set($attri, $value)
     {
-        throw new DisException("设置属性 $attri 不存在或不可见！");
-        //echo "<br>设置属性 $attri <b>不存在或不可见！</b>设置值：$value。在".get_class($this)."类内<br>";
+        throw new DisException("属性 $attri 不存在或不可见！无法设置 $value.");
     }
 
     /**

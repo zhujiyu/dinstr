@@ -109,4 +109,12 @@ class DisDBException extends DisException
         $this->message = $mess;
     }
 }
+
+class DisPWException extends DisException
+{
+    function  __construct($mess)
+    {
+        $this->message = $mess;
+    }
+}
 ?>

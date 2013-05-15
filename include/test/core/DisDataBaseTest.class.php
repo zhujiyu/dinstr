@@ -55,7 +55,7 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
         else if( file_exists(dirname(__FILE__)."res/$file") )
             $path = dirname(__FILE__)."res/$file";
         else
-            throw new DisException('文件不存在');
+            throw new DisException("测试数据源文件 $file 不存在");
         return $this->createFlatXMLDataSet($path);
     }
 

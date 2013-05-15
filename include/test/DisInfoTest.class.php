@@ -1,8 +1,8 @@
 <?php
 /**
- * @package: DIS.TEST.MYSQL
- * @file   : DisUserDataTest.class.php
- * Description of DisUserDataTest
+ * @package: DIS.TEST
+ * @file   : DisInfoTest.class.php
+ * Description of DisInfoTest
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -10,18 +10,9 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-$file = "common.inc.php";
-for( $i = 0; $i < 5; $i ++ )
-{
-    if( file_exists($file) )
-    {
-        require_once ( $file );
-        break;
-    }
-    $file = "../".$file;
-}
+require_once "../../common.inc.php";
 
-class DisUserDataTest extends DisDataBaseTest
+class DisInfoTest extends DisDataBaseTest
 {
     function  __construct()
     {
@@ -372,4 +363,15 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000;";
         $this->assertEquals(1, $this->mock->attr('fans_num'));
     }
 }
+
+//$file = "common.inc.php";
+//for( $i = 0; $i < 5; $i ++ )
+//{
+//    if( file_exists($file) )
+//    {
+//        require_once ( $file );
+//        break;
+//    }
+//    $file = "../".$file;
+//}
 ?>

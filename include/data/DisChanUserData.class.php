@@ -36,8 +36,6 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
         $this->select("ID = $id", $slt);
         if( !$this->ID )
             throw new DisParamException("不存在该数据");
-//        $this->detail['role'] = self::$role_param[$this->detail['role']];
-//        DisObject::print_array($this->detail);
         return $this;
     }
 
@@ -47,8 +45,6 @@ class DisChanUserData extends DisDBTable //pmDBStaticTable
         if( !$this->user_id || !$chan_id )
             throw new DisParamException('参数不合法');
         $this->select("chan_id = $chan_id and user_id = $this->user_id", $slt);
-//        DisObject::print_array($this);
-//        $this->detail['role'] = self::$role_param[$this->detail['role']];
         return $this;
     }
 

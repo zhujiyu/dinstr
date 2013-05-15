@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<users ID="1234861" username="帐号1234861" email="1234861@abcdf.com" salt="55sde" password="121981" impassword="gou86.com"/>
+	<users ID="1593490" username="zhujiyu" email="zhujiyu@abc.com" salt="30sfe" password="kuke.com" impassword="gou86.com"/>
+	<users ID="1593648" username="测试帐号" email="test@abc.com" salt="28986" password="gou86.com" impassword="gou86.com"/>
+
+</dataset>

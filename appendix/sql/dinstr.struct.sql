@@ -33,7 +33,6 @@ CREATE TABLE users
     email varchar(255), -- 邮箱注册 安全邮箱，用于找回密码，也可用于登录
     username varchar(32),
     avatar bigint default 0, -- 头像
-    sign varchar(64),  -- 个性签名 一个好的个人签名，可以获得更多的信任
     -- 安全设置
     salt char(5),
     `password` char(32), -- 用md5算法将密码转成32位
@@ -41,6 +40,7 @@ CREATE TABLE users
     errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
     last_pw_check int default 0, -- 最后一次密码检验时间，用于设置密码锁定一小时
     -- 个人基本信息
+    sign varchar(64),  -- 个性签名 一个好的个人签名，可以获得更多的信任
     introducer int default 0,
     `rank` smallint default 0, -- 级别
     live_city varchar(64),
@@ -239,7 +239,7 @@ CREATE TABLE chan_users
 --    `role` enum('subscriber', 'member', 'editor') default 'subscriber',
     weight int default 1, -- 频道的权值，这里值表示权重值的数量级
     `rank` int default 0, -- 同数量级权值的频道的排序，rank大的频道同样权值的邮件排在前面，
-    opened tinyint default 1,
+--     opened tinyint default 1,
     join_time int default 0,
     subscribe_time timestamp,
     unique (chan_id, user_id),

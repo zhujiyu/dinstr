@@ -29,10 +29,11 @@ class DisMemcachedMock
 
     function get($param)
     {
-        if( isset(self::$_mem[$param]) )
-            return self::$_mem[$param];
-        else
-            return null;
+        return null;
+//        if( isset(self::$_mem[$param]) )
+//            return self::$_mem[$param];
+//        else
+//            return null;
     }
 
     function set($param, $value)

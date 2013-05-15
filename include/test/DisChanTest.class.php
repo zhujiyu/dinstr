@@ -1,8 +1,8 @@
 <?php
 /**
  * @package: DIS.TEST
- * @file   : DisChanDataTest.class.php
- * Description of DisChanDataTest
+ * @file   : DisChanTest.class.php
+ * Description of DisChanTest
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -10,25 +10,17 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-$file = "common.inc.php";
-for( $i = 0; $i < 5; $i ++ )
-{
-    if( file_exists($file) )
-    {
-        require_once ( $file );
-        break;
-    }
-    $file = "../$file";
-}
+require_once "../../common.inc.php";
 
-class DisChanDataTest extends DisDataBaseTest
+class DisChanTest extends DisDataBaseTest
 {
     function  __construct()
     {
         parent::__construct();
         $this->default_data_file = "channels.xml";
+        $this->pdo->exec("drop table chan_users");
 
-        $this->pdo->exec("
+        $sqls = array("
 CREATE TABLE channels
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
@@ -49,10 +41,8 @@ CREATE TABLE channels
     index (create_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
-        ");
-
-        $this->pdo->exec("drop table chan_users");
-        $this->pdo->exec("
+        ",
+            "drop table chan_users", "
 CREATE TABLE chan_users
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
@@ -62,7 +52,7 @@ CREATE TABLE chan_users
 --    `role` enum('subscriber', 'member', 'editor') default 'subscriber',
     weight int default 1, -- 频道的权值，这里值表示权重值的数量级
     `rank` int default 0, -- 同数量级权值的频道的排序，rank大的频道同样权值的邮件排在前面，
-    opened tinyint default 1,
+--    opened tinyint default 1,
     join_time int default 0,
     subscribe_time timestamp,
     unique (chan_id, user_id),
@@ -70,9 +60,7 @@ CREATE TABLE chan_users
     index (user_id, weight, `rank`)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
-        ");
-
-        $this->pdo->exec("
+        ", "
 CREATE TABLE users
 (
     -- 用户核心信息，其中ID，username,email都可用于登录
@@ -80,14 +68,14 @@ CREATE TABLE users
     email varchar(255), -- 邮箱注册 安全邮箱，用于找回密码，也可用于登录
     username varchar(32),
     avatar bigint default 0, -- 头像
-    sign varchar(64),  -- 个性签名 一个好的个人签名，可以获得更多的信任
     -- 安全设置
     salt char(5),
     `password` char(32), -- 用md5算法将密码转成32位
     impassword char(32),  -- 资金帐号密码，支付密码
-    errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
-    last_pw_check int default 0, -- 最后一次密码检验时间，用于设置密码锁定一小时
+    last_check int default 0, -- 最后一次密码检验时间，用于设置密码锁定一小时
+    check_errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
     -- 个人基本信息
+    sign varchar(64),  -- 个性签名 一个好的个人签名，可以获得更多的信任
     introducer int default 0,
     `rank` smallint default 0, -- 级别
     live_city varchar(64),
@@ -104,9 +92,7 @@ CREATE TABLE users
     index (username)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
-        ");
-
-        $this->pdo->exec("
+        ", "
 CREATE TABLE user_params
 (
     ID int PRIMARY KEY,
@@ -137,6 +123,11 @@ CREATE TABLE user_params
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
         ");
 
+        $len = count($sqls);
+        for( $i = 0; $i < $len; $i ++ )
+            $this->pdo->exec($sqls[$i]);
+
+//        $this->pdo->exec("source sqls/chan.test.sql");
     }
 
     function testLoadData()
@@ -162,14 +153,66 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
         $this->assertTrue($r);
     }
 
+    function testAddSubscriber()
+    {
+        $chan = new DisChannelCtrl(1593648);
+        $chan->add_subscriber(1000000);
+        $this->assertEquals(2, $chan->attr('subscriber_num'));
+        $cu = new DisChanUserCtrl(1000000, 1593648);
+        $this->assertEquals('subscriber', DisChanUserCtrl::role($cu->attr('role')));
+        $param = new DisUserParamCtrl(1000000);
+        $this->assertEquals(1, $param->attr('subscribe_num'));
+    }
+
+    function testRemoveSubscriber()
+    {
+        $chan = new DisChannelCtrl(1593648);
+        $this->assertEquals(1, $chan->attr('subscriber_num'));
+        $chan->remove_subscriber(1000012);
+        $this->assertEquals(0, $chan->attr('subscriber_num'));
+        $param = new DisUserParamCtrl(1000012);
+        $this->assertEquals(1, $param->attr('subscribe_num'));
+    }
+
     function testAddMember()
     {
-        $chan = new DisChannelCtrl(1234861);
-        $chan->add_member(1000012);
-        $this->assertEquals(1, $chan->attr('member_num'));
-        $cu = new DisChanUserCtrl(1000012, 1234861);
-//        $this->assertEquals(1, $cu->attr('role'));
-        $this->assertEquals('member', DisChanUserCtrl::role($cu->attr('role')));
+        $chan1 = new DisChannelCtrl(1234861);
+        $chan1->add_member(1000012);
+        $this->assertEquals(1, $chan1->attr('subscriber_num'));
+        $this->assertEquals(1, $chan1->attr('member_num'));
+        $cu1 = new DisChanUserCtrl(1000012, 1234861);
+        $this->assertEquals('member', DisChanUserCtrl::role($cu1->attr('role')));
+
+        $chan2 = new DisChannelCtrl(1593648);
+        $cu2 = new DisChanUserCtrl(1000012, 1593648);
+        $this->assertEquals('subscriber', DisChanUserCtrl::role($cu2->attr('role')));
+        $chan2->add_member(1000012);
+        $this->assertEquals(1, $chan2->attr('subscriber_num'));
+        $this->assertEquals(1, $chan2->attr('member_num'));
+        $cu3 = new DisChanUserCtrl(1000012, 1593648);
+        $this->assertEquals('member', DisChanUserCtrl::role($cu3->attr('role')));
+
+        $param = new DisUserParamCtrl(1000012);
+        $this->assertEquals(3, $param->attr('join_num'));
+    }
+
+    function testRemoveMember()
+    {
+        $chan1 = new DisChannelCtrl(1593648);
+        $chan1->remove_member(1000012);
+        $cu1 = new DisChanUserCtrl(1000012, 1593648);
+        $this->assertEquals('subscriber', DisChanUserCtrl::role($cu1->attr('role')));
+
+        $param1 = new DisUserParamCtrl(1000012);
+        $this->assertEquals(1, $param1->attr('join_num'));
+
+        $chan2 = new DisChannelCtrl(1593490);
+        $chan2->remove_member(1000012);
+        $cu2 = new DisChanUserCtrl(1000012, 1593490);
+        $this->assertEquals('subscriber', DisChanUserCtrl::role($cu2->attr('role')));
+
+        $param2 = new DisUserParamCtrl(1000012);
+        $this->assertEquals(0, $param2->attr('join_num'));
     }
 
     function testCreate()
@@ -212,45 +255,19 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
 //    }
 }
 
+//$file = "common.inc.php";
+//for( $i = 0; $i < 5; $i ++ )
+//{
+//    if( file_exists($file) )
+//    {
+//        require_once ( $file );
+//        break;
+//    }
+//    $file = "../$file";
+//}
+
 //        $this->columns = "ID, name, logo, `type`, description";
 //        $this->table = "channels";
 //        $this->mock = new DisChannelData();
 
-//        $str = "
-//CREATE TABLE channels
-//(
-//    ID int AUTO_INCREMENT PRIMARY KEY,
-//    `name` varchar(32),
-//    logo bigint default 0,
-//    `type` enum('social', 'business', 'info', 'news') default 'social', --  社会交往social 商品交易business 商务资讯info 社会新闻news
-//    description varchar(256), -- 介绍
-//    announce varchar(512),    -- 公告
-//    creater int, -- 创建者
-//    -- 参数
-//    member_num int default 0,
-//    subscriber_num int default 0,
-//    info_num bigint default 0,
-//    applicant_num int default 0,
-//    create_time int,
-//    unique key (`name`),
-//    index (creater),
-//    index (create_time)
-//)
-//ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
-//";
-//        $this->pdo->exec($str);
-
-//        $this->mock->init(1234861);
-//        $this->assertEquals('游戏海报', $this->mock->attr('name'));
-//        $this->mock->init(1593490);
-//        $this->assertEquals('这副海报是新的 高战 ', $this->mock->attr('description'));
-//        $r1 = $this->mock->name_exist('测试帐号');
-//        $this->assertTrue($r1);
-//        $r2 = $this->mock->name_exist('新加网寨');
-//        $this->assertTrue(!$r2);
-
-//    protected function getDataSet()
-//    {
-//        return $this->_getDataSet('channels.xml');
-//    }
 ?>

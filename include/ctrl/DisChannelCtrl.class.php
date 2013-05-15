@@ -261,9 +261,9 @@ class DisChannelCtrl extends DisChannelData
             throw new DisParamException('参数不合法！');
 
         $cu = new DisChanUserCtrl($user_id);
-        $channel_ids = $cu->list_subscribed_ids();
-        if( in_array($this->ID, $channel_ids) )
-            return ;
+        $chan_ids = $cu->list_subscribed_ids();
+        if( in_array($this->ID, $chan_ids) )
+            return;
 
         $rank = $cu->get_max_rank(1);
         $cu->insert((int)$this->ID, (int)$user_id, 'subscriber', $rank + 1);
@@ -284,7 +284,7 @@ class DisChannelCtrl extends DisChannelData
 //        $feed = DisFeedCtrl::read_ctrler((int)$user_id);
 //        $feed->subscribe((int)$this->ID);
 //        DisFeedCtrl::save_ctrler($feed);
-        return $cu;
+//        return $cu;
     }
 
     function remove_subscriber($user_id)
@@ -294,17 +294,17 @@ class DisChannelCtrl extends DisChannelData
         if( !$user_id )
             throw new DisParamException('参数不合法！');
 
-        $cu = new DisChanUserCtrl($user_id);
-        $channel_ids = $cu->list_subscribed_ids();
-        if( !in_array($this->ID, $channel_ids) )
-            return ;
-        $cu->load((int)$this->ID);
+        $cu = new DisChanUserCtrl($user_id, (int)$this->ID);
         if( !$cu->ID )
-            return ;
+            return;
         $cu->delete();
+//        $chan_ids = $cu->list_subscribed_ids();
+//        if( !in_array($this->ID, $chan_ids) )
+//            return;
+//        $cu->load((int)$this->ID);
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->reduce('subscribe_num');
         $this->reduce("subscriber_num");
 
@@ -317,7 +317,7 @@ class DisChannelCtrl extends DisChannelData
 //        $feed = DisFeedCtrl::read_ctrler((int)$user_id);
 //        $feed->cancel_subscribe((int)$this->ID);
 //        DisFeedCtrl::save_ctrler($feed);
-        return $cu;
+//        return $cu;
     }
 
     function add_member($user_id)
@@ -327,27 +327,32 @@ class DisChannelCtrl extends DisChannelData
         if( !$user_id )
             throw new DisParamException('传入的参数不正确！');
 
-        $cu = new DisChanUserCtrl($user_id);
-        $cu->load($this->ID);
+        $cu = new DisChanUserCtrl($user_id, (int)$this->ID);
         if( !$cu->ID )
-            $cu = $this->add_subscriber($user_id);
+        {
+            $this->add_subscriber($user_id);
+            $cu->load($this->ID);
+        }
+        $cu->change_role('member');
+//        $cu->load($this->ID);
 //        echo $cu->ID;
 //        if( !$cu->ID )
 //        {
 //            echo __CLASS__.":".__LINE__;
 //            $cu = $this->add_subscriber($user_id);
 //        }
-        $cu->change_role('member');
 
         $this->increase('member_num');
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
-        $param->increase("subscribe_num");
+        $param = new DisUserParamCtrl($user_id);
+        $param->increase("join_num");
+//        DisObject::print_array($param->info());
+//        $param->ID = $user_id;
+//        DisObject::print_array($param->info());
 
         DisChanVectorCache::set_joined_user_ids($this->ID, null);
         DisUserVectorCache::set_joined_chan_ids($user_id, null);
         DisUserVectorCache::set_chan_roles($user_id, null);
-        return $cu;
+//        return $cu;
     }
 
     function remove_member($user_id)
@@ -357,21 +362,23 @@ class DisChannelCtrl extends DisChannelData
         if( !$user_id )
             throw new DisParamException('传入的参数不正确！');
 
-        $cu = new DisChanUserCtrl($user_id);
-        $cu->load((int)$this->ID);
+        $cu = new DisChanUserCtrl($user_id, (int)$this->ID);
+//        $cu->load((int)$this->ID);
         if( !$cu->ID )
+            return;
+        if( $cu->attr('role') < 1 )
             return;
         $cu->change_role('subscriber');
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->reduce ("join_num");
         $this->reduce("member_num");
 
         DisChanVectorCache::set_joined_user_ids($this->ID, null);
         DisUserVectorCache::set_joined_chan_ids($user_id, null);
         DisUserVectorCache::set_chan_roles($user_id, null);
-        return $cu;
+//        return $cu;
     }
 
     /**
@@ -406,11 +413,13 @@ class DisChannelCtrl extends DisChannelData
                 DisChanTagData::insert($channel->ID, $tags[$i]);
         }
 
-        $cu = new DisChanUserData($creater_id);
-        $cu->load((int)$channel->ID);
+        $cu = new DisChanUserData($creater_id, (int)$channel->ID);
+//        $cu->load((int)$channel->ID);
         if( !$cu->ID )
-            $cu = $channel->add_subscriber($creater_id);
-        $cu->load((int)$channel->ID);
+        {
+            $channel->add_subscriber($creater_id);
+            $cu->load((int)$channel->ID);
+        }
         $cu->change_role('creator');
 
         $param = new DisUserParamCtrl();
