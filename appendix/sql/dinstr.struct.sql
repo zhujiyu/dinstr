@@ -34,7 +34,7 @@ CREATE TABLE users
     username varchar(32),
     avatar bigint default 0, -- 头像
     -- 安全设置
-    salt char(5),
+    salt char(32),
     `password` char(32), -- 用md5算法将密码转成32位
     impassword char(32),  -- 资金帐号密码，支付密码
     errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
@@ -90,6 +90,34 @@ CREATE TABLE user_params
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000;
 select '用户参数表已经生成' as tip;
+
+-- 用户关系表 用户之间的关系包括：关注，信任，互信，一体
+DROP TABLE IF EXISTS user_relations;
+CREATE TABLE user_relations
+(
+    ID int AUTO_INCREMENT PRIMARY KEY,
+    `from_user` int,
+    `to_user` int,
+    `read` tinyint default 0,
+    follow_time timestamp,
+    unique (`from_user`, `to_user`),
+    index (`to_user`),
+    index (`follow_time`)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '用户关系表已经生成' as tip;
+
+-- 黑名单
+DROP TABLE IF EXISTS user_denies;
+CREATE TABLE user_denies
+(
+    ID int AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null,
+    denier int not null,
+    INDEX (user_id, denier)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '黑名单表已经生成' as tip;
 
 -- 领取金币表
 DROP TABLE IF EXISTS imoney_logs;
@@ -161,34 +189,6 @@ CREATE TABLE user_feedbacks
 ENGINE = MyISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT = 100000;
 select '用户反馈表已经生成' as tip;
 
--- 用户关系表 用户之间的关系包括：关注，信任，互信，一体
-DROP TABLE IF EXISTS user_relations;
-CREATE TABLE user_relations
-(
-    ID int AUTO_INCREMENT PRIMARY KEY,
-    `from_user` int,
-    `to_user` int,
-    `read` tinyint default 0,
-    follow_time timestamp,
-    unique (`from_user`, `to_user`),
-    index (`to_user`),
-    index (`follow_time`)
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '用户关系表已经生成' as tip;
-
--- 黑名单
-DROP TABLE IF EXISTS user_denies;
-CREATE TABLE user_denies
-(
-    ID int AUTO_INCREMENT PRIMARY KEY,
-    user_id int not null,
-    denier int not null,
-    INDEX (user_id, denier)
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '黑名单表已经生成' as tip;
-
 /*************************************\
  * 频道模块
 \*************************************/
@@ -257,7 +257,7 @@ CREATE TABLE chan_applicants
     chan_id int,
     user_id int,
     reason varchar(255),
-    `status` enum('untreated', 'accept', 'refuse') default 'untreated', -- 0表示没有处理，1表示申请通过，2表示申请被拒绝
+    `status` enum('untreated', 'accepted', 'refused') default 'untreated', -- 0表示没有处理，1表示申请通过，2表示申请被拒绝
     apply_time timestamp,
     index (chan_id, `status`),
     index (user_id, `status`)
@@ -477,7 +477,12 @@ CREATE TABLE notices
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null, -- 信息的所有者
-    `type` enum('mail', 'approve', 'reply', 'apply', 'fan', 'invite') default 'mail', --
+    `type` enum('reply', 'follow', 'invite', 'approve', 'apply') default 'reply',
+    -- reply 发出的信息或者评论收到回复
+    -- follow 有人关注
+    -- invite 受到加入某个频道的邀请
+    -- approve 发出的信息收到赞同
+    -- apply 加入频道的申请通知
     data_id bigint default 0,
     message varchar(255),
     create_time timestamp,

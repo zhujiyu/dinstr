@@ -441,9 +441,7 @@ class DisChannelCtrl extends DisChannelData
         $apply = new DisChanApplicantCtrl();
         if( $apply->exist($user_id, $this->ID) )
             throw new DisParamException('申请已经发送，不用重复申请！');
-
         $applicant_id = $apply->insert($user_id, (int)$this->ID, $reason);
-        $this->increase("applicant_num");
 
         $manager_ids = $this->list_manager_ids();
         $len = count($manager_ids);
@@ -453,42 +451,43 @@ class DisChannelCtrl extends DisChannelData
             $notice->add_apply_notice($applicant_id);
         }
 
+        $this->increase("applicant_num");
         $param = new DisUserParamCtrl();
         $param->ID = $user_id;
         $param->increase('applicant_num');
     }
 
-    function accept_apply($applicant_id, $user_id)
+    function accept_apply($applicant_id)
     {
         if( !$this->ID || !$applicant_id )
             throw new DisParamException('参数不合法！');
 
         $apply = new DisChanApplicantCtrl($applicant_id);
         $apply->accept();
+
+        $user_id = $apply->attr('user_id');
         $this->add_member($user_id);
         $this->reduce("applicant_num");
-        $this->increase('member_num');
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
         $param->reduce('applicant_num');
-        $param->increase('join_num');
-
+        
         $notice = new DisNoticeCtrl($user_id);
         $notice->add_apply_notice($applicant_id, "你加入".$this->detail['name']."的申请已经通过！");
     }
 
-    function refuse_apply($applicant_id, $user_id, $reason = "")
+    function refuse_apply($applicant_id, $reason = "")
     {
         if( !$this->ID || !$applicant_id )
             throw new DisParamException('参数不合法！');
 
         $apply = new DisChanApplicantCtrl($applicant_id);
         $apply->refuse();
-        $this->reduce("applicant_num");
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $this->reduce("applicant_num");
+        $user_id = $apply->attr('user_id');
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->reduce('applicant_num');
 
         $notice = new DisNoticeCtrl($user_id);

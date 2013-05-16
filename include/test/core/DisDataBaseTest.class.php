@@ -25,15 +25,17 @@ DisDBTable::$writePDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'roo
 
 abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
 {
-//    protected $mock;
-//    protected $columns;
-//    protected $table;
     protected $pdo;
     protected $default_data_file;
 
-    function  __construct()
+    function  __construct($sqls = null)
     {
         $this->pdo = DisDBTable::$readPDO;
+        if( $sqls == null )
+            return;
+        $len = count($sqls);
+        for( $i = 0; $i < $len; $i ++ )
+            $this->pdo->exec($sqls[$i]);
     }
 
     protected function getConnection()
@@ -59,24 +61,23 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
         return $this->createFlatXMLDataSet($path);
     }
 
-//    protected function _getDatabaseTable($table = null, $query = null)
-//    {
-//        if( $table == null )
-//            $table = $this->table;
-//        if( $query == null )
-//            $query = "select $this->columns from $table";
-//        return new PHPUnit_Extensions_Database_DataSet_QueryTable($table, $query,
-//            $this->getConnection());
-//    }
-//
-//    protected function _getXmlTable($file = null, $table = null)
-//    {
-//        if( !$file )
-//            $file = $this->default_data_file;
-//        if( !$table )
-//            $table = $this->table;
-//        return $this->_getDataSet($file)->getTable($table);
-//    }
+    protected function _getDBRow($table, $slt, $whr)
+    {
+        return DisDBTable::load_line_data("select $slt from $table where $whr");
+    }
+
+    protected function _getDatabaseTable($table, $slt)
+    {
+        return new PHPUnit_Extensions_Database_DataSet_QueryTable($table,
+                "select $slt from $table", $this->getConnection());
+    }
+
+    protected function _getXmlTable($table, $file = null)
+    {
+        if( $file == null )
+            $file = $this->default_data_file;
+        return $this->_getDataSet($file)->getTable($table);
+    }
 }
 
 ?>

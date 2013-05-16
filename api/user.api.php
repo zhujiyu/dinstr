@@ -69,7 +69,10 @@ try
         }
         else if( $view == 'pword' )
         {
-            $user->reset_pword($info['old_pword'], $info['new_pword']);
+            if( !$user->check_password($info['old_pword']) )
+                throw new DisException('原密码错误！');
+            $user->update_password($info['new_pword']);
+//            $user->reset_pword($info['old_pword'], $info['new_pword']);
         }
 //        elseif ( $view == 'tag-add' )
 //        {

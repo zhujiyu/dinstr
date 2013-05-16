@@ -420,7 +420,6 @@ class DisUserCtrl extends DisUserData
     {
         $left = $page * $count;
         $hope = $left + $count;
-
 //        pmCacheUserVector::set_reply_mail_ids($this->ID, null);
         $mail_ids = DisUserVectorCache::get_reply_mail_ids($this->ID);
 
@@ -568,36 +567,36 @@ class DisUserCtrl extends DisUserData
      * @return DisUserCtrl
      */
     static function register($username, $password, $email = '',
-            $sign = '', $self_intro = '', $live_city = '', $gender = 'none')
+            $sign = '', $self_intro = '', $gender = 'none', $live_city = '')
     {
         if( self::get_uid_by_name($username) > 0 )
             throw new DisParamException('该用户名已经被占用了！');
         if( $email && self::get_uid_by_email($email) > 0 )
             throw new DisParamException('该邮箱已经注册了！');
 
-        $salt = substr(md5(rand()), 0, 5);
-        $password = md5($password.md5($salt));
-
         $user = new DisUserCtrl();
-        $user->insert($username, $password, $salt, $email, $sign, $self_intro, $live_city, $gender);
+        $salt = substr(md5(rand()), 0, 16).substr(md5(rand()), 0, 16);
+        $password = md5($password.$salt);
+        $user->insert($username, $password, $salt, $email, $sign, $self_intro,
+                $gender, $live_city);
 
         $param = new DisUserParamCtrl();
         $param->insert($user->ID);
         return $user;
     }
 
-    function reset_pword($old_pword, $new_pword)
-    {
-        if( !$this->ID )
-            throw new DisParamException('对象没有初始化！');
-        if( !$this->detail )
-            $this->detail = self::get_data($this->ID);
-
-        $r = $this->check_password($old_pword);
-        if( !$r )
-            throw new DisException('原密码错误！');
-        return $this->update_password($new_pword);
-    }
+//    function reset_pword($old_pword, $new_pword)
+//    {
+//        if( !$this->ID )
+//            throw new DisParamException('对象没有初始化！');
+//        if( !$this->detail )
+//            $this->detail = self::get_data($this->ID);
+//
+//        $r = $this->check_password($old_pword);
+//        if( !$r )
+//            throw new DisException('原密码错误！');
+//        return $this->update_password($new_pword);
+//    }
 
     /**
      * 判断是否跟踪某个人

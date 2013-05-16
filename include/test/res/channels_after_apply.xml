@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <chan_applicants ID="1000000" chan_id="1593648" user_id="1000012" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
+    <chan_applicants ID="1000011" chan_id="1593648" user_id="1000000" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
+    <chan_applicants ID="1000012" chan_id="1593490" user_id="1000012" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
+</dataset>

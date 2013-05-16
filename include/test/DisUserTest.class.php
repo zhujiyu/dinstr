@@ -16,10 +16,7 @@ class DisUserTest extends DisDataBaseTest
 {
     function  __construct()
     {
-        parent::__construct();
-        $this->default_data_file = 'users.xml';
-
-        $sqls = array("drop table users","
+        $sqls = array("
 CREATE TABLE users
 (
     -- 用户核心信息，其中ID，username,email都可用于登录
@@ -28,7 +25,7 @@ CREATE TABLE users
     username varchar(32),
     avatar bigint default 0, -- 头像
     -- 安全设置
-    salt char(5),
+    salt char(32),
     `password` char(32), -- 用md5算法将密码转成32位
     impassword char(32),  -- 资金帐号密码，支付密码
     check_errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
@@ -80,28 +77,47 @@ CREATE TABLE user_params
     fans_notice int default 0
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
+        ", "
+CREATE TABLE user_relations
+(
+    ID int AUTO_INCREMENT PRIMARY KEY,
+    `from_user` int,
+    `to_user` int,
+    `read` tinyint default 0,
+    follow_time timestamp,
+    unique (`from_user`, `to_user`),
+    index (`to_user`),
+    index (`follow_time`)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE new_notices
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null, -- 信息的所有者
+    `type` enum('mail', 'approve', 'reply', 'apply', 'fan', 'invite') default 'mail', --
+    data_id bigint default 0,
+    message varchar(255),
+    create_time timestamp,
+    index (user_id, `type`, data_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE notices
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null, -- 信息的所有者
+    `type` enum('mail', 'approve', 'reply', 'apply', 'fan', 'invite') default 'mail', --
+    data_id bigint default 0,
+    message varchar(255),
+    create_time timestamp,
+    index (user_id, `type`)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         ");
 
-        $len = count($sqls);
-        for( $i = 0; $i < $len; $i ++ )
-            $this->pdo->exec($sqls[$i]);
-
-    }
-
-    protected function _getDataSet($file)
-    {
-        $xml_dataset = parent::_getDataSet($file);
-        $xml_datatable = $xml_dataset->getTable('users');
-        $count = $xml_datatable->getRowCount();
-
-        for( $i = 0; $i < $count; $i ++ )
-        {
-            $value1 = md5(md5($xml_datatable->getValue($i, 'password')).md5($xml_datatable->getValue($i, 'salt')));
-            $xml_datatable->setValue($i, 'password', $value1);
-            $value2 = md5(md5($xml_datatable->getValue($i, 'impassword')).md5($xml_datatable->getValue($i, 'salt')));
-            $xml_datatable->setValue($i, 'impassword', $value2);
-        }
-        return $xml_dataset;
+        parent::__construct($sqls);
+        $this->default_data_file = 'users.xml';
     }
 
     function testInit()
@@ -135,10 +151,9 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
         $user->init(1593490, "ID, username, sign, live_city, contact, self_intro, check_errs");
         $this->assertEquals(4, $user->attr('check_errs'));
 
-        $r1 = $user->check_password(md5('gou86.com'), 'imoney');
+        $r1 = $user->check_password(md5('heibaoban'), 'imoney');
         $this->assertTrue($r1);
         $user->init(1593490, "ID, username, sign, live_city, contact, self_intro, check_errs");
-        DisObject::print_array($user->info());
         $this->assertEquals(0, $user->attr('check_errs'));
     }
 
@@ -154,32 +169,103 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
         }
     }
 
-//    function testUpdatePassword()
-//    {
-//        $this->mock->init(1593490);
-//        $r1 = $this->mock->update_password(md5('kuke.com'));
-//        $this->assertTrue(!$r1);
-//        $r2 = $this->mock->update_password(md5('kuuuke.com'));
-//        $this->assertTrue($r2);
-//
-//        $user_table = $this->_getXmlTable('user_table.xml');
-//        $user_table->setValue(1, 'password', md5(md5('kuuuke.com').md5($user_table->getValue(1, 'salt'))));
-//        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-//    }
-//
-//    function testUpdateIMPassword()
-//    {
-//        $this->mock->init(1593490);
-//        $r1 = $this->mock->update_password(md5('gou86.com'), 'imoney');
-//        $this->assertTrue(!$r1);
-//        $r2 = $this->mock->update_password(md5('kuuuke.com'), 'imoney');
-//        $this->assertTrue($r2);
-//
-//        $user_table = $this->_getXmlTable('user_table.xml');
-//        $user_table->setValue(1, 'impassword', md5(md5('kuuuke.com').md5($user_table->getValue(1, 'salt'))));
-//        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-//    }
-//
+    function testUpdatePassword()
+    {
+        $user = new DisUserCtrl(1593490);
+        $r1 = $user->update_password(md5('kuke.com'));
+        $this->assertTrue($r1);
+        $r2 = $user->update_password(md5('heibaoban.com'));
+        $this->assertTrue($r2);
+        $user_t1 = $this->_getDatabaseTable('users',
+                'ID, username, email, salt, password, impassword');
+
+        $user_t2 = $this->_getXmlTable('users');
+        $salt = $user_t2->getValue(1, 'salt');
+        $user_t2->setValue(1, 'password', md5(md5('heibaoban.com').$salt));
+        $this->assertTablesEqual($user_t1, $user_t2);
+    }
+
+    function testUpdateIMPassword()
+    {
+        $user = new DisUserCtrl(1593490);
+        $r1 = $user->update_password(md5('gou86.com'), 'imoney');
+        $this->assertTrue($r1);
+        $r2 = $user->update_password(md5('heibaoban.com'), 'imoney');
+        $this->assertTrue($r2);
+        $user_t1 = $this->_getDatabaseTable('users',
+                'ID, username, email, salt, password, impassword');
+
+        $user_t2 = $this->_getXmlTable('users');
+        $salt = $user_t2->getValue(1, 'salt');
+        $user_t2->setValue(1, 'impassword', md5(md5('heibaoban.com').$salt));
+        $this->assertTablesEqual($user_t1, $user_t2);
+    }
+
+    function testFollow()
+    {
+        $user = new DisUserCtrl(1593490);
+        $user->follow(1234861);
+
+        $p1 = new DisUserParamCtrl(1593490);
+        $this->assertEquals(2, $p1->attr('follow_num'));
+        $p2 = new DisUserParamCtrl(1234861);
+        $this->assertEquals(11, $p2->attr('fans_num'));
+
+        $row = $this->_getDBRow('user_relations', "ID, `from_user`, `to_user`, `read`, follow_time",
+                "ID = 1000035");
+        $time = $row['follow_time'];
+        $t1 = $this->_getXmlTable('user_relations', 'users_after_insert.xml');
+        $t1->setValue(4, 'follow_time', $time);
+        $t2 = $this->_getDatabaseTable('user_relations', "ID, `from_user`, `to_user`, `read`, follow_time");
+        $this->assertTablesEqual($t1, $t2);
+    }
+
+    function testCancelFollow()
+    {
+        $user = new DisUserCtrl(1234861);
+        $user->cancel_follow(1593490);
+
+        $p1 = new DisUserParamCtrl(1234861);
+        $this->assertEquals(1, $p1->attr('follow_num'));
+        $p2 = new DisUserParamCtrl(1593490);
+        $this->assertEquals(0, $p2->attr('fans_num'));
+
+        $t2 = $this->_getXmlTable('user_relations', 'users_after_cf.xml');
+        $t1 = $this->_getDatabaseTable('user_relations', "ID, `from_user`, `to_user`, `read`, follow_time");
+        $this->assertTablesEqual($t1, $t2);
+    }
+
+    function testRegister()
+    {
+        $user = DisUserCtrl::register('朱继玉', md5('332288'), 'zhuhz82@126.com');
+        $this->assertEquals('朱继玉', $user->attr('username'));
+        $user_t1 = $this->_getDatabaseTable('users', 'ID, username, email, salt, password, impassword');
+
+        $row = $this->_getDBRow('users', 'ID, username, email, salt, password, impassword',
+                "username = '朱继玉'");
+        $salt = $row['salt'];
+
+        $user_t2 = $this->_getXmlTable('users', 'users_after_insert.xml');
+        $user_t2->setValue(3, 'salt', $salt);
+        $user_t2->setValue(3, 'password', md5(md5('332288').$salt));
+//        $user_t2->setValue(3, 'impassword', md5(md5('55332288').$salt));
+        $this->assertTablesEqual($user_t2, $user_t1);
+    }
+
+    function testParam()
+    {
+        $user = new DisUserParamCtrl(1234861);
+        $this->assertEquals(10, $user->attr('fans_num'));
+        $user->increase('fans_num');
+        $this->assertEquals(11, $user->attr('fans_num'));
+        $user->increase('fans_num', 3);
+        $this->assertEquals(14, $user->attr('fans_num'));
+        $user->reduce('fans_num', 10);
+        $this->assertEquals(4, $user->attr('fans_num'));
+        $user->reduce('fans_num', 10);
+        $this->assertEquals(0, $user->attr('fans_num'));
+    }
+
 //    /**
 //     * @expectedException soParamException
 //     */
@@ -229,23 +315,6 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
 //    {
 //        $this->mock->init(1234861);
 //        $this->mock->notice('fans_notice', -10);
-//    }
-//
-//    function testInsertUser()
-//    {
-//        global $salt;
-//        $this->mock->insert('朱继玉', md5('332288'), md5('55332288'));
-//        $this->assertEquals('朱继玉', $this->mock->attr('username'));
-//
-//        $user_table = $this->_getXmlTable('user_table_after_insert.xml');
-//        $user_table->setValue(3, 'salt', $salt);
-//        $user_table->setValue(3, 'password', md5(md5('332288').md5($salt)));
-//        $user_table->setValue(3, 'impassword', md5(md5('55332288').md5($salt)));
-//        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-//
-//        $this->mock->init(1593649);
-//        $r = $this->mock->check_password(md5('55332288'), 'imoney');
-//        $this->assertTrue($r);
 //    }
 //
 //    function testFreeze()
@@ -340,15 +409,23 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
 //        $this->mock->freeze(120.50);
 //        $this->mock->pay(128.50);
 //    }
-//
-//    function testParam()
-//    {
-//        $this->mock->init(1234861);
-//        $this->assertEquals(0, $this->mock->attr('fans_num'));
-//        $this->mock->increase('fans_num');
-//        $this->assertEquals(1, $this->mock->attr('fans_num'));
-//    }
 }
+
+//    protected function _getDataSet($file)
+//    {
+//        $xml_dataset = parent::_getDataSet($file);
+//        $xml_datatable = $xml_dataset->getTable('users');
+//        $count = $xml_datatable->getRowCount();
+//
+//        for( $i = 0; $i < $count; $i ++ )
+//        {
+//            $value1 = md5(md5($xml_datatable->getValue($i, 'password')).md5($xml_datatable->getValue($i, 'salt')));
+//            $xml_datatable->setValue($i, 'password', $value1);
+//            $value2 = md5(md5($xml_datatable->getValue($i, 'impassword')).md5($xml_datatable->getValue($i, 'salt')));
+//            $xml_datatable->setValue($i, 'impassword', $value2);
+//        }
+//        return $xml_dataset;
+//    }
 
 //    protected function getDataSet()
 //    {

@@ -16,10 +16,6 @@ class DisChanTest extends DisDataBaseTest
 {
     function  __construct()
     {
-        parent::__construct();
-        $this->default_data_file = "channels.xml";
-        $this->pdo->exec("drop table chan_users");
-
         $sqls = array("
 CREATE TABLE channels
 (
@@ -41,8 +37,7 @@ CREATE TABLE channels
     index (create_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
-        ",
-            "drop table chan_users", "
+        ", "
 CREATE TABLE chan_users
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
@@ -69,7 +64,7 @@ CREATE TABLE users
     username varchar(32),
     avatar bigint default 0, -- 头像
     -- 安全设置
-    salt char(5),
+    salt char(32),
     `password` char(32), -- 用md5算法将密码转成32位
     impassword char(32),  -- 资金帐号密码，支付密码
     last_check int default 0, -- 最后一次密码检验时间，用于设置密码锁定一小时
@@ -121,13 +116,23 @@ CREATE TABLE user_params
     fans_notice int default 0
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
+        ", "drop table chan_applicants", "
+CREATE TABLE chan_applicants
+(
+    ID int AUTO_INCREMENT PRIMARY KEY,
+    chan_id int,
+    user_id int,
+    reason varchar(255),
+    `status` enum('untreated', 'accepted', 'refused') default 'untreated', -- 0表示没有处理，1表示申请通过，2表示申请被拒绝
+    apply_time timestamp,
+    index (chan_id, `status`),
+    index (user_id, `status`)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         ");
 
-        $len = count($sqls);
-        for( $i = 0; $i < $len; $i ++ )
-            $this->pdo->exec($sqls[$i]);
-
-//        $this->pdo->exec("source sqls/chan.test.sql");
+        parent::__construct($sqls);
+        $this->default_data_file = "channels.xml";
     }
 
     function testLoadData()
@@ -156,63 +161,68 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
     function testAddSubscriber()
     {
         $chan = new DisChannelCtrl(1593648);
-        $chan->add_subscriber(1000000);
+        $chan->add_subscriber(1000012);
         $this->assertEquals(2, $chan->attr('subscriber_num'));
-        $cu = new DisChanUserCtrl(1000000, 1593648);
+        $cu = new DisChanUserCtrl(1000012, 1593648);
         $this->assertEquals('subscriber', DisChanUserCtrl::role($cu->attr('role')));
-        $param = new DisUserParamCtrl(1000000);
+        $param = new DisUserParamCtrl(1000012);
         $this->assertEquals(1, $param->attr('subscribe_num'));
     }
 
+    /**
+     * @expectedException DisParamException
+     */
     function testRemoveSubscriber()
     {
         $chan = new DisChannelCtrl(1593648);
         $this->assertEquals(1, $chan->attr('subscriber_num'));
-        $chan->remove_subscriber(1000012);
+        $chan->remove_subscriber(1000000);
         $this->assertEquals(0, $chan->attr('subscriber_num'));
-        $param = new DisUserParamCtrl(1000012);
-        $this->assertEquals(1, $param->attr('subscribe_num'));
+        $param = new DisUserParamCtrl(1000000);
+        $this->assertEquals(2, $param->attr('subscribe_num'));
+        $cu2 = new DisChanUserCtrl(1000000, 1593648);
+        $this->assertEquals('subscriber', DisChanUserCtrl::role($cu2->attr('role')));
     }
 
     function testAddMember()
     {
-        $chan1 = new DisChannelCtrl(1234861);
+        $chan1 = new DisChannelCtrl(1593648);
         $chan1->add_member(1000012);
-        $this->assertEquals(1, $chan1->attr('subscriber_num'));
+        $this->assertEquals(2, $chan1->attr('subscriber_num'));
         $this->assertEquals(1, $chan1->attr('member_num'));
-        $cu1 = new DisChanUserCtrl(1000012, 1234861);
+        $cu1 = new DisChanUserCtrl(1000012, 1593648);
         $this->assertEquals('member', DisChanUserCtrl::role($cu1->attr('role')));
 
         $chan2 = new DisChannelCtrl(1593648);
-        $cu2 = new DisChanUserCtrl(1000012, 1593648);
+        $cu2 = new DisChanUserCtrl(1000000, 1593648);
         $this->assertEquals('subscriber', DisChanUserCtrl::role($cu2->attr('role')));
-        $chan2->add_member(1000012);
-        $this->assertEquals(1, $chan2->attr('subscriber_num'));
-        $this->assertEquals(1, $chan2->attr('member_num'));
-        $cu3 = new DisChanUserCtrl(1000012, 1593648);
+        $chan2->add_member(1000000);
+        $this->assertEquals(2, $chan2->attr('subscriber_num'));
+        $this->assertEquals(2, $chan2->attr('member_num'));
+        $cu3 = new DisChanUserCtrl(1000000, 1593648);
         $this->assertEquals('member', DisChanUserCtrl::role($cu3->attr('role')));
 
         $param = new DisUserParamCtrl(1000012);
-        $this->assertEquals(3, $param->attr('join_num'));
+        $this->assertEquals(1, $param->attr('join_num'));
     }
 
     function testRemoveMember()
     {
         $chan1 = new DisChannelCtrl(1593648);
-        $chan1->remove_member(1000012);
-        $cu1 = new DisChanUserCtrl(1000012, 1593648);
+        $chan1->remove_member(1000000);
+        $cu1 = new DisChanUserCtrl(1000000, 1593648);
         $this->assertEquals('subscriber', DisChanUserCtrl::role($cu1->attr('role')));
 
-        $param1 = new DisUserParamCtrl(1000012);
-        $this->assertEquals(1, $param1->attr('join_num'));
+        $param1 = new DisUserParamCtrl(1000000);
+        $this->assertEquals(2, $param1->attr('join_num'));
 
         $chan2 = new DisChannelCtrl(1593490);
-        $chan2->remove_member(1000012);
-        $cu2 = new DisChanUserCtrl(1000012, 1593490);
+        $chan2->remove_member(1000000);
+        $cu2 = new DisChanUserCtrl(1000000, 1593490);
         $this->assertEquals('subscriber', DisChanUserCtrl::role($cu2->attr('role')));
 
-        $param2 = new DisUserParamCtrl(1000012);
-        $this->assertEquals(0, $param2->attr('join_num'));
+        $param2 = new DisUserParamCtrl(1000000);
+        $this->assertEquals(1, $param2->attr('join_num'));
     }
 
     function testCreate()
@@ -225,34 +235,64 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
         $this->assertEquals(1, $param->attr('create_num'));
     }
 
-//    protected function _getDataSet($file)
-//    {
-//        $xml_dataset = $this->createFlatXMLDataSet(dirname(__FILE__).'/_files/'.$file);
-//        if( $xml_dataset == null )
-//            return NULL;
-//        $xml_datatable = $xml_dataset->getTable('channels');
-//        if( $xml_datatable == null )
-//            return NULL;
-//
-//        $count = $xml_datatable->getRowCount();
-//        for ( $i = 0; $i < $count; $i ++ )
-//        {
-//            $value = md5(md5($xml_datatable->getValue($i, 'password')).md5($xml_datatable->getValue($i, 'salt')));
-//            $xml_datatable->setValue($i, 'password', $value);
-//        }
-//        return $xml_dataset;
-//    }
+    function testApply()
+    {
+        $chan1 = new DisChannelCtrl(1593490);
+        $chan1->apply(1000012, "申请加入");
+        $this->assertEquals(1, $chan1->attr('applicant_num'));
 
-//    function testInsert()
-//    {
-//        $this->mock->insert(1234861, '新加网寨', md5('121981'), 'gou86@sina.cn');
-//        $table = $this->_getXmlTable('office_after_insert.xml');
-//        $table->setValue(3, 'salt', $salt);
-//        $table->setValue(3, 'password', md5(md5('121981').md5($salt)));
-//        $this->assertTablesEqual($table, $this->_getDatabaseTable());
-//        $r = $this->mock->name_exist('新加网寨');
-//        $this->assertTrue($r);
-//    }
+        $user = new DisUserParamCtrl(1000012);
+        $this->assertEquals(2, $user->attr('applicant_num'));
+
+        $row = $this->_getDBRow('chan_applicants', "ID, chan_id, user_id, reason, status, apply_time",
+                "ID = 1000012");
+        $time = $row['apply_time'];
+
+        $t1 = $this->_getXmlTable('chan_applicants', 'channels_after_apply.xml');
+        $t1->setValue(2, 'apply_time', $time);
+        $t2 = $this->_getDatabaseTable('chan_applicants', "ID, chan_id, user_id, reason, status, apply_time");
+        $this->assertTablesEqual($t1, $t2);
+    }
+
+    function testAcceptApply()
+    {
+        $chan1 = new DisChannelCtrl(1593648);
+        $chan1->accept_apply(1000000);
+        $this->assertEquals(1, $chan1->attr('applicant_num'));
+        $this->assertEquals(1, $chan1->attr('member_num'));
+        $this->assertEquals(2, $chan1->attr('subscriber_num'));
+
+        $user = new DisUserParamCtrl(1000012);
+        $this->assertEquals(0, $user->attr('applicant_num'));
+        $this->assertEquals(1, $user->attr('join_num'));
+        $this->assertEquals(1, $user->attr('subscribe_num'));
+
+        $apply = new DisChanApplicantCtrl(1000000);
+        $this->assertEquals('accepted', $apply->attr('status'));
+
+        $chan1->accept_apply(1000011);
+        $this->assertEquals(0, $chan1->attr('applicant_num'));
+        $this->assertEquals(2, $chan1->attr('member_num'));
+        $this->assertEquals(2, $chan1->attr('subscriber_num'));
+
+        $user2 = new DisUserParamCtrl(1000000);
+        $this->assertEquals(0, $user2->attr('applicant_num'));
+        $this->assertEquals(3, $user2->attr('join_num'));
+        $this->assertEquals(3, $user2->attr('subscribe_num'));
+    }
+
+    function testRefuseApply()
+    {
+        $chan1 = new DisChannelCtrl(1234861);
+        $chan1->refuse_apply(1000000);
+        $this->assertEquals(0, $chan1->attr('applicant_num'));
+
+        $user = new DisUserParamCtrl(1000012);
+        $this->assertEquals(0, $user->attr('applicant_num'));
+
+        $apply = new DisChanApplicantCtrl(1000000);
+        $this->assertEquals('refused', $apply->attr('status'));
+    }
 }
 
 //$file = "common.inc.php";

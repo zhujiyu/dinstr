@@ -66,24 +66,22 @@ class DisChanApplicantData extends DisDBTable
             throw new DisParamException("参数不合法！");
         $str = "delete from $this->table where ID = $this->ID";
         return parent::check_query($str, 1);
-//        return (parent::query($str) === 1);
     }
 
     function accept()
     {
         if( !$this->ID )
-            throw new DisParamException("参数不合法！");
-        $str = "update $this->table set status = 'accept' where ID = $this->ID";
+            throw new DisParamException("对象未初始化！");
+        $str = "update $this->table set status = 'accepted' where ID = $this->ID";
         return parent::check_query($str, 1);
-//        return parent::query($str) == 1;
     }
 
     function refuse()
     {
         if( !$this->ID )
-            throw new DisParamException("参数不合法！");
-        $str = "update $this->table set status = 'refuse' where ID = $this->ID";
-        return parent::query($str) == 1;
+            throw new DisParamException("对象未初始化！");
+        $str = "update $this->table set status = 'refused' where ID = $this->ID";
+        return parent::check_query($str, 1);
     }
 
 //    static function list_applicants($chan_id, $page = 0, $count = 40)

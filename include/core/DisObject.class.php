@@ -65,7 +65,7 @@ class DisObject
             if( $this->detail != null && array_key_exists($name, $this->detail) )
                 $value = $this->detail[$name];
             else
-                throw new DisException('Not exist key.'.$name);
+                throw new DisParamException('Not exist key.'.$name);
         }
         else
             $this->detail[$name] = $value;

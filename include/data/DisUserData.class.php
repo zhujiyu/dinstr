@@ -64,8 +64,8 @@ class DisUserData extends DisDBTable
                 from $this->table where ID = $this->ID";
         else
             $str = "select ID, salt, password from $this->table where ID = $this->ID";
-        $data = parent::load_line_data($str);
 
+        $data = parent::load_line_data($str);
         if( $data == null )
             throw new DisDBException('读取数据失败');
         if( $type == 'imoney' && $data['check_errs'] >= 5 && $data['last_check'] + 3600 * 4 > time() )
@@ -85,7 +85,8 @@ class DisUserData extends DisDBTable
             throw new DisParamException('对象没有初始化！');
 
         $data = $this->_get_salt($type);
-        if( $data['password'] != md5($password.md5($data['salt'])) )
+//        if( $data['password'] != md5($password.md5($data['salt'])) )
+        if( $data['password'] != md5($password.$data['salt']) )
         {
             if( $type == 'imoney' )
             {
@@ -115,9 +116,11 @@ class DisUserData extends DisDBTable
             throw new DisParamException('对象没有初始化！');
 
         $data = $this->_get_salt($type);
-        $password = md5($password.md5($data['salt']));
+        $password = md5($password.$data['salt']);
+        if( $data['password'] == $password )
+            return true;
 
-        if( $type && $type == 'imoney' )
+        if( $type == 'imoney' )
             $str = "update $this->table set impassword ='$password' where ID = $this->ID";
         else
             $str = "update $this->table set password ='$password' where ID = $this->ID";
@@ -187,7 +190,7 @@ class DisUserData extends DisDBTable
     // 密码是原始密码的MD5值
     // 成功返回1，返回插入操作受影响的行数
     protected function insert($username, $password, $salt, $email = '', $sign = '',
-            $self_intro = '', $live_city = '', $gender = 'none')
+            $self_intro = '', $gender = 'none', $live_city = '')
     {
         if( !$username || !$password || !$email )
             throw new DisParamException('用户名、密码，邮箱地址三项不能为空！');
