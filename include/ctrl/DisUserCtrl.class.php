@@ -113,10 +113,10 @@ class DisUserCtrl extends DisUserData
             try
             {
                 $user = self::get_data($user_ids[$i]);
-                $mail_id = self::get_last_mail_id($user_ids[$i]);
+                $mail_id = self::get_last_note_id($user_ids[$i]);
                 if( $mail_id > 0 )
                 {
-                    $user['mail'] = DisNoteCtrl::get_mail_view($mail_id);
+                    $user['mail'] = DisNoteCtrl::get_note_view($mail_id);
                     $user['mail'][content] = strip_tags($user['mail'][content]);
                 }
             }
@@ -166,10 +166,10 @@ class DisUserCtrl extends DisUserData
         $len = count($theme_ids);
         for( $i = 0; $i < $len; $i ++ )
         {
-            $theme = DisHeadCtrl::theme($theme_ids[$i]);
-            $data = $theme->theme_view();
+            $theme = DisHeadCtrl::head($theme_ids[$i]);
+            $data = $theme->head_view();
             $data['status'] = $theme->check_status($this->ID);
-            $data['last_mail'] = $theme->last_mail();
+            $data['last_mail'] = $theme->last_note();
             array_push($themes, $data);
         }
         return $themes;
@@ -182,9 +182,9 @@ class DisUserCtrl extends DisUserData
 
         for( $i = 0; $i < $count; $i ++ )
         {
-            $mail = DisNoteCtrl::get_mail_view($mail_ids[$i]);
+            $mail = DisNoteCtrl::get_note_view($mail_ids[$i]);
             $mail[content] = strip_tags($mail[content]);
-            $theme = DisHeadCtrl::theme($mail['theme_id']);
+            $theme = DisHeadCtrl::head($mail['theme_id']);
             $mail[theme] = $theme->info();
             $mail[theme][status] = $theme->check_status($this->ID);
             array_push($mail_list, $mail);
@@ -197,12 +197,12 @@ class DisUserCtrl extends DisUserData
         $flow_list = array();
         $len = count($flow_ids);
 
-        for ( $i = 0; $i < $len; $i ++ )
+        for( $i = 0; $i < $len; $i ++ )
         {
             try
             {
                 $flow = DisStreamCtrl::get_flow_view($flow_ids[$i]);
-                $theme = DisHeadCtrl::theme($flow['theme_id']);
+                $theme = DisHeadCtrl::head($flow['theme_id']);
                 $flow['theme']['status'] = $theme->check_status($this->ID);
             }
             catch (DisException $ex)
@@ -327,9 +327,9 @@ class DisUserCtrl extends DisUserData
     protected function _list_interest_theme_ids($max_id = 0, $count = 200)
     {
         $theme_ids = array();
-        $ids = DisHeadUserData::list_interest_theme_ids($this->ID, $max_id, $count);
+        $ids = DisInfoUserData::list_interest_theme_ids($this->ID, $max_id, $count);
         $len = count($ids);
-        for ($i = 0; $i < $len; $i ++ )
+        for( $i = 0; $i < $len; $i ++ )
             $theme_ids[$i] = $ids[$i]['theme_id'];
         return $theme_ids;
     }
@@ -342,14 +342,14 @@ class DisUserCtrl extends DisUserData
         $start = $page * $count;
         $hope = $start + $count;
 //        pmCacheUserVector::set_interest_theme_ids($this->ID, null);
-        $theme_ids = DisUserVectorCache::get_interest_theme_ids($this->ID);
+        $theme_ids = DisUserVectorCache::get_interest_head_ids($this->ID);
 
         if( !$theme_ids )
         {
             $theme_ids = $this->_list_interest_theme_ids(0, $hope);
             if( count($theme_ids) == 0 )
                 $theme_ids[0] = "#E#";
-            DisUserVectorCache::set_interest_theme_ids($this->ID, $theme_ids);
+            DisUserVectorCache::set_interest_head_ids($this->ID, $theme_ids);
         }
         else if( $theme_ids[0] != "#E#" )
         {
@@ -358,7 +358,7 @@ class DisUserCtrl extends DisUserData
             {
                 $temp_ids = $this->_list_interest_theme_ids($theme_ids[$len - 1], $hope - $len);
                 $theme_ids = array_merge($theme_ids, $temp_ids);
-                DisUserVectorCache::set_interest_theme_ids($this->ID, $theme_ids);
+                DisUserVectorCache::set_interest_head_ids($this->ID, $theme_ids);
             }
         }
 
@@ -368,14 +368,14 @@ class DisUserCtrl extends DisUserData
     protected function _list_approved_theme_ids($start = 0, $count = 20)
     {
         $theme_ids = array();
-        $ids = DisHeadUserData::list_approve_theme_ids($this->ID, $start, $count);
+        $ids = DisInfoUserData::list_approve_theme_ids($this->ID, $start, $count);
         $len = count($ids);
         for( $i = 0; $i < $len; $i ++ )
             $theme_ids[$i] = $ids[$i]['theme_id'];
         return $theme_ids;
     }
 
-    function list_approved_theme_ids($page = 0, $count = 20)
+    function list_approved_head_ids($page = 0, $count = 20)
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
@@ -383,37 +383,37 @@ class DisUserCtrl extends DisUserData
         $start = $page * $count;
         $hope = $start + $count;
 //        pmCacheUserVector::set_approved_theme_ids($this->ID, null);
-        $theme_ids = DisUserVectorCache::get_approved_theme_ids($this->ID);
+        $head_ids = DisUserVectorCache::get_approved_head_ids($this->ID);
 
-        if( !$theme_ids )
+        if( !$head_ids )
         {
-            $theme_ids = $this->_list_approved_theme_ids(0, $hope);
-            if( count($theme_ids) == 0 )
-                $theme_ids[0] = "#E#";
-            DisUserVectorCache::set_approved_theme_ids($this->ID, $theme_ids);
+            $head_ids = $this->_list_approved_theme_ids(0, $hope);
+            if( count($head_ids) == 0 )
+                $head_ids[0] = "#E#";
+            DisUserVectorCache::set_approved_head_ids($this->ID, $head_ids);
         }
-        else if( $theme_ids[0] != "#E#" )
+        else if( $head_ids[0] != "#E#" )
         {
-            $len = count($theme_ids);
+            $len = count($head_ids);
             if( $len < $hope )
             {
-                $temp_ids = $this->_list_approved_theme_ids($theme_ids[$len - 1], $hope - $len);
-                $theme_ids = array_merge($theme_ids, $temp_ids);
-                DisUserVectorCache::set_approved_theme_ids($this->ID, $theme_ids);
+                $temp_ids = $this->_list_approved_theme_ids($head_ids[$len - 1], $hope - $len);
+                $head_ids = array_merge($head_ids, $temp_ids);
+                DisUserVectorCache::set_approved_head_ids($this->ID, $head_ids);
             }
         }
 
-        return list_slice($theme_ids, $start, $count);
+        return list_slice($head_ids, $start, $count);
     }
 
     private function _list_reply_mail_ids($max_id, $size = 20)
     {
-        $mail_ids = array();
-        $mails = DisNoteReplyData::load_reply_mails($this->ID, $max_id, $size);
-        $count = count($mails);
+        $notes = DisInfoReplyData::load_reply_mails($this->ID, $max_id, $size);
+        $count = count($notes);
+        $note_ids = array();
         for ( $i = 0; $i < $count; $i ++ )
-            $mail_ids[$i] = $mails[$i]['mail_id'];
-        return $mail_ids;
+            $note_ids[$i] = $notes[$i]['mail_id'];
+        return $note_ids;
     }
 
     function list_reply_mail_ids($page, $count = 20)
@@ -421,40 +421,40 @@ class DisUserCtrl extends DisUserData
         $left = $page * $count;
         $hope = $left + $count;
 //        pmCacheUserVector::set_reply_mail_ids($this->ID, null);
-        $mail_ids = DisUserVectorCache::get_reply_mail_ids($this->ID);
+        $note_ids = DisUserVectorCache::get_reply_note_ids($this->ID);
 
-        if( !$mail_ids )
+        if( !$note_ids )
         {
-            $mail_ids = $this->_list_reply_mail_ids(0, $hope);
-            if( count($mail_ids) == 0 )
-                $mail_ids[0] = "#E#";
-            DisUserVectorCache::set_reply_mail_ids($this->ID, $mail_ids);
+            $note_ids = $this->_list_reply_mail_ids(0, $hope);
+            if( count($note_ids) == 0 )
+                $note_ids[0] = "#E#";
+            DisUserVectorCache::set_reply_note_ids($this->ID, $note_ids);
         }
-        else if( $mail_ids[0] != "#E#" )
+        else if( $note_ids[0] != "#E#" )
         {
-            $have = count($mail_ids);
+            $have = count($note_ids);
             if( $have < $hope )
             {
-                $temp_ids = $this->_list_reply_mail_ids($mail_ids[$have - 1], $hope - $have);
-                $mail_ids = array_merge($mail_ids, $temp_ids);
-                DisUserVectorCache::set_reply_mail_ids($this->ID, $mail_ids);
+                $temp_ids = $this->_list_reply_mail_ids($note_ids[$have - 1], $hope - $have);
+                $note_ids = array_merge($note_ids, $temp_ids);
+                DisUserVectorCache::set_reply_note_ids($this->ID, $note_ids);
             }
         }
 
-        return list_slice($mail_ids, $left, $count);
+        return list_slice($note_ids, $left, $count);
     }
 
-    protected function _list_publish_mail_ids($max_id = 0, $count = 20)
+    protected function _list_publish_note_ids($max_id = 0, $count = 20)
     {
-        $mail_ids = array();
-        $mails = DisNoteCtrl::list_user_mails($this->ID, $max_id, $count);
-        $count = count($mails);
+        $notes = DisNoteCtrl::list_user_infos($this->ID, $max_id, $count);
+        $count = count($notes);
+        $note_ids = array();
         for( $i = 0; $i < $count; $i ++ )
-            $mail_ids[$i] = $mails[$i]['ID'];
-        return $mail_ids;
+            $note_ids[$i] = $notes[$i]['ID'];
+        return $note_ids;
     }
 
-    function list_publish_mail_ids($page = 0, $count = 20)
+    function list_publish_note_ids($page = 0, $count = 20)
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
@@ -462,54 +462,43 @@ class DisUserCtrl extends DisUserData
         $start = $page * $count;
         $hope = $start + $count;
 //        pmCacheUserVector::set_publish_mail_ids($this->ID, null);
-        $mail_ids = DisUserVectorCache::get_publish_mail_ids($this->ID);
+        $note_ids = DisUserVectorCache::get_publish_note_ids($this->ID);
 
-        if( !$mail_ids )
+        if( !$note_ids )
         {
-            $mail_ids = $this->_list_publish_mail_ids(0, $hope);
-            if( count($mail_ids) == 0 )
-                $mail_ids[0] = "#E#";
-            DisUserVectorCache::set_publish_mail_ids($this->ID, $mail_ids);
+            $note_ids = $this->_list_publish_note_ids(0, $hope);
+            if( count($note_ids) == 0 )
+                $note_ids[0] = "#E#";
+            DisUserVectorCache::set_publish_note_ids($this->ID, $note_ids);
         }
-        else if( $mail_ids[0] != "#E#" )
+        else if( $note_ids[0] != "#E#" )
         {
-            $len = count($mail_ids);
+            $len = count($note_ids);
             if( $len < $hope )
             {
-                $temp_ids = $this->_list_publish_mail_ids($mail_ids[$len - 1], $hope - $len);
-                $mail_ids = array_merge($mail_ids, $temp_ids);
-                DisUserVectorCache::set_publish_mail_ids($this->ID, $mail_ids);
+                $temp_ids = $this->_list_publish_note_ids($note_ids[$len - 1],
+                        $hope - $len);
+                $note_ids = array_merge($note_ids, $temp_ids);
+                DisUserVectorCache::set_publish_note_ids($this->ID, $note_ids);
             }
         }
 
-        return list_slice($mail_ids, $start, $count);
+        return list_slice($note_ids, $start, $count);
     }
 
-    function reply_notice($mail_id)
-    {
-        if( !$this->ID )
-            throw new DisParamException('对象没有初始化！');
-        if( !$mail_id )
-            throw new DisParamException("参数不合法");
-
-        DisNoteReplyData::insert($mail_id, $this->ID);
-        $notice = new DisNoticeCtrl($this->ID);
-        $notice->add_reply_notice($mail_id);
-    }
-
-    static function get_last_mail_id($user_id)
+    static function get_last_note_id($user_id)
     {
 //        pmVectorMemcached::set_last_mail_id($user_id, 0);
-        $mail_id = DisUserVectorCache::get_last_mail_id($user_id);
-        if( !$mail_id )
+        $note_id = DisUserVectorCache::get_last_note_id($user_id);
+        if( !$note_id )
         {
-            $mail_id = 0;
-            $mail = DisNoteCtrl::last_user_mail($user_id);
-            if( $mail )
-                $mail_id = $mail['ID'];
-            DisUserVectorCache::set_last_mail_id($user_id, $mail_id);
+            $note_id = 0;
+            $note = DisNoteCtrl::last_user_info($user_id);
+            if( $note )
+                $note_id = $note['ID'];
+            DisUserVectorCache::set_last_note_id($user_id, $note_id);
         }
-        return $mail_id;
+        return $note_id;
     }
 
     static function get_uid_by_name($username)
@@ -585,19 +574,6 @@ class DisUserCtrl extends DisUserData
         return $user;
     }
 
-//    function reset_pword($old_pword, $new_pword)
-//    {
-//        if( !$this->ID )
-//            throw new DisParamException('对象没有初始化！');
-//        if( !$this->detail )
-//            $this->detail = self::get_data($this->ID);
-//
-//        $r = $this->check_password($old_pword);
-//        if( !$r )
-//            throw new DisException('原密码错误！');
-//        return $this->update_password($new_pword);
-//    }
-
     /**
      * 判断是否跟踪某个人
      * @param integer $user_id 检查用户ID
@@ -634,7 +610,7 @@ class DisUserCtrl extends DisUserData
             $param2->increase('fans_num');
 
             $notice = new DisNoticeCtrl($target_id);
-            $notice->add_fan_notice($this->ID);
+            $notice->add_follow_notice($this->ID);
         }
         catch (DisException $ex)
         {
@@ -719,5 +695,31 @@ class DisUserCtrl extends DisUserData
         }
         DisUserDataCache::set_user_data($this->ID, null);
     }
+
+//    function reply_notice($note_id)
+//    {
+//        if( !$this->ID )
+//            throw new DisParamException('对象没有初始化！');
+//        if( !$note_id )
+//            throw new DisParamException("参数不合法");
+//
+//        DisInfoReplyData::insert($note_id, $this->ID);
+//        $notice = new DisNoticeCtrl($this->ID);
+//        $notice->add_reply_notice($note_id);
+//    }
+
+//    function reset_pword($old_pword, $new_pword)
+//    {
+//        if( !$this->ID )
+//            throw new DisParamException('对象没有初始化！');
+//        if( !$this->detail )
+//            $this->detail = self::get_data($this->ID);
+//
+//        $r = $this->check_password($old_pword);
+//        if( !$r )
+//            throw new DisException('原密码错误！');
+//        return $this->update_password($new_pword);
+//    }
+
 }
 ?>

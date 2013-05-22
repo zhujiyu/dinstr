@@ -47,7 +47,7 @@ abstract class DisDBTable extends DisObject
         return 0;
     }
 
-    protected function check_query($str, $count = 1)
+    static function check_query($str, $count = 1)
     {
         $r = self::query($str) == $count;
         return $r;

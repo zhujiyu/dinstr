@@ -15,4 +15,7 @@
     <user_relations ID="1000012" from_user="1593490" to_user="1593648" read="1" follow_time="2013-05-15 00:00:00"/>
     <user_relations ID="1000022" from_user="1234861" to_user="1593648" read="1" follow_time="2013-05-15 00:00:00"/>
     <user_relations ID="1000034" from_user="1593648" to_user="1234861" read="1" follow_time="2013-05-15 00:00:00"/>
+
+    <notices ID="1000000" />
+    <latest_notices ID="1000000" />
 </dataset>

@@ -30,8 +30,8 @@ class DisGoodData extends DisDBTable
 
     function load($iid, $source = 'taobao')
     {
-        if( $this->_check_param('num_iid', $iid) != PMAIL_SUCCEEDED
-            || $this->_check_param('source', $source) != PMAIL_SUCCEEDED )
+        if( $this->_check_param('num_iid', $iid) != DIS_SUCCEEDED
+            || $this->_check_param('source', $source) != DIS_SUCCEEDED )
             throw new DisParamException('参数格式不正确！');
 
         return $this->select("`num_iid` = '$iid' and `source` = '$source' ",
@@ -45,43 +45,43 @@ class DisGoodData extends DisDBTable
         {
             case 'user_id' :
                 if( !uid_check($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'num_iid' :
                 if( !is_numeric($value) && !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'source' :
                 if( !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'title' :
             case 'shop' :
             case 'item_location' :
             case 'desc' :
                 if( !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'pic_url' :
             case 'click_url' :
             case 'price_url' :
             case 'shop_url' :
                 if( !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'quote' :
             case 'trade_num' :
             case 'click_num' :
                 if( !is_integer($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'price' :
                 if( !is_numeric($value) && !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
-            default : return err(PMAIL_ERR_PARAM);
+            default : return err(DIS_ERR_PARAM);
         }
-        return err(PMAIL_SUCCEEDED);
+        return err(DIS_SUCCEEDED);
     }
 
     protected function _check_num_param($param)

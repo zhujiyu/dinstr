@@ -13,72 +13,72 @@ class DisNoteVectorCache extends DisVectorCache
 {
     static function get($key)
     {
-        return parent::get('mail-'.$key);
+        return parent::get('note-'.$key);
     }
 
     static function set($key, $value)
     {
-        return parent::set('mail-'.$key, $value);
+        return parent::set('note-'.$key, $value);
     }
 
-    static function get_theme_approval_ids($theme_id)
+    static function get_head_approval_ids($head_id)
     {
-        $key = "waids-$theme_id";
+        $key = "waids-$head_id";
         return self::get($key);
     }
 
-    static function set_theme_approval_ids($theme_id, $user_ids)
+    static function set_head_approval_ids($head_id, $user_ids)
     {
-        $key = "waids-$theme_id";
+        $key = "waids-$head_id";
         self::set($key, $user_ids);
     }
 
-    static function get_theme_interest_ids($theme_id)
+    static function get_head_interest_ids($head_id)
     {
-        $key = "tiids-$theme_id";
+        $key = "tiids-$head_id";
         return self::get($key);
     }
 
-    static function set_theme_interest_ids($theme_id, $user_ids)
+    static function set_head_interest_ids($head_id, $user_ids)
     {
-        $key = "tiids-$theme_id";
+        $key = "tiids-$head_id";
         self::set($key, $user_ids);
     }
 
-    static function get_mail_ids($theme_id)
+    static function get_note_ids($head_id)
     {
-        $key = 'tmid-'.$theme_id;
+        $key = 'tmid-'.$head_id;
         return self::get($key);
     }
 
-    static function set_mail_ids($theme_id, $mail_ids)
+    static function set_note_ids($head_id, $note_ids)
     {
-        $key = 'tmid-'.$theme_id;
-        self::set($key, $mail_ids);
+        $key = 'tmid-'.$head_id;
+        self::set($key, $note_ids);
     }
 
-    static function get_parent_mail_ids($mail_id)
+    static function get_parent_note_ids($note_id)
     {
-        $key = 'pnids-'.$mail_id;
+        $key = 'pnids-'.$note_id;
         return parent::get($key);
     }
 
-    static function set_parent_mail_ids($mail_id, $parent_mail_ids)
+    static function set_parent_mail_ids($note_id, $parent_note_ids)
     {
-        $key = 'pnids-'.$mail_id;
-        parent::set($key, $parent_mail_ids);
+        $key = 'pnids-'.$note_id;
+        parent::set($key, $parent_note_ids);
     }
 
-    static function get_child_mail_ids($mail_id)
+    static function get_child_note_ids($note_id)
     {
-        $key = 'cnids-'.$mail_id;
+        $key = 'cnids-'.$note_id;
         return self::get($key);
     }
 
-    static function set_child_mail_ids($mail_id, $child_mail_ids)
+    static function set_child_note_ids($note_id, $child_note_ids)
     {
-        $key = 'cnids-'.$mail_id;
-        self::set($key, $child_mail_ids);
+        $key = 'cnids-'.$note_id;
+        self::set($key, $child_note_ids);
     }
 
     /**
@@ -86,16 +86,16 @@ class DisNoteVectorCache extends DisVectorCache
      * @param int $theme_id 话题ＩＤ
      * @return integer 评论ID
      */
-    static function get_last_mail_id($theme_id)
+    static function get_last_note_id($head_id)
     {
-        $key = 'wlnid-'.$theme_id;
+        $key = 'wlnid-'.$head_id;
         return self::get($key);
     }
 
-    static function set_last_mail_id($theme_id, $last_mail_id)
+    static function set_last_note_id($head_id, $note_id)
     {
-        $key = 'wlnid-'.$theme_id;
-        self::set($key, $last_mail_id);
+        $key = 'wlnid-'.$head_id;
+        self::set($key, $note_id);
     }
 }
 ?>

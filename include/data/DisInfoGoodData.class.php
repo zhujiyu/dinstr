@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.DATA
- * @file   : DisNoteFlowData.class.php
+ * @file   : DisInfoGoodData.class.php
  * @abstract  : 信息结点
  *
  * 各个函数的参数检查不严格，不做数据完整性一致性检查，甚至数据格式的检查也不完整
@@ -16,26 +16,26 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisNoteGoodData extends DisObject
+class DisInfoGoodData extends DisObject
 {
-    static function insert($mail_id, $good_id, $rank = 0, $desc = '')
+    static function insert($note_id, $good_id, $rank = 0, $desc = '')
     {
-        $str = "insert into mail_goods (mail_id, good_id, `rank`, `desc`)
-            values ($mail_id, $good_id, $rank, '$desc')";
-        return DisDBTable::query($str) == 1;
+        $str = "insert into info_good (note_id, good_id, `rank`, `desc`)
+            values ($note_id, $good_id, $rank, '$desc')";
+        return DisDBTable::check_query($str, 1);
     }
 
-    static function list_mail_goods($mail_id)
+    static function list_info_good($note_id)
     {
-        $str = "select ID, mail_id, good_id, `rank`, `desc`
-            from mail_goods where mail_id = $mail_id";
+        $str = "select ID, note_id, good_id, `rank`, `desc`
+            from info_good where note_id = $note_id";
         return DisDBTable::load_datas($str);
     }
 
     static function get_data($id)
     {
-        $str = "select ID, mail_id, good_id, `rank`, `desc`
-            from mail_goods where ID = $id";
+        $str = "select ID, note_id, good_id, `rank`, `desc`
+            from info_good where ID = $id";
         return DisDBTable::load_line_data($str);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.DATA
- * @file   : DisHeadData.class.php
+ * @file   : DisInfoHeadData.class.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -12,13 +12,12 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisHeadData extends DisDBTable
+class DisInfoHeadData extends DisDBTable
 {
     protected static $stable = "info_heads";
 
     function __construct($ID = null)
     {
-        //DisHeadData::$stable = "heads";
         $this->table = "info_heads";
         parent::__construct($ID);
     }
@@ -28,7 +27,8 @@ class DisHeadData extends DisDBTable
         $detail['content'] = strip_tags($detail['content']);
     }
 
-    function init($id, $slt = "ID, note_id, content, interest_num, note_num, approved_num, update_time")
+    function init($id, $slt = "ID, content, note_id, note_num, interest_num, approved_num,
+        update_time")
     {
         parent::init($id, $slt);
     }
@@ -39,17 +39,17 @@ class DisHeadData extends DisDBTable
         {
             case 'content' :
                 if( !is_string($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             case 'note_id' :
-            case 'note_num' :
+            case 'note_num':
                 if( !is_integer($value) )
-                    return err(PMAIL_ERR_PARAM);
+                    return err(DIS_ERR_PARAM);
                 break;
             default :
-                return err(PMAIL_ERR_PARAM);
+                return err(DIS_ERR_PARAM);
         }
-        return err(PMAIL_SUCCEEDED);
+        return err(DIS_SUCCEEDED);
     }
 
     protected function _check_num_param($param)
@@ -67,11 +67,11 @@ class DisHeadData extends DisDBTable
 //        $str = "select ID from ".DisHeadData::$stable." where channel_id = $channel_id order by ID desc limit ".$page*$count.", $count";
 //        return parent::load_datas($str);
 //    }
-
-    static function list_themes($count = 10)
-    {
-        $str = "select * from ".DisHeadData::$stable." order by id desc limit $count";
-        return parent::load_datas($str);
-    }
+//
+//    static function list_themes($count = 10)
+//    {
+//        $str = "select * from ".DisInfoHeadData::$stable." order by id desc limit $count";
+//        return parent::load_datas($str);
+//    }
 }
 ?>

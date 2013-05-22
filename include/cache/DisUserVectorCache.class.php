@@ -83,49 +83,49 @@ class DisUserVectorCache extends DisVectorCache
         self::drop($key, $fid);
     }
 
-    static function get_interest_theme_ids($user_id)
+    static function get_interest_head_ids($user_id)
     {
         $key = "fwids-$user_id";
         return self::get($key);
     }
 
-    static function set_interest_theme_ids($user_id, $theme_ids)
+    static function set_interest_head_ids($user_id, $theme_ids)
     {
         $key = "fwids-$user_id";
         self::set($key, $theme_ids);
     }
 
-    static function get_approved_theme_ids($user_id)
+    static function get_approved_head_ids($user_id)
     {
         $key = "awids-$user_id";
         return self::get($key);
     }
 
-    static function set_approved_theme_ids($user_id, $theme_ids)
+    static function set_approved_head_ids($user_id, $theme_ids)
     {
         $key = "awids-$user_id";
         self::set($key, $theme_ids);
     }
 
-    static function get_reply_mail_ids($user_id)
+    static function get_reply_note_ids($user_id)
     {
         $key = "rmid-$user_id";
         return self::get($key);
     }
 
-    static function set_reply_mail_ids($user_id, $mail_ids)
+    static function set_reply_note_ids($user_id, $mail_ids)
     {
         $key = "rmid-$user_id";
         self::set($key, $mail_ids);
     }
 
-    static function get_publish_mail_ids($user_id)
+    static function get_publish_note_ids($user_id)
     {
         $key = "pmids-$user_id";
         return self::get($key);
     }
 
-    static function set_publish_mail_ids($user_id, $mail_ids)
+    static function set_publish_note_ids($user_id, $mail_ids)
     {
         $key = "pmids-$user_id";
         self::set($key, $mail_ids);
@@ -136,13 +136,13 @@ class DisUserVectorCache extends DisVectorCache
      * @param int $user_id 话题ＩＤ
      * @return integer 评论ID
      */
-    static function get_last_mail_id($user_id)
+    static function get_last_note_id($user_id)
     {
         $key = 'lmid-'.$user_id;
         return self::get($key);
     }
 
-    static function set_last_mail_id($user_id, $last_id)
+    static function set_last_note_id($user_id, $last_id)
     {
         $key = 'lmid-'.$user_id;
         self::set($key, $last_id);

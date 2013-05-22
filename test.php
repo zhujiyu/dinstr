@@ -10,53 +10,30 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-//$salt = substr(md5(rand()), 0, 5);
-$salt = substr(md5(rand()), 0, 16).substr(md5(rand()), 0, 16);
-//$salt = "b04e62432a9b64305c874ecaa8520db2";
-echo "$salt<br>";
-echo '<br>';
-echo md5(md5('asd123').$salt).'<br>';
-echo '<br>';
-echo md5(md5('zxc456').$salt);
-//$rand = rand();
-//echo "rand: $rand\n";
-//$salt = md5(rand());
-//echo "$salt\n";
-//echo strlen($salt)."\n";
-exit();
+require_once 'common.inc.php';
 
-//require_once 'common.inc.php';
-//
-//$val = array("石中玉", "石破天");
-//foreach( $val as $key=>$name )
-//{
-//    echo "$key=>$name<br>\n";
-//}
-//foreach( $val as $name )
-//{
-//    echo "=>$name<br>\n";
-//}
-//exit();
+$a = array('6685', '325', '54645');
+$b = array('12', '325', '554', '6685', '46574', '54645');
 
-//        $user_id = 1000000;
-//        $user_id = $_SESSION['userId'];
-//        DisObject::print_array($user_id);
-//        $user = DisUserCtrl::user($user_id);
-//        DisUserCtrl::set_inline($user_id);
-//        DisObject::print_array($user);
-//        $gSmarty->assign("user", $user->info());
-//
-//        if( $user_id > 0 )
-//        {
-//            $status = $user->get_channel_status($channel_id);
-//            $gSmarty->assign("status", $status);
-//            $role = $status[role];
-//        }
-//
-//        $_ids = DisChannelCtrl::list_channel_ids($_GET['tag']);
-//
-//        if( $user_id > 0 )
-//            $channels = $user->list_channels($_ids);
-//        else
-//            $channels = DisChannelCtrl::parse_channels($_ids);
+$len1 = count($a);
+$len2 = count($b);
+
+        for( $i = 0; $i < $len1; $i ++ )
+        {
+            $len2 = count($b);
+            for( $j = 0; $j < $len2; $j ++ )
+            {
+                if( $b[$j] == $a[$i] )
+                {
+                    array_splice($b, $j, 1);
+                    break;
+                }
+            }
+        }
+
+//$matches = null;
+//$notices = "dasfjoaiwetu464567e98";
+//preg_match_all('/\d+/', $notices, $matches);
+DisObject::print_array($a);
+DisObject::print_array($b);
 ?>

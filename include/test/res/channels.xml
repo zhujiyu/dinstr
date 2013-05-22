@@ -12,4 +12,6 @@
     <chan_users ID="10000022" chan_id="1234861" user_id="1000000" role="2" subscribe_time="0" join_time="0"/>
     <chan_applicants ID="1000000" chan_id="1593648" user_id="1000012" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
     <chan_applicants ID="1000011" chan_id="1593648" user_id="1000000" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
+    <notices ID="1000000" />
+    <latest_notices ID="1000000" />
 </dataset>

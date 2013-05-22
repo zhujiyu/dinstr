@@ -10,368 +10,199 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-require_once "../../common.inc.php";
+require_once dirname(__FILE__)."/../../common.inc.php";
 
 class DisInfoTest extends DisDataBaseTest
 {
     function  __construct()
     {
-        parent::__construct();
-
-        $this->table = "users";
-        $this->columns = "ID, username, email, salt, domain, atme_notice, `password`, `impassword`, imoney";
-        $this->mock = new soUserDataTable();
-
-        $str = "
-CREATE TABLE users
+        $sqls = array("
+CREATE TABLE info_heads
 (
-    -- 用户核心信息，其中ID，username,email都可用于登录
-    ID int AUTO_INCREMENT PRIMARY KEY,
-    username varchar(32) not null,
-    email varchar(255), -- 安全邮箱，用于找回密码，也可用于登录
-    imoney float default 0,
-    freezed float default 0, -- 冻结的资金
-    avatar varchar(255), -- 头像
-    -- 安全设置
-    salt char(5) not null,
-    `password` char(32) not null, -- 用md5算法将密码转成32位
-    impassword char(32) not null, -- 资金帐号密码
-    errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
-    last_pw_check int default 0,
-    -- 个人基本信息
-    phone varchar(15),
-    realname varchar(32),
-    gender enum('none', 'male', 'female') default 'none',
-    ID_type varchar(10), -- 身份证件类型
-    ID_number varchar(25), -- 证件号码
-    self_intro varchar(255), -- 个人介绍
-    live_city varchar(64),
-    introducer int default 0,
-    contact varchar(255),
-    -- 个人参数
-    `domain` varchar(32), -- 个性域名
-    `rank` smallint default 0, -- 级别
-    `online` tinyint default 0,
-    online_times bigint default 0,
-    last_login timestamp,
-    -- 统计参数
-    flighty_num int default 0, -- 撒娇（将心愿或者文章发给特定个人）的次数
-    fans_num int default 0, -- 粉丝数
-    follow_num int default 0, -- 关注人数
-    blog_num int default 0, -- 微博条数
-    wish_num int default 0, -- 发布心愿次数
-    action_num int default 0, -- 参加活动次数
-    finance float default 0, -- 完成的融资数量
-    suggest_num int default 0, -- 发送评论数
-    comment_num int default 0, -- 发送评论数
-    favorite_num int default 0, -- 收藏资讯数量
-    create_office_num int default 0, -- 创建的会社数
-    join_office_num int default 0, -- 加入的会社数
-    -- 消息提醒
-    flighty_notice int default 0,
-    fans_notice int default 0,
-    msg_notice int default 0,
-    reply_notice int default 0,
-    atme_notice int default 0,
-    -- 配置
-    msg_process enum('all', 'follow', 'none') default 'all',
-    -- 索引设置
-    UNIQUE (username),
-    INDEX (email(10)),
-    INDEX (phone(11)),
-    INDEX (fans_num)
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    content varchar(255),
+    note_id bigint,
+    note_num int default 0,
+    interest_num int default 0,
+    approved_num int default 0
 )
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000;";
-        $this->pdo->exec($str);
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE info_notes
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null,
+    head_id bigint default 0,
+    parent_id bigint default 0,
+    content varchar(2560), -- 信息内容
+    video varchar(255),
+    -- 参数
+    good_num  smallint default 0,
+    photo_num smallint default 0,
+    reply_num int default 0,
+    status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
+    create_time int,
+    index (user_id, status),
+    index (head_id),
+    index (parent_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE user_params
+(
+    ID int PRIMARY KEY,
+    -- 个人基本信息
+    imoney float default 0,
+    online_times bigint default 0,
+    -- 统计参数
+    join_num int default 0,    -- 加入的频道数
+    subscribe_num int default 0,
+    applicant_num int default 0, -- 正在处理的加入频道申请的数目
+    create_num int default 0,  -- 创建频道数
+    head_num int default 0,    -- 信息头数
+    note_num int default 0,    -- 信息数
+    draft_num int default 0,   -- 草稿数
+    collect_num int default 0, -- 收藏邮件数量
+    interest_num int default 0,
+    approved_num int default 0, -- 参与邮件主题活动数
+    msg_num int default 0,    -- 发送私信数
+    follow_num int default 0, -- 关注人数
+    fans_num int default 0,   -- 粉丝数
+    -- 消息提醒
+    reply_notice int default 0,
+    note_notice int default 0,
+    msg_notice int default 0,
+    system_notice int default 0,
+    fans_notice int default 0
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
+        ", "
+CREATE TABLE info_users
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int,
+    head_id bigint,
+    approve int default 0,
+    create_time timestamp,
+    index (head_id),
+    index (user_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE notices
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null, -- 信息的所有者
+    `type` enum('reply', 'follow', 'approve', 'apply', 'invite') default 'reply',
+    data_id bigint default 0,
+    message varchar(255),
+    create_time timestamp,
+    index (user_id, `type`, data_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE latest_notices
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null, -- 信息的所有者
+    `type` enum('reply', 'follow', 'approve', 'apply', 'invite') default 'reply',
+    data_id bigint default 0,
+    message varchar(255),
+    create_time timestamp,
+    index (user_id, `type`, data_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ");
+
+        $this->default_data_file = 'infos.xml';
+        parent::__construct($sqls);
     }
 
-    protected function _getDataSet($file)
+    function testNewInfo()
     {
-        $xml_dataset = $this->createFlatXMLDataSet(dirname(__FILE__).'/_files/'.$file);
-        $xml_datatable = $xml_dataset->getTable('users');
-        $count = $xml_datatable->getRowCount();
+        $note = DisNoteCtrl::new_info(1000000, 1234861, "信息头", "信息内容", 0);
+        $this->assertEquals(1000203, $note->attr('head_id'));
+        $this->assertEquals(0, $note->attr('photo_num'));
 
-        for ( $i = 0; $i < $count; $i ++ )
-        {
-            $value1 = md5(md5($xml_datatable->getValue($i, 'password')).md5($xml_datatable->getValue($i, 'salt')));
-            $xml_datatable->setValue($i, 'password', $value1);
-            $value2 = md5(md5($xml_datatable->getValue($i, 'impassword')).md5($xml_datatable->getValue($i, 'salt')));
-            $xml_datatable->setValue($i, 'impassword', $value2);
-        }
-        return $xml_dataset;
+        $param = new DisUserParamCtrl(1000000);
+        $this->assertEquals(1, $param->attr('note_num'));
+
+        $chan = new DisChannelCtrl(1234861);
+        $this->assertEquals(1, $chan->attr('info_num'));
     }
 
-    protected function getDataSet()
+    function testReply()
     {
-        return $this->_getDataSet('user_table.xml');
+        $note = new DisNoteCtrl(1000100);
+        $reply = $note->reply(1000012, "回复信息");
+        $this->assertEquals(1000200, $reply->attr('head_id'));
+        $this->assertEquals(0, $reply->attr('photo_num'));
+
+        $param = new DisUserParamCtrl(1000012);
+        $this->assertEquals(2, $param->attr('note_num'));
     }
 
-    function testInit()
+    function testLoadInfos()
     {
-        $this->mock->init(1234861);
-        $this->assertEquals("帐号1234861", $this->mock->attr('username'));
-        $this->mock->init('zhujiyu@abc.com');
-        $this->assertEquals("zhujiyu", $this->mock->attr('username'));
+        $user = new DisUserCtrl(1000000);
+        $note_ids = $user->list_publish_note_ids(0);
+        $this->assertEquals(1000101, $note_ids[0]);
+        $this->assertEquals(1000100, $note_ids[1]);
     }
 
-    function testInitBadUser()
+    function testInterest()
     {
-        $this->mock->init(12340);
-        $this->assertEquals(0, $this->mock->ID);
+        $head = new DisHeadCtrl(1000202);
+        $user_ids1 = $head->list_interest_user_ids();
+        $this->assertEquals(0, count($user_ids1));
+
+        $head->interest(1000012);
+        $user_ids2 = $head->list_interest_user_ids();
+        $this->assertEquals(1, count($user_ids2));
+        $this->assertEquals(1000012, $user_ids2[0]);
+        $this->assertEquals(1, $head->attr('interest_num'));
     }
 
-    function testLoadByDomain()
+    function testApprove()
     {
-        $this->mock->load_by_domain('zhujiyu');
-        $this->assertEquals(1593490, $this->mock->ID);
-        $this->mock->load_by_domain('zhujiyutest');
-        $this->assertEquals(0, $this->mock->ID);
-    }
+        $head = new DisHeadCtrl(1000200);
+        $user_ids1 = $head->list_approved_user_ids();
+        $this->assertEquals(1, count($user_ids1));
 
-    function testUpdateNotice()
-    {
-        $this->mock->init(1234861);
-        $notices = $this->mock->update_notice();
-        $this->assertEquals(12, $notices['atme_notice']);
-    }
+        $head->approve(1000012);
+        $user_ids2 = $head->list_approved_user_ids();
+        $this->assertEquals(1, count($user_ids2));
+        $this->assertEquals(1000012, $user_ids2[0]);
 
-    function testNotice()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(12, $this->mock->attr('atme_notice'));
-        $this->mock->notice('atme_notice', 10);
-        $this->assertEquals(22, $this->mock->attr('atme_notice'));
-        $this->assertTablesEqual($this->_getXmlTable('user_table_after_notice.xml'), $this->_getDatabaseTable());
-        $this->mock->notice('atme_notice', -20);
-        $this->assertEquals(2, $this->mock->attr('atme_notice'));
-        $this->mock->notice('atme_notice', -20);
-        $this->assertEquals(0, $this->mock->attr('atme_notice'));
+        $head->approve(1000000);
+        $user_ids3 = $head->list_approved_user_ids();
+        $this->assertEquals(2, count($user_ids3));
+        $this->assertEquals(1000000, $user_ids3[0]);
 
-        $user_table = $this->_getXmlTable('user_table_after_notice.xml');
-        $user_table->setValue(0, 'atme_notice', 0);
-        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-    }
-
-    /**
-     * @expectedException soParamException
-     */
-    function testNoticeBadParamException()
-    {
-        $this->mock->init(1234861);
-        $this->mock->notice('follow_notice', 10);
-    }
-
-    /**
-     * @expectedException soParamException
-     */
-    function testNoticeZeroParamException()
-    {
-        $this->mock->init(1234861);
-        $this->mock->notice('fans_notice', 0);
-    }
-
-    /**
-     * @expectedException soParamException
-     */
-    function testNoticeNotChangeException()
-    {
-        $this->mock->init(1234861);
-        $this->mock->notice('fans_notice', -10);
-    }
-
-    function testCheckPassword()
-    {
-        $this->mock->init(1593490);
-        $r = $this->mock->check_password(md5('kuke.com'));
-        $this->assertTrue($r);
-    }
-
-    function testCheckIMPassword()
-    {
-        $this->mock->init(1593490);
-        for( $i = 0; $i < 4; $i ++ )
-        {
-            $this->mock->check_password(md5('kuke.com'), 'imoney');
-        }
-
-        $r = $this->mock->check_password(md5('gou86.com'), 'imoney');
-        $this->assertTrue($r);
-        $this->mock->init(1593490, 'ID, errs');
-        $this->assertEquals(0, $this->mock->attr('errs'));
-        for( $i = 0; $i < 5; $i ++ )
-        {
-            $this->mock->check_password(md5('kuke.com'), 'imoney');
-        }
-    }
-
-    /**
-     * @expectedException soException
-     */
-    function testCheckIMPasswordException()
-    {
-        $this->mock->init(1593490);
-        $r = $this->mock->check_password(md5('gou86.com'), 'imoney');
-        $this->assertTrue($r);
-
-        for( $i = 0; $i < 6; $i ++ )
-        {
-            $this->mock->check_password(md5('kuke.com'), 'imoney');
-        }
-    }
-
-    function testUpdatePassword()
-    {
-        $this->mock->init(1593490);
-        $r1 = $this->mock->update_password(md5('kuke.com'));
-        $this->assertTrue(!$r1);
-        $r2 = $this->mock->update_password(md5('kuuuke.com'));
-        $this->assertTrue($r2);
-
-        $user_table = $this->_getXmlTable('user_table.xml');
-        $user_table->setValue(1, 'password', md5(md5('kuuuke.com').md5($user_table->getValue(1, 'salt'))));
-        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-    }
-
-    function testUpdateIMPassword()
-    {
-        $this->mock->init(1593490);
-        $r1 = $this->mock->update_password(md5('gou86.com'), 'imoney');
-        $this->assertTrue(!$r1);
-        $r2 = $this->mock->update_password(md5('kuuuke.com'), 'imoney');
-        $this->assertTrue($r2);
-
-        $user_table = $this->_getXmlTable('user_table.xml');
-        $user_table->setValue(1, 'impassword', md5(md5('kuuuke.com').md5($user_table->getValue(1, 'salt'))));
-        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-    }
-
-    function testInsertUser()
-    {
-        global $salt;
-        $this->mock->insert('朱继玉', md5('332288'), md5('55332288'));
-        $this->assertEquals('朱继玉', $this->mock->attr('username'));
-
-        $user_table = $this->_getXmlTable('user_table_after_insert.xml');
-        $user_table->setValue(3, 'salt', $salt);
-        $user_table->setValue(3, 'password', md5(md5('332288').md5($salt)));
-        $user_table->setValue(3, 'impassword', md5(md5('55332288').md5($salt)));
-        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-
-        $this->mock->init(1593649);
-        $r = $this->mock->check_password(md5('55332288'), 'imoney');
-        $this->assertTrue($r);
-    }
-
-    function testFreeze()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(0, $this->mock->attr('freezed'));
-        $this->mock->freeze(128.50);
-        $this->assertEquals(128.50, $this->mock->attr('freezed'));
-
-        $user_table = $this->_getXmlTable('user_table.xml');
-        $user_table->setValue(1, 'freezed', 128.50);
-        $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
-
-        $this->mock->init(1234861);
-        $this->assertEquals(128.50, $this->mock->attr('freezed'));
-    }
-
-    function testUnfreeze()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(0, $this->mock->attr('freezed'));
-        $this->mock->freeze(128.50);
-        $this->mock->unfreeze(28.50);
-        $this->mock->init(1234861);
-        $this->assertEquals(100, $this->mock->attr('freezed'));
-        $this->mock->unfreeze(100);
-        $this->assertEquals(0, $this->mock->attr('freezed'));
-    }
-
-    function testUnfreezeExceptoin()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(0, $this->mock->attr('freezed'));
-        $this->mock->freeze(128.50);
-
-        $exceptions = 0;
-        try
-        {
-            $this->mock->unfreeze(228.50);
-        }
-        catch (soParamException $ex)
-        {
-            $exceptions ++;
-        }
-        try
-        {
-            $this->mock->unfreeze(0);
-        }
-        catch (soParamException $ex)
-        {
-            $exceptions ++;
-        }
-        try
-        {
-            $this->mock->unfreeze(-228.50);
-        }
-        catch (soParamException $ex)
-        {
-            $exceptions ++;
-        }
-
-        if( $exceptions < 3 )
-            $this->fail("解冻失败！");
-    }
-
-    function testFinance()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(0, $this->mock->attr('finance'));
-        $this->mock->finance(128.50);
-        $this->assertEquals(128.5, $this->mock->attr('finance'));
-    }
-
-    function testPay()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(200, $this->mock->attr('imoney'));
-        $this->mock->freeze(128.50);
-        $this->mock->pay(128.50);
-        $this->mock->init(1234861);
-        $this->assertEquals(71.50, $this->mock->attr('imoney'));
-        $this->assertEquals(0, $this->mock->attr('freezed'));
-    }
-
-    /**
-     * @expectedException soParamException
-     */
-    function testPayException()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(200, $this->mock->attr('imoney'));
-        $this->mock->freeze(120.50);
-        $this->mock->pay(128.50);
-    }
-
-    function testParam()
-    {
-        $this->mock->init(1234861);
-        $this->assertEquals(0, $this->mock->attr('fans_num'));
-        $this->mock->increase('fans_num');
-        $this->assertEquals(1, $this->mock->attr('fans_num'));
+//        $this->assertEquals(2, $head->attr('interest_num'));
+        $this->assertEquals(2, $head->attr('approved_num'));
     }
 }
 
-//$file = "common.inc.php";
-//for( $i = 0; $i < 5; $i ++ )
-//{
-//    if( file_exists($file) )
+//    protected function _getDataSet($file)
 //    {
-//        require_once ( $file );
-//        break;
+//        $xml_dataset = $this->createFlatXMLDataSet(dirname(__FILE__).'/_files/'.$file);
+//        $xml_datatable = $xml_dataset->getTable('users');
+//        $count = $xml_datatable->getRowCount();
+//
+//        for ( $i = 0; $i < $count; $i ++ )
+//        {
+//            $value1 = md5(md5($xml_datatable->getValue($i, 'password')).md5($xml_datatable->getValue($i, 'salt')));
+//            $xml_datatable->setValue($i, 'password', $value1);
+//            $value2 = md5(md5($xml_datatable->getValue($i, 'impassword')).md5($xml_datatable->getValue($i, 'salt')));
+//            $xml_datatable->setValue($i, 'impassword', $value2);
+//        }
+//        return $xml_dataset;
 //    }
-//    $file = "../".$file;
-//}
+//
+//    protected function getDataSet()
+//    {
+//        return $this->_getDataSet('user_table.xml');
+//    }
+
 ?>

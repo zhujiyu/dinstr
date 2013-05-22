@@ -117,14 +117,14 @@ class DisChannelCtrl extends DisChannelData
         $start = $page * $count;
         $hope = $start + $count;
 //        pmCacheUserVector::set_interest_theme_ids($this->ID, null);
-        $theme_ids = DisUserVectorCache::get_interest_theme_ids($this->ID);
+        $theme_ids = DisUserVectorCache::get_interest_head_ids($this->ID);
 
         if( !$theme_ids )
         {
             $theme_ids = $this->_list_interest_theme_ids(0, $hope);
             if( count($theme_ids) == 0 )
                 $theme_ids[0] = "#E#";
-            DisUserVectorCache::set_interest_theme_ids($this->ID, $theme_ids);
+            DisUserVectorCache::set_interest_head_ids($this->ID, $theme_ids);
         }
         else if( $theme_ids[0] != "#E#" )
         {
@@ -133,7 +133,7 @@ class DisChannelCtrl extends DisChannelData
             {
                 $temp_ids = $this->_list_interest_theme_ids($theme_ids[$len - 1], $hope - $len);
                 $theme_ids = array_merge($theme_ids, $temp_ids);
-                DisUserVectorCache::set_interest_theme_ids($this->ID, $theme_ids);
+                DisUserVectorCache::set_interest_head_ids($this->ID, $theme_ids);
             }
         }
 
@@ -471,7 +471,7 @@ class DisChannelCtrl extends DisChannelData
 
         $param = new DisUserParamCtrl($user_id);
         $param->reduce('applicant_num');
-        
+
         $notice = new DisNoticeCtrl($user_id);
         $notice->add_apply_notice($applicant_id, "你加入".$this->detail['name']."的申请已经通过！");
     }

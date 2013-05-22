@@ -18,7 +18,7 @@ try
         throw new DisException("没有登录！");
     $user_id = $_SESSION['userId'];
 
-    $theme = DisHeadCtrl::theme((int)$_GET['theme_id']);
+    $theme = DisHeadCtrl::head((int)$_GET['theme_id']);
     if( !$theme || !$theme->ID )
         throw new DisException("没有要操作的数据！");
     $p = $_GET['p'] ? $_GET['p']: $_POST['p'];

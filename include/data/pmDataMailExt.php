@@ -47,7 +47,7 @@ class pmDataMailKeepTag extends DisObject
         return DisDBTable::query($str);
     }
 
-    static function list_mail_ids($tag_id)
+    static function list_note_ids($tag_id)
     {
         $str = "select mail_id
             from mail_keep_tags as t left join mail_keeps as k on k.ID = t.keep_id

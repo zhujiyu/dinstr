@@ -114,7 +114,7 @@ CREATE TABLE user_denies
     ID int AUTO_INCREMENT PRIMARY KEY,
     user_id int not null,
     denier int not null,
-    INDEX (user_id, denier)
+    index (user_id, denier)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '黑名单表已经生成' as tip;
@@ -205,8 +205,8 @@ CREATE TABLE channels
     -- 参数
     member_num int default 0,
     subscriber_num int default 0,
-    info_num bigint default 0,
     applicant_num int default 0,
+    info_num bigint default 0,
     create_time int,
     unique key (`name`),
     index (creater),
@@ -257,8 +257,10 @@ CREATE TABLE chan_applicants
     chan_id int,
     user_id int,
     reason varchar(255),
-    `status` enum('untreated', 'accepted', 'refused') default 'untreated', -- 0表示没有处理，1表示申请通过，2表示申请被拒绝
-    apply_time timestamp,
+    `status` enum('untreated', 'accepted', 'refused') default 'untreated',
+    -- 0表示没有处理，1表示申请通过，2表示申请被拒绝
+    apply_time int,
+    update_time timestamp,
     index (chan_id, `status`),
     index (user_id, `status`)
 )
@@ -324,8 +326,8 @@ CREATE TABLE info_heads
     note_id bigint,
     note_num int default 0,
     interest_num int default 0,
-    approved_num int default 0,
-    update_time timestamp
+    approved_num int default 0
+--    update_time timestamp
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息头表已经生成' as tip;
@@ -349,7 +351,7 @@ CREATE TABLE info_notes
     photo_num smallint default 0,
     reply_num int default 0,
     status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
-    create_time int,
+    create_time timestamp,
 --    publish_num int default 0, -- 发表次数
 --    index (user_id, publish_num),
     index (user_id, status),
@@ -367,7 +369,7 @@ CREATE TABLE info_users
     user_id int,
     head_id bigint,
     approve int default 0,
-    create_time timestamp,
+    update_time timestamp,
     index (head_id),
     index (user_id)
 )
@@ -402,6 +404,17 @@ CREATE TABLE info_goods
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息商品表已经生成' as tip;
 
+DROP TABLE IF EXISTS info_replies;
+CREATE TABLE info_replies
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    note_id bigint,
+    user_id int,
+    index (user_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '回复信息表已经生成' as tip;
+
 -- 留言表
 DROP TABLE IF EXISTS info_leaves;
 CREATE TABLE info_leaves
@@ -413,20 +426,6 @@ CREATE TABLE info_leaves
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '留言表已经生成' as tip;
-
-/*-- 信息关键字
-DROP TABLE IF EXISTS info_keywords;
-CREATE TABLE info_keywords
-(
-    ID bigint AUTO_INCREMENT PRIMARY KEY,
-    note_id bigint,
-    keyword varchar(32),
-    create_time timestamp,
-    unique (keyword, note_id),
-    index (create_time)
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '信息关键字表已经生成' as tip; */
 
 -- 业务2：用户消息表 完成用户之间的私信业务
 DROP TABLE IF EXISTS messages;
@@ -477,7 +476,7 @@ CREATE TABLE notices
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null, -- 信息的所有者
-    `type` enum('reply', 'follow', 'invite', 'approve', 'apply') default 'reply',
+    `type` enum('reply', 'follow', 'approve', 'apply', 'invite') default 'reply',
     -- reply 发出的信息或者评论收到回复
     -- follow 有人关注
     -- invite 受到加入某个频道的邀请
@@ -492,12 +491,13 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '系统通知表已经生成' as tip;
 
 -- 未读通知
-DROP TABLE IF EXISTS new_notices;
-CREATE TABLE new_notices
+DROP TABLE IF EXISTS latest_notices;
+CREATE TABLE latest_notices
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null, -- 信息的所有者
-    `type` enum('mail', 'approve', 'reply', 'apply', 'fan', 'invite') default 'mail', --
+--    `type` enum('mail', 'approve', 'reply', 'apply', 'fan', 'invite') default 'mail', --
+    `type` enum('reply', 'follow', 'approve', 'apply', 'invite') default 'reply',
     data_id bigint default 0,
     message varchar(255),
     create_time timestamp,
@@ -509,6 +509,7 @@ select '未读通知表已经生成' as tip;
 /*************************************\
  * 信息流 feed算法
 \*************************************/
+/*
 -- 信息流表
 DROP TABLE IF EXISTS streams;
 CREATE TABLE streams
@@ -543,17 +544,6 @@ CREATE TABLE stream_back
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息流表已经生成' as tip;
 
-DROP TABLE IF EXISTS info_replies;
-CREATE TABLE info_replies
-(
-    ID bigint AUTO_INCREMENT PRIMARY KEY,
-    note_id bigint,
-    user_id int,
-    index (user_id)
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '回复信息表已经生成' as tip;
-
 DROP TABLE IF EXISTS info_collects;
 CREATE TABLE info_collects
 (
@@ -565,6 +555,22 @@ CREATE TABLE info_collects
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '收藏信息表已经生成' as tip;
+*/
+/*
+-- 信息关键字
+DROP TABLE IF EXISTS info_keywords;
+CREATE TABLE info_keywords
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    note_id bigint,
+    keyword varchar(32),
+    create_time timestamp,
+    unique (keyword, note_id),
+    index (create_time)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '信息关键字表已经生成' as tip;
+*/
 
 /*
 -- 用户收到信息表

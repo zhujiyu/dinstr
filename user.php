@@ -98,7 +98,7 @@ try
         else //if( isset($_GET['mail']) || $view == 'mail' )
         {
             $file = "pmail.user.mail.tpl";
-            $mail_ids = $target_user->list_publish_mail_ids(0, 20);
+            $mail_ids = $target_user->list_publish_note_ids(0, 20);
             $pub_mails = $target_user->list_mails($mail_ids);
             $gSmarty->assign("pub_mails", $pub_mails);
         }

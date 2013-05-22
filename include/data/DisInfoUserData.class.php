@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: DIS.DATA
- * @file   : DisHeadUserData.class.php
+ * @file   : DisInfoUserData.class.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -12,57 +12,57 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisHeadUserData extends DisDBStaticTable
+class DisInfoUserData extends DisDBStaticTable
 {
     static function load($approve_id)
     {
-        $str = "select * from head_users where ID = $approve_id";
+        $str = "select * from info_users where ID = $approve_id";
         return DisDBTable::load_line_data($str);
     }
 
     static function insert($head_id, $user_id)
     {
-        $str = "insert into head_users (head_id, user_id)
+        $str = "insert into info_users (head_id, user_id)
             values ($head_id, $user_id)";
         return parent::insert($str);
     }
 
     static function approve($id)
     {
-        $str = "update head_users set approve = 1 where ID = $id";
+        $str = "update info_users set approve = 1 where ID = $id";
         return DisDBTable::query($str);
     }
 
     static function cancel_approve($id)
     {
-        $str = "update head_users set approve = 0 where ID = $id";
+        $str = "update info_users set approve = 0 where ID = $id";
         return DisDBTable::query($str);
     }
 
     static function remove($head_id, $user_id)
     {
-        $str = "delete from head_users
+        $str = "delete from info_users
             where user_id = $user_id and head_id = $head_id";
         return DisDBTable::query($str);
     }
 
     static function get_interest_id($head_id, $user_id)
     {
-        $str = "select ID from head_users
+        $str = "select ID from info_users
             where user_id = $user_id and head_id = $head_id";
         return parent::get_id($str);
     }
 
     static function exist($head_id, $user_id)
     {
-        $str = "from head_users
+        $str = "from info_users
             where user_id = $user_id and head_id = $head_id";
         return DisDBTable::count($str) > 0;
     }
 
     static function list_follow_user_ids($head_id)
     {
-        $str = "select user_id from head_users
+        $str = "select user_id from info_users
             where head_id = $head_id order by user_id";
         return DisDBTable::load_datas($str);
     }
@@ -74,7 +74,7 @@ class DisHeadUserData extends DisDBStaticTable
         else
             $whr = "";
 
-        $str = "select head_id from head_users
+        $str = "select head_id from info_users
             where user_id = $user_id $whr
             order by head_id desc  limit $count";
         return DisDBTable::load_datas($str);
@@ -87,7 +87,7 @@ class DisHeadUserData extends DisDBStaticTable
         else
             $whr = "";
 
-        $str = "select head_id from head_users
+        $str = "select head_id from info_users
             where user_id = $user_id $whr and approve > 0
             order by head_id desc limit $count";
         return DisDBTable::load_datas($str);
@@ -95,14 +95,14 @@ class DisHeadUserData extends DisDBStaticTable
 
     static function list_approve_user_ids($head_id)
     {
-        $str = "select user_id from head_users
+        $str = "select user_id from info_users
             where head_id = $head_id and approve > 0 order by user_id";
         return DisDBTable::load_datas($str);
     }
 
     static function delete($id)
     {
-        return parent::delete($id, 'head_users');
+        return parent::delete($id, 'info_users');
     }
 }
 ?>

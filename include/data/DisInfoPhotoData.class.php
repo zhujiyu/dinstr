@@ -18,26 +18,26 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisNotePhotoData extends DisObject
+class DisInfoPhotoData extends DisObject
 {
-    static function insert($mail_id, $photo_id, $rank = 0, $desc = '')
+    static function insert($note_id, $photo_id, $rank = 0, $desc = '')
     {
-        $str = "insert into mail_photos (mail_id, photo_id, `rank`, `desc`)
-            values ($mail_id, $photo_id, $rank, '$desc')";
-        return DisDBTable::query($str) == 1;
+        $str = "insert into info_photos (note_id, photo_id, `rank`, `desc`)
+            values ($note_id, $photo_id, $rank, '$desc')";
+        return DisDBTable::check_query($str, 1);
     }
 
-    static function list_mail_photos($mail_id)
+    static function list_info_photos($note_id)
     {
-        $str = "select ID, mail_id, photo_id, `rank`, `desc`
-            from mail_photos where mail_id = $mail_id";
+        $str = "select ID, note_id, photo_id, `rank`, `desc`
+            from info_photos where note_id = $note_id";
         return DisDBTable::load_datas($str);
     }
 
     static function get_data($id)
     {
-        $str = "select ID, mail_id, photo_id, `rank`, `desc`
-            from mail_photos where ID = $id";
+        $str = "select ID, note_id, photo_id, `rank`, `desc`
+            from info_photos where ID = $id";
         return DisDBTable::load_line_data($str);
     }
 }

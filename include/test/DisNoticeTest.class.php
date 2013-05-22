@@ -10,7 +10,7 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-require_once "../../common.inc.php";
+require_once dirname(__FILE__)."/../../common.inc.php";
 
 class DisUserTest extends DisDataBaseTest
 {
@@ -22,7 +22,6 @@ CREATE TABLE new_notices
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null, -- 信息的所有者
     `type` enum('reply', 'follow', 'invite', 'approve', 'apply') default 'reply',
---    `type` enum('mail', 'approve', 'reply', 'apply', 'fan', 'invite') default 'mail', --
     data_id bigint default 0,
     message varchar(255),
     create_time timestamp,
@@ -43,36 +42,39 @@ CREATE TABLE notices
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         ");
 
-        parent::__construct($sqls);
         $this->default_data_file = 'users.xml';
+        parent::__construct($sqls);
     }
 
-    function testNotice()
+    function testInitNotice()
     {
-        $this->mock->init(1234861);
-        $this->assertEquals(12, $this->mock->attr('atme_notice'));
-        $this->mock->notice('atme_notice', 10);
-        $this->assertEquals(22, $this->mock->attr('atme_notice'));
+        $notice = new DisNoticeCtrl(1234861);
+
+        $param = new DisUserParamCtrl(1234861);
+        $this->assertEquals(12, $param->attr('msg_notice'));
+        $param->notice('msg_notice', 10);
+        $this->assertEquals(22, $param->attr('atme_notice'));
+
         $this->assertTablesEqual($this->_getXmlTable('user_table_after_notice.xml'), $this->_getDatabaseTable());
-        $this->mock->notice('atme_notice', -20);
+        $param->notice('atme_notice', -20);
         $this->assertEquals(2, $this->mock->attr('atme_notice'));
-        $this->mock->notice('atme_notice', -20);
-        $this->assertEquals(0, $this->mock->attr('atme_notice'));
+        $param->notice('atme_notice', -20);
+        $this->assertEquals(0, $param->attr('atme_notice'));
 
         $user_table = $this->_getXmlTable('user_table_after_notice.xml');
         $user_table->setValue(0, 'atme_notice', 0);
         $this->assertTablesEqual($user_table, $this->_getDatabaseTable());
     }
 
-//    /**
-//     * @expectedException soParamException
-//     */
-//    function testNoticeBadParamException()
-//    {
-//        $user = new DisUserCtrl(1234861);
-//        $user->notice('follow_notice', 10);
-//    }
-//
+    /**
+     * @expectedException soParamException
+     */
+    function testNoticeBadParamException()
+    {
+        $user = new DisUserCtrl(1234861);
+        $user->notice('follow_notice', 10);
+    }
+
 //    function testUpdateNotice()
 //    {
 //        $this->mock->init(1234861);

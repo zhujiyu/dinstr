@@ -48,7 +48,7 @@ try
     if( $_GET['id'] )
     {
 //        $mail = pmCtrlMail::get_data($_GET['id']);
-        $mail = DisNoteCtrl::get_mail_view($_GET['id']);
+        $mail = DisNoteCtrl::get_note_view($_GET['id']);
         $mail_id = $mail[ID];
     }
 
@@ -58,8 +58,8 @@ try
         $gSmarty->assign("view", $view);
 
         $theme_id = $mail['theme_id'];
-        $theme = DisHeadCtrl::theme($theme_id);
-        $theme_data = $theme->theme_view();
+        $theme = DisHeadCtrl::head($theme_id);
+        $theme_data = $theme->head_view();
 
         if( $user_id > 0 )
         {
@@ -100,7 +100,7 @@ try
         else
         {
             $file = "pmail.mail.view.tpl";
-            $mail = DisNoteCtrl::mail ($mail_id);
+            $mail = DisNoteCtrl::note ($mail_id);
             $mail_ids = $mail->list_child_ids();
 
             if( $user_id > 0 )

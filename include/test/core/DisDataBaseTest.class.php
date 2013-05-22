@@ -50,12 +50,11 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
 
     protected function _getDataSet($file)
     {
-        if( file_exists($file) )
-            $path = $file;
-        else if( file_exists("res/$file") )
-            $path = "res/$file";
-        else if( file_exists(dirname(__FILE__)."res/$file") )
-            $path = dirname(__FILE__)."res/$file";
+        $path = dirname(__FILE__)."/../res/";
+        if( file_exists($path.$file) )
+            $path = $path.$file;
+        else if( file_exists("$path../$file") )
+            $path = "$path../$file";
         else
             throw new DisException("测试数据源文件 $file 不存在");
         return $this->createFlatXMLDataSet($path);

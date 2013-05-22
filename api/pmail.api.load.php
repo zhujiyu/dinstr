@@ -161,7 +161,7 @@ function user_mails($page, $count)
     if( !$target_id )
         throw new DisException('参数不合法，没有操作对象');
     $target_user = DisUserCtrl::user($target_id);
-    $mail_ids = $target_user->list_publish_mail_ids($page, $count);
+    $mail_ids = $target_user->list_publish_note_ids($page, $count);
     return $mail_ids;
 }
 
@@ -207,13 +207,13 @@ try
         else if( isset($_GET['collect']) || $item == 'collect' )
         {
             $collect = new DisNoteCollectCtrl($user->ID);
-            $mail_ids = $collect->list_mail_ids($page, $count);
+            $mail_ids = $collect->list_note_ids($page, $count);
             $mails = $user->list_mails($mail_ids);
             display_collects($mails, $gSmarty);
         }
         else if( isset($_GET['publish']) || $item == 'publish' )
         {
-            $mail_ids = $user->list_publish_mail_ids($page, $count);
+            $mail_ids = $user->list_publish_note_ids($page, $count);
             $mails = $user->list_mails($mail_ids);
             display_mails($mails, $gSmarty);
         }
@@ -225,7 +225,7 @@ try
         }
         else if( isset($_GET['approve']) || $item == 'approve' )
         {
-            $theme_ids = $user->list_approved_theme_ids($page, $count);
+            $theme_ids = $user->list_approved_head_ids($page, $count);
             $themes = $user->list_themes($theme_ids);
             display_themes($themes, $gSmarty);
         }
@@ -298,7 +298,7 @@ try
         }
         else if( isset($_GET['theme']) || $item == 'theme' )
         {
-            $themes = DisHeadCtrl::parse_themes($_GET['theme_ids']);
+            $themes = DisHeadCtrl::parse_heads($_GET['theme_ids']);
             display_themes($themes, $gSmarty);
         }
     }

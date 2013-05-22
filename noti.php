@@ -18,6 +18,7 @@ try
     if( !isset($_SESSION['userId']) || $_SESSION['userId'] == 0 || !DisUserCtrl::check_inline($_SESSION['userId']) )
         throw new DisException('没有登录！');
 
+    $gSmarty = init_smarty();
     $user_id = $_SESSION['userId'];
     $user = DisUserCtrl::user($user_id);
     $gSmarty->assign("user", $user->info());

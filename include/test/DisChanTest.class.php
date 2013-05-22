@@ -10,7 +10,7 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-require_once "../../common.inc.php";
+require_once dirname(__FILE__)."/../../common.inc.php";
 
 class DisChanTest extends DisDataBaseTest
 {
@@ -116,7 +116,7 @@ CREATE TABLE user_params
     fans_notice int default 0
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
-        ", "drop table chan_applicants", "
+        ", "
 CREATE TABLE chan_applicants
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
@@ -129,15 +129,44 @@ CREATE TABLE chan_applicants
     index (user_id, `status`)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE latest_notices
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null, -- 信息的所有者
+--    `type` enum('mail', 'approve', 'reply', 'apply', 'fan', 'invite') default 'mail', --
+    `type` enum('reply', 'follow', 'approve', 'apply', 'invite') default 'reply',
+    data_id bigint default 0,
+    message varchar(255),
+    create_time timestamp,
+    index (user_id, `type`, data_id)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
+        ", "
+CREATE TABLE notices
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int not null, -- 信息的所有者
+    `type` enum('reply', 'follow', 'approve', 'apply', 'invite') default 'reply',
+    -- reply 发出的信息或者评论收到回复
+    -- follow 有人关注
+    -- invite 受到加入某个频道的邀请
+    -- approve 发出的信息收到赞同
+    -- apply 加入频道的申请通知
+    data_id bigint default 0,
+    message varchar(255),
+    create_time timestamp,
+    index (user_id, `type`)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         ");
 
-        parent::__construct($sqls);
         $this->default_data_file = "channels.xml";
+        parent::__construct($sqls);
     }
 
     function testLoadData()
     {
-//        $mock = new DisChannelData();
         $chan = new DisChannelCtrl();
         $chan->init(1234861);
         $this->assertEquals('游戏海报', $chan->attr('name'));
@@ -279,6 +308,11 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $this->assertEquals(0, $user2->attr('applicant_num'));
         $this->assertEquals(3, $user2->attr('join_num'));
         $this->assertEquals(3, $user2->attr('subscribe_num'));
+
+        $nctrl = new DisNoticeCtrl(1000000);
+        $notice_ids = $nctrl->get_unread_notice_ids();
+        $notice = DisNoticeCtrl::load_notice($notice_ids[0]);
+        $this->assertEquals(1000011, $notice['data_id']);
     }
 
     function testRefuseApply()
@@ -292,6 +326,11 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
 
         $apply = new DisChanApplicantCtrl(1000000);
         $this->assertEquals('refused', $apply->attr('status'));
+
+        $nctrl = new DisNoticeCtrl(1000012);
+        $notice_ids = $nctrl->get_unread_notice_ids();
+        $notice = DisNoticeCtrl::load_notice($notice_ids[0]);
+        $this->assertEquals(1000000, $notice['data_id']);
     }
 }
 

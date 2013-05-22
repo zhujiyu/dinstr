@@ -10,7 +10,7 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-require_once "../../common.inc.php";
+require_once dirname(__FILE__)."/../../common.inc.php";
 
 class DisUserTest extends DisDataBaseTest
 {
@@ -91,7 +91,7 @@ CREATE TABLE user_relations
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         ", "
-CREATE TABLE new_notices
+CREATE TABLE latest_notices
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null, -- 信息的所有者
@@ -116,8 +116,8 @@ CREATE TABLE notices
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         ");
 
-        parent::__construct($sqls);
         $this->default_data_file = 'users.xml';
+        parent::__construct($sqls);
     }
 
     function testInit()
@@ -214,10 +214,16 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $row = $this->_getDBRow('user_relations', "ID, `from_user`, `to_user`, `read`, follow_time",
                 "ID = 1000035");
         $time = $row['follow_time'];
+
         $t1 = $this->_getXmlTable('user_relations', 'users_after_insert.xml');
         $t1->setValue(4, 'follow_time', $time);
         $t2 = $this->_getDatabaseTable('user_relations', "ID, `from_user`, `to_user`, `read`, follow_time");
         $this->assertTablesEqual($t1, $t2);
+
+        $nctrl = new DisNoticeCtrl(1234861);
+        $notice_ids = $nctrl->get_unread_notice_ids();
+        $notice = DisNoticeCtrl::load_notice($notice_ids[0]);
+        $this->assertEquals(1593490, $notice['data_id']);
     }
 
     function testCancelFollow()
@@ -248,7 +254,6 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $user_t2 = $this->_getXmlTable('users', 'users_after_insert.xml');
         $user_t2->setValue(3, 'salt', $salt);
         $user_t2->setValue(3, 'password', md5(md5('332288').$salt));
-//        $user_t2->setValue(3, 'impassword', md5(md5('55332288').$salt));
         $this->assertTablesEqual($user_t2, $user_t1);
     }
 
@@ -265,7 +270,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $user->reduce('fans_num', 10);
         $this->assertEquals(0, $user->attr('fans_num'));
     }
-
+    
 //    /**
 //     * @expectedException soParamException
 //     */
@@ -411,39 +416,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
 //    }
 }
 
-//    protected function _getDataSet($file)
-//    {
-//        $xml_dataset = parent::_getDataSet($file);
-//        $xml_datatable = $xml_dataset->getTable('users');
-//        $count = $xml_datatable->getRowCount();
-//
-//        for( $i = 0; $i < $count; $i ++ )
-//        {
-//            $value1 = md5(md5($xml_datatable->getValue($i, 'password')).md5($xml_datatable->getValue($i, 'salt')));
-//            $xml_datatable->setValue($i, 'password', $value1);
-//            $value2 = md5(md5($xml_datatable->getValue($i, 'impassword')).md5($xml_datatable->getValue($i, 'salt')));
-//            $xml_datatable->setValue($i, 'impassword', $value2);
-//        }
-//        return $xml_dataset;
-//    }
-
-//    protected function getDataSet()
-//    {
-//        return $this->_getDataSet('user_table.xml');
-//    }
-
 //        $this->table = "users";
 //        $this->columns = "ID, username, email, salt, domain, atme_notice, `password`, `impassword`, imoney";
 //        $this->mock = new soUserDataTable();
-
-//$file = "common.inc.php";
-//for( $i = 0; $i < 5; $i ++ )
-//{
-//    if( file_exists($file) )
-//    {
-//        require_once ( $file );
-//        break;
-//    }
-//    $file = "../".$file;
-//}
 ?>

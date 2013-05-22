@@ -39,7 +39,7 @@ try
     {
         $title = "我发出的邮件";
         $file = 'pmail.ls.mail.tpl';
-        $mail_ids = $user->list_publish_mail_ids(0, 20);
+        $mail_ids = $user->list_publish_note_ids(0, 20);
         $mails = $user->list_mails($mail_ids);
         $gSmarty->assign("mail_list", $mails);
     }
@@ -48,7 +48,7 @@ try
         $title = "我的收藏";
         $file = 'pmail.ls.collect.tpl';
         $collect = new DisNoteCollectCtrl($user_id);
-        $mail_ids = $collect->list_mail_ids(0, 20);
+        $mail_ids = $collect->list_note_ids(0, 20);
         $mails = $user->list_mails($mail_ids);
         $gSmarty->assign("mail_list", $mails);
     }
@@ -68,7 +68,7 @@ try
         $file = 'pmail.ls.theme.tpl';
         $item = 'approve';
 
-        $theme_ids = $user->list_approved_theme_ids(0, 20);
+        $theme_ids = $user->list_approved_head_ids(0, 20);
         $themes = $user->list_themes($theme_ids);
         $gSmarty->assign("theme_list",  $themes);
     }

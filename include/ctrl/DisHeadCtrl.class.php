@@ -13,83 +13,73 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-class DisHeadCtrl extends DisHeadData
+class DisHeadCtrl extends DisInfoHeadData
 {
     public $mail;
 
-    function increase($param, $step = 1)
+    function _chack_init()
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
         if( !$this->detail )
             $this->detail = self::get_data($this->ID);
+    }
+
+    function increase($param, $step = 1)
+    {
+        $this->_chack_init();
         parent::increase($param, $step);
-        DisNoteDataCache::set_theme_data($this->ID, null);
+        DisNoteDataCache::set_head_data($this->ID, null);
     }
 
     function reduce($param, $step = 1)
     {
-        if( !$this->ID )
-            throw new DisParamException('对象没有初始化！');
-        if( !$this->detail )
-            $this->detail = self::get_data($this->ID);
+        $this->_chack_init();
         parent::reduce($param, $step);
-        DisNoteDataCache::set_theme_data($this->ID, null);
+        DisNoteDataCache::set_head_data($this->ID, null);
     }
 
-    static function get_data($theme_id)
+    static function get_data($head_id)
     {
 //        pmRowMemcached::set_theme_data($theme_id, null);
-        $theme_data = DisNoteDataCache::get_theme_data($theme_id);
-        if( !$theme_data )
+        $head_data = DisNoteDataCache::get_head_data($head_id);
+        if( !$head_data )
         {
-            $theme = new DisHeadCtrl();
-            $theme->init($theme_id);
-            if( !$theme->ID )
-                throw new DisException("对象不存在！$theme_id");
-            $theme_data = $theme->info();
-            DisNoteDataCache::set_theme_data($theme_id, $theme_data);
+            $head = new DisHeadCtrl();
+            $head->init($head_id);
+            if( !$head->ID )
+                throw new DisParamException("对象不存在！$head_id");
+            $head_data = $head->info();
+            DisNoteDataCache::set_head_data($head_id, $head_data);
         }
-        return $theme_data;
+        return $head_data;
     }
 
-    function theme_view()
+    function head_view()
     {
-        if( !$this->ID )
-            throw new DisParamException('对象没有初始化！');
-        if( !$this->detail )
-            $this->detail = self::get_data($this->ID);
+        $this->_chack_init( );
         $view = $this->detail;
 
-        if( $view['mail_id'] )
-        {
-            $view['mail'] = DisNoteCtrl::get_mail_view($view['mail_id']);
-            $view['mail'][content] = strip_tags($view['mail'][content]);
-        }
-
-        if( $view['channel_id'] )
-            $view['channel'] = DisChannelCtrl::get_data($view['channel_id']);
-        else if( $view['mail']['channel_list'][0] )
-            $view['channel'] = $view['mail']['channel_list'][0];
-//        if( $user_id > 0 )
-//            $view['status'] = $this->check_status($user_id);
+        $view['note'] = DisNoteCtrl::get_note_view($view['note_id']);
+        $view['note']['content'] = strip_tags($view['note']['content']);
+        if( $view['chan_id'] > 0 )
+            $view['channel'] = DisChannelCtrl::get_data($view['chan_id']);
 
         return $view;
     }
 
-    static function parse_themes($theme_ids)
+    static function parse_heads($head_ids)
     {
-        $theme_list = array();
-        $len = count($theme_ids);
-
+        $len = count($head_ids);
+        $head_list = array();
         for( $i = 0; $i < $len; $i ++ )
         {
-            $theme = DisHeadCtrl::theme($theme_ids[$i]);
-            $data = $theme->theme_view();
-            $data['last_mail'] = $theme->last_mail();
-            array_push($theme_list, $data);
+            $head = DisHeadCtrl::head($head_ids[$i]);
+            $data = $head->head_view();
+            $data['last_note'] = $head->last_note();
+            array_push($head_list, $data);
         }
-        return $theme_list;
+        return $head_list;
     }
 
     protected function check_interest($user_id)
@@ -113,31 +103,34 @@ class DisHeadCtrl extends DisHeadData
         return $status;
     }
 
-    static function new_theme($user_id, $title, $channel_id)
+    static function new_head($user_id, $chan_id, $title)
     {
         if( !$user_id || !$title )
             throw new DisParamException("参数不合法！");
-        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
-        $theme_content = preg_replace($rsg, '', $title);
+//        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
+//        $title = preg_replace($rsg, '', $title);
 
-        $theme = new DisHeadCtrl();
-        $theme->insert($theme_content, 0, (int)$channel_id);
-        if( !$theme->ID )
-            throw new DisDBException("插入邮件标题失败！");
-        $theme->interest($user_id);
+        $head = new DisHeadCtrl();
+        $head->insert($title, 0, (int)$chan_id);
+        if( !$head->ID )
+            throw new DisDBException("插入信息头失败！");
+        $head->interest($user_id);
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
-        $param->increase('theme_num');
-        return $theme;
+        $chan = new DisChannelCtrl($chan_id);
+        $chan->increase('info_num');
+
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
+        $param->increase('head_num');
+        return $head;
     }
 
-    static function theme($theme_id)
+    static function head($head_id)
     {
-        $theme = new DisHeadCtrl();
-        $theme->ID = $theme_id;
-        $theme->detail = self::get_data($theme_id);
-        return $theme;
+        $head = new DisHeadCtrl();
+        $head->ID = $head_id;
+        $head->detail = self::get_data($head_id);
+        return $head;
     }
 
     function interest($user_id)
@@ -148,21 +141,24 @@ class DisHeadCtrl extends DisHeadData
             throw new DisParamException('没有操作用户！');
 
         if( $this->check_interest($user_id) )
-            return ;
-        $interest_id = DisHeadUserData::insert($this->ID, $user_id);
+            return 0;
+        $interest_id = DisInfoUserData::insert($this->ID, $user_id);
         if( !$interest_id )
             throw new DisException('发生了意外异常！');
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->increase('interest_num');
         $this->increase ('interest_num');
 
-        $theme_ids = DisUserVectorCache::get_interest_theme_ids($user_id);
-        array_unshift($theme_ids, $this->ID);
+        $head_ids = DisUserVectorCache::get_interest_head_ids($user_id);
+        if( $head_ids == null )
+            $head_ids = array($this->ID);
+        else
+            array_unshift($head_ids, $this->ID);
 
-        DisUserVectorCache::set_interest_theme_ids($user_id, $theme_ids);
-        DisNoteVectorCache::set_theme_interest_ids($this->ID, null);
+        DisUserVectorCache::set_interest_head_ids($user_id, $head_ids);
+        DisNoteVectorCache::set_head_interest_ids($this->ID, null);
         return $interest_id;
     }
 
@@ -175,17 +171,17 @@ class DisHeadCtrl extends DisHeadData
 
         if( !$this->check_interest($user_id) )
             return ;
-        DisHeadUserData::remove($this->ID, $user_id);
+        DisInfoUserData::remove($this->ID, $user_id);
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->reduce('interest_num');
         $this->reduce ('interest_num');
 
-        DisUserVectorCache::set_interest_theme_ids($user_id, null);
-        DisUserVectorCache::set_approved_theme_ids($user_id, null);
-        DisNoteVectorCache::set_theme_interest_ids($this->ID, null);
-        DisNoteVectorCache::set_theme_approval_ids($this->ID, null);
+        DisUserVectorCache::set_interest_head_ids($user_id, null);
+        DisUserVectorCache::set_approved_head_ids($user_id, null);
+        DisNoteVectorCache::set_head_interest_ids($this->ID, null);
+        DisNoteVectorCache::set_head_approval_ids($this->ID, null);
     }
 
     function approve($user_id)
@@ -197,29 +193,29 @@ class DisHeadCtrl extends DisHeadData
 
         if( $this->check_approved($user_id) )
             return ;
-        $approve_id = DisHeadUserData::get_interest_id($this->ID, $user_id);
+        $approve_id = DisInfoUserData::get_interest_id($this->ID, $user_id);
         if( !$approve_id )
-            $approve_id = DisHeadUserData::insert($this->ID, $user_id);
+            $approve_id = DisInfoUserData::insert($this->ID, $user_id);
         if( !$approve_id )
-            throw new DisException('发生了意外异常！');
-        DisHeadUserData::approve($approve_id);
+            throw new DisDBException('发生了意外异常！');
+        DisInfoUserData::approve($approve_id);
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->increase('approved_num');
         $this->increase ('approved_num');
 
-        $mail = DisNoteCtrl::get_data($this->detail[mail_id]);
-        if( $mail[user_id] != $user_id )
+        $note = DisNoteCtrl::get_data($this->detail['note_id']);
+        if( $note['user_id'] != $user_id )
         {
-            $notice = new DisNoticeCtrl($mail[user_id]);
+            $notice = new DisNoticeCtrl($note['user_id']);
             $notice->add_approve_notice($approve_id);
         }
 
-        DisUserVectorCache::set_interest_theme_ids($user_id, null);
-        DisUserVectorCache::set_approved_theme_ids($user_id, null);
-        DisNoteVectorCache::set_theme_interest_ids($this->ID, null);
-        DisNoteVectorCache::set_theme_approval_ids($this->ID, null);
+        DisUserVectorCache::set_interest_head_ids($user_id, null);
+        DisUserVectorCache::set_approved_head_ids($user_id, null);
+        DisNoteVectorCache::set_head_interest_ids($this->ID, null);
+        DisNoteVectorCache::set_head_approval_ids($this->ID, null);
     }
 
     function cancel_approve($user_id)
@@ -230,19 +226,19 @@ class DisHeadCtrl extends DisHeadData
             throw new DisParamException('没有操作用户！');
 
         if( !$this->check_approved($user_id) )
-            return ;
-        $approve_id = DisHeadUserData::get_interest_id($this->ID, $user_id);
+            return;
+        $approve_id = DisInfoUserData::get_interest_id($this->ID, $user_id);
         if( !$approve_id )
-            return ;
-        DisHeadUserData::cancel_approve($approve_id);
+            return;
+        DisInfoUserData::cancel_approve($approve_id);
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->reduce('approved_num');
         $this->reduce ('approved_num');
 
-        DisUserVectorCache::set_approved_theme_ids($user_id, null);
-        DisNoteVectorCache::set_theme_approval_ids($this->ID, null);
+        DisUserVectorCache::set_approved_head_ids($user_id, null);
+        DisNoteVectorCache::set_head_approval_ids($this->ID, null);
     }
 
     function list_interest_user_ids()
@@ -251,15 +247,15 @@ class DisHeadCtrl extends DisHeadData
             throw new DisParamException('对象没有初始化！');
 
         //pmVectorMemcached::set_follow_theme_ids($user_id, null);
-        $user_ids = DisNoteVectorCache::get_theme_interest_ids($this->ID);
+        $user_ids = DisNoteVectorCache::get_head_interest_ids($this->ID);
         if( !$user_ids )
         {
             $user_ids[0] = "#E#";
-            $ids = DisHeadUserData::list_follow_user_ids($this->ID);
+            $ids = DisInfoUserData::list_follow_user_ids($this->ID);
             $count = count($ids);
             for( $i = 0; $i < $count; $i ++ )
                 $user_ids[$i] = $ids[$i]['user_id'];
-            DisNoteVectorCache::set_theme_interest_ids($this->ID, $user_ids);
+            DisNoteVectorCache::set_head_interest_ids($this->ID, $user_ids);
         }
 
         if( $user_ids[0] == "#E#" )
@@ -273,15 +269,15 @@ class DisHeadCtrl extends DisHeadData
             throw new DisParamException('对象没有初始化！');
 
 //        pmVectorMemcached::set_theme_approval_ids($this->ID, null);
-        $user_ids = DisNoteVectorCache::get_theme_approval_ids($this->ID);
+        $user_ids = DisNoteVectorCache::get_head_approval_ids($this->ID);
         if( !$user_ids )
         {
             $user_ids[0] = "#E#";
-            $ids = DisHeadUserData::list_approve_user_ids($this->ID);
+            $ids = DisInfoUserData::list_approve_user_ids($this->ID);
             $count = count($ids);
             for( $i = 0; $i < $count; $i ++ )
                 $user_ids[$i] = $ids[$i]['user_id'];
-            DisNoteVectorCache::set_theme_approval_ids($this->ID, $user_ids);
+            DisNoteVectorCache::set_head_approval_ids($this->ID, $user_ids);
         }
 
         if( $user_ids[0] == "#E#" )
@@ -289,84 +285,70 @@ class DisHeadCtrl extends DisHeadData
         return $user_ids;
     }
 
-    function list_mail_ids()
+    function list_note_ids()
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
 
 //        pmVectorMemcached::set_mail_ids($this->ID, null);
-        $mail_ids = DisNoteVectorCache::get_mail_ids($this->ID);
-        if( !$mail_ids )
+        $note_ids = DisNoteVectorCache::get_note_ids($this->ID);
+        if( !$note_ids )
         {
-            $mail_ids[0] = '#E#';
-            $mails = DisNoteCtrl::load_theme_mails($this->ID, 'ID');
-            $count = count($mails);
+            $note_ids[0] = '#E#';
+            $notes = DisNoteCtrl::load_head_notes($this->ID, 'ID');
+            $count = count($notes);
             for( $i = 0; $i < $count; $i ++ )
-                $mail_ids[$i] = $mails[$i]['ID'];
-            DisNoteVectorCache::set_mail_ids($this->ID, $mail_ids);
+                $note_ids[$i] = $notes[$i]['ID'];
+            DisNoteVectorCache::set_note_ids($this->ID, $note_ids);
         }
 
-        if( $mail_ids[0] == '#E#' )
-            $mail_ids = array();
-        return $mail_ids;
+        if( $note_ids[0] == '#E#' )
+            $note_ids = array();
+        return $note_ids;
     }
 
-    function last_mail_id()
+    function last_note_id()
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
 
         //pmVectorMemcached::set_last_mail_id($root, null);
-        $mail_id = DisNoteVectorCache::get_last_mail_id($this->ID);
-        if( !$mail_id )
+        $note_id = DisNoteVectorCache::get_last_note_id($this->ID);
+        if( !$note_id )
         {
-            $last_mails = DisNoteCtrl::last_theme_mail($this->ID);
-            if( $last_mails )
-                $mail_id = $last_mails['ID'];
+            $lasts = DisNoteCtrl::last_head_note($this->ID);
+            if( $lasts )
+                $note_id = $lasts['ID'];
             else
-                $mail_id = $this->detail['mail_id'];
-            DisNoteVectorCache::set_last_mail_id($this->ID, $mail_id);
+                $note_id = $this->detail['note_id'];
+            DisNoteVectorCache::set_last_note_id($this->ID, $note_id);
         }
 
-        return $mail_id;
+        return $note_id;
     }
 
-    function last_mail()
+    function last_note()
     {
-        $mail_id = $this->last_mail_id();
-        $mail = DisNoteCtrl::get_mail_view($mail_id);
-        $mail[content] = strip_tags($mail[content]);
-        return $mail;
-    }
-
-    static function list_themes($count = 10)
-    {
-        $themes = parent::list_themes($count);
-        $len = count($themes);
-        for( $i = 0; $i < $len; $i ++ )
-        {
-            $_id = $themes[$i]['channel_id'];
-            if( $_id )
-                $themes[$i]['channel'] = DisChannelCtrl::get_data($_id);
-//            array_push($theme_view, $_view);
-        }
-        return $themes;
+//        $note_id = $this->last_note_id();
+        $note = DisNoteCtrl::get_note_view($this->last_note_id());
+        $note['content'] = strip_tags($note['content']);
+        return $note;
     }
 
     function list_all_photos()
     {
-        $mail_ids = self::list_mail_ids();
-        $len = count($mail_ids);
+        $note_ids = $this->list_note_ids();//self::list_mail_ids();
+        $len = count($note_ids);
         for( $i = 0, $pk = 0; $i < $len; $i ++ )
         {
-            $mail = DisNoteCtrl::get_data($mail_ids[$i]);
-            if( !$mail['photo_list'] )
+            $note = DisNoteCtrl::get_data($note_ids[$i]);
+            if( !$note['photo_list'] )
                 continue;
+            $count = count($note['photo_list']);
 
-            $count = count($mail['photo_list']);
             for( $j = 0; $j < $count; $j ++ )
             {
-                $photo = $mail['photo_list'][$j];
+                $photo = $note['photo_list'][$j];
                 $photo_info = DisPhotoCtrl::get_data($photo['photo_id']);
                 $photo['url'] = $photo_info['url'];
                 $photo['user'] = $photo_info['user'];
@@ -378,21 +360,52 @@ class DisHeadCtrl extends DisHeadData
 
     function list_all_goods()
     {
-        $mail_ids = self::list_mail_ids();
-        $len = count($mail_ids);
+        $note_ids = $this->list_note_ids();//self::list_mail_ids();
+        $len = count($note_ids);
         for( $i = 0, $pk = 0; $i < $len; $i ++ )
         {
-            $mail = DisNoteCtrl::get_data($mail_ids[$i]);
-            if( !$mail['good_list'] )
+            $note = DisNoteCtrl::get_data($note_ids[$i]);
+            if( !$note['good_list'] )
                 continue;
-            $count = count($mail['good_list']);
+            $count = count($note['good_list']);
+
             for( $j = 0; $j < $count; $j ++ )
             {
-                $good = $mail['good_list'][$j];
+                $good = $note['good_list'][$j];
                 $goods[$pk ++] = DisGoodCtrl::get_data($good['good_id']);
             }
         }
         return $goods;
     }
 }
+
+//    static function list_themes($count = 10)
+//    {
+//        $themes = parent::list_themes($count);
+//        $len = count($themes);
+//        for( $i = 0; $i < $len; $i ++ )
+//        {
+//            $_id = $themes[$i]['channel_id'];
+//            if( $_id )
+//                $themes[$i]['channel'] = DisChannelCtrl::get_data($_id);
+////            array_push($theme_view, $_view);
+//        }
+//        return $themes;
+//    }
+//
+//        if( !$this->ID )
+//            throw new DisParamException('对象没有初始化！');
+//        if( !$this->detail )
+//            $this->detail = self::get_data($this->ID);
+
+//        if( $view['note_id'] )
+//        {
+//            $view['note'] = DisNoteCtrl::get_note_view($view['note_id']);
+//            $view['note']['content'] = strip_tags($view['note']['content']);
+//        }
+//        else if( $view['mail']['channel_list'][0] )
+//            $view['channel'] = $view['mail']['channel_list'][0];
+//        if( $user_id > 0 )
+//            $view['status'] = $this->check_status($user_id);
+
 ?>

@@ -35,7 +35,7 @@ class DisStreamCtrl extends DisStreamData
         if( $flow['channel_id'] > 0 )
             $flow['channel'] = DisChannelCtrl::get_data($flow['channel_id']);
 
-        $mail = DisNoteCtrl::get_mail_view($flow['mail_id']);
+        $mail = DisNoteCtrl::get_note_view($flow['mail_id']);
         $mail[content] = strip_tags($mail[content]);
         if( $mail['ID'] > 0 )
             $mail['theme'] = DisHeadCtrl::get_data($mail['theme_id']);
@@ -83,7 +83,7 @@ class DisStreamCtrl extends DisStreamData
         if( $this->detail == null )
             $this->detail = self::get_data($this->ID);
 
-        $mail = DisNoteCtrl::mail($this->detail['mail_id']);
+        $mail = DisNoteCtrl::note($this->detail['mail_id']);
         if( $mail->attr('user_id') != $user_id )
             return;
         $super_ids = DisUserCtrl::list_super_user_ids();
@@ -93,7 +93,7 @@ class DisStreamCtrl extends DisStreamData
         parent::delete();
         DisNoteDataCache::set_flow_note($this->ID, null);
         $mail->delete();
-        DisNoteDataCache::set_mail_data($this->detail['mail_id'], null);
+        DisNoteDataCache::set_note_data($this->detail['mail_id'], null);
 
         $feed = DisFeedCtrl::read_ctrler($user_id);
         $feed->drop_flow($this->ID);

@@ -79,7 +79,7 @@ try
     }
 
     if( $mail_id )
-        $mail = DisNoteCtrl::mail($mail_id);
+        $mail = DisNoteCtrl::note($mail_id);
     $mail_ids = $flow_ids = array();
 
     if( $p == 'publish' )
@@ -88,7 +88,7 @@ try
             return;
         $channel_id = (int)$_REQUEST['channel_id'];
 
-        $mail = DisNoteCtrl::new_mail($user_id, $_REQUEST['title'], $_REQUEST['content'], $channel_id,
+        $mail = DisNoteCtrl::new_info($user_id, $_REQUEST['title'], $_REQUEST['content'], $channel_id,
                 $_REQUEST['photos'], $_REQUEST['goods']);
         $flow_id = $mail->send($user_id, $channel_id, (int)$_REQUEST['weight']);
 
@@ -110,7 +110,7 @@ try
         else if( $_REQUEST['parent'] )
             $parent_id = (int)$_REQUEST['parent'];
 
-        $parent = DisNoteCtrl::mail($parent_id);
+        $parent = DisNoteCtrl::note($parent_id);
         $reply = $parent->reply($user_id, $_REQUEST['content'],
                 $_REQUEST['photos'], $_REQUEST['goods']);
         $gSmarty = init_smarty();

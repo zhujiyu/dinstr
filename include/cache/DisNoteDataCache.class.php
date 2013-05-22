@@ -46,25 +46,25 @@ class DisNoteDataCache extends DisRowCache
         self::set($key, $note);
     }
 
-    static function get_theme_data($theme_id)
+    static function get_head_data($theme_id)
     {
         $key = "wdd-$theme_id";
         return self::get($key);
     }
 
-    static function set_theme_data($theme_id, $theme_data)
+    static function set_head_data($theme_id, $theme_data)
     {
         $key = "wdd-$theme_id";
         self::set($key, $theme_data);
     }
 
-    static function get_mail_data($mail_id)
+    static function get_note_data($mail_id)
     {
         $key = "ndd-".$mail_id;
         return self::get($key);
     }
 
-    static function set_mail_data($mail_id, $data)
+    static function set_note_data($mail_id, $data)
     {
         $key = "ndd-".$mail_id;
         self::set($key, $data);

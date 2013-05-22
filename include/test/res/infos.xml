@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-	<channels ID="1234861" name="游戏海报"   type="business" logo="0" description="first" announce="121981" creater="200" info_num="41" subscriber_num="0" member_num="0" create_time="0"/>
-	<channels ID="1593490" name="新建海报板" type="business" logo="0" description="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" announce="kuke.com" creater='0' subscriber_num="1" member_num="1" create_time="0"/>
-	<channels ID="1593648" name="生活海报"   type="business" logo="0" description="test" announce="gou86.com" creater='0' subscriber_num="1" member_num="0" create_time="0"/>
     <users ID="1000000" username="zhujiyu" email="zhujiyu@126.com"/>
     <users ID="1000012" username="zhuhz82" email="zhuhz82@126.com"/>
-    <user_params ID="1000000" create_num="0" subscribe_num="0" join_num="0"/>
-    <user_params ID="1000012" create_num="0" subscribe_num="2" join_num="1"/>
-    <chan_users ID="10000012" chan_id="1593648" user_id="1000012" role="0" subscribe_time="0" join_time="0"/>
-    <chan_users ID="10000015" chan_id="1593490" user_id="1000012" role="1" subscribe_time="0" join_time="0"/>
+    <user_params ID="1000000" interest_num="0" head_num="0" note_num="0"/>
+    <user_params ID="1000012" interest_num="0" head_num="2" note_num="1"/>
+
+    <info_notes ID="1000100" user_id="1000000" head_id="1000200" parent_id="0" content="信息内容"/>
+    <info_heads ID="1000200" content="信息头" note_id="1000100" approved_num="1" interest_num="2"/>
+
+    <info_notes ID="1000101" user_id="1000000" head_id="1000202" parent_id="0" content="信息内容"/>
+    <info_heads ID="1000202" content="信息头" note_id="1000101" approved_num="0" interest_num="0"/>
+
+    <info_users ID="10000012" head_id="1000200" user_id="1000000" approve="0" create_time="2013-05-20 00:00:00"/>
+    <info_users ID="10000015" head_id="1000200" user_id="1000012" approve="1" create_time="2013-05-20 00:00:00"/>
+
+	<channels ID="1234861" name="游戏海报"   type="business" logo="0" description="first" announce="121981" creater="200" info_num="0" subscriber_num="0" member_num="0" create_time="0"/>
+	<channels ID="1593490" name="新建海报板" type="business" logo="0" description="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" announce="kuke.com" creater='0' info_num="0" subscriber_num="1" member_num="1" create_time="0"/>
+	<channels ID="1593648" name="生活海报"   type="business" logo="0" description="test" announce="gou86.com" creater='0' info_num="0" subscriber_num="1" member_num="0" create_time="0"/>
 </dataset>

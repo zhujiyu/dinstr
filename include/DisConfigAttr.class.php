@@ -101,21 +101,21 @@ class DisConfigAttr
         'DisPhotoTagData'=>'include/data/DisPhotoTagData.class.php',
         'DisGoodCtrl' =>'include/ctrl/DisGoodCtrl.class.php',
         'DisPhotoCtrl'=>'include/ctrl/DisPhotoCtrl.class.php',
-        'pmCtrlFile' =>'include/ctrl/pmCtrlFile.php',
 
-        'DisNoteData'       =>'include/data/DisNoteData.class.php',
-        'DisNoteGoodData'   =>'include/data/DisNoteGoodData.class.php',
-        'DisNotePhotoData'  =>'include/data/DisNotePhotoData.class.php',
-        'DisNoteReplyData'  =>'include/data/DisNoteReplyData.class.php',
+        'DisInfoHeadData'  =>'include/data/DisInfoHeadData.class.php',
+        'DisInfoUserData'  =>'include/data/DisInfoUserData.class.php',
+        'DisInfoNoteData'  =>'include/data/DisInfoNoteData.class.php',
+        'DisInfoGoodData'  =>'include/data/DisInfoGoodData.class.php',
+        'DisInfoPhotoData' =>'include/data/DisInfoPhotoData.class.php',
+        'DisInfoReplyData' =>'include/data/DisInfoReplyData.class.php',
+
+        'DisNoteCtrl'    =>'include/ctrl/DisNoteCtrl.class.php',
+        'DisHeadCtrl'    =>'include/ctrl/DisHeadCtrl.class.php',
+        'DisInfoUserCtrl'=>'include/ctrl/DisInfoUserCtrl.class.php',
+
         'DisNoteKeywordData'=>'include/data/DisNoteKeywordData.class.php',
         'DisStreamData'=>'include/data/DisStreamData.class.php',
-        'DisNoteCtrl'  =>'include/ctrl/DisNoteCtrl.class.php',
         'DisStreamCtrl'=>'include/ctrl/DisStreamCtrl.class.php',
-
-        'DisHeadData'    =>'include/data/DisHeadData.class.php',
-        'DisHeadUserData'=>'include/data/DisHeadUserData.class.php',
-        'DisHeadCtrl'    =>'include/ctrl/DisHeadCtrl.class.php',
-        'DisHeadUserCtrl'=>'include/ctrl/DisHeadUserCtrl.class.php',
 
 //        'pmDataMailCollect' =>'include/data/pmDataMailExt.php',
 //        'pmCtrlMailCollect' =>'include/ctrl/pmCtrlMailExt.php',

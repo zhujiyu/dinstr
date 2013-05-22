@@ -22,10 +22,12 @@ class DisNoticeCtrl extends DisNoticeData
 
     static function preg_notices($notices)
     {
+        $matches = null;
         if( preg_match_all('/\d+/', $notices, $matches) )
-            return $matches[0];
+            $notice_ids = $matches[0];
         else
-            return array();
+            $notice_ids = array();
+        return $notice_ids;
     }
 
     static function get_data($notice_id)
@@ -56,14 +58,14 @@ class DisNoticeCtrl extends DisNoticeData
                 $_ids[] = $notice_ids[$i];
         }
 
-        $_len = count($_ids);
-        if( $_len == 0 )
-            return ;
+        $len1 = count($_ids);
+        if( $len1 == 0 )
+            return;
         $notices = DisUserVectorCache::get_new_notice_ids($this->user_id);
         if( !$notices || $notices[0] == '#E#' )
-            return ;
+            return;
 
-        for( $i = 0; $i < $_len; $i ++ )
+        for( $i = 0; $i < $len1; $i ++ )
         {
             $len2 = count($notices);
             for( $j = 0; $j < $len2; $j ++ )
@@ -112,47 +114,47 @@ class DisNoticeCtrl extends DisNoticeData
 
     function _parse($notice)
     {
-        $notice[create_time] = strtotime($notice[create_time]);
-        if( $notice[type] == 'mail' || $notice[type] == 'reply' )
+        $notice['create_time'] = strtotime($notice['create_time']);
+        if( $notice['type'] == 'mail' || $notice['type'] == 'reply' )
         {
-            $mail = DisNoteCtrl::get_data($notice[data_id]);
-            $user = DisUserCtrl::get_data($mail[user_id]);
-            $theme = DisHeadCtrl::get_data($mail[theme_id]);
+            $mail = DisNoteCtrl::get_data($notice['data_id']);
+            $user = DisUserCtrl::get_data($mail['user_id']);
+            $theme = DisHeadCtrl::get_data($mail['theme_id']);
 
-            $notice[theme_id] = $mail[theme_id];
-            $notice[theme] = $theme[content];
-            $notice[mail_user_id] = $mail[user_id];
-            $notice[mail_username] = $user['username'];
+            $notice['theme_id'] = $mail['theme_id'];
+            $notice['theme'] = $theme['content'];
+            $notice['mail_user_id'] = $mail['user_id'];
+            $notice['mail_username'] = $user['username'];
         }
-        else if( $notice[type] == 'approve' )
+        else if( $notice['type'] == 'approve' )
         {
-            $approve = DisHeadUserCtrl::get_data($notice[data_id]);
-            $user = DisUserCtrl::get_data($approve[user_id]);
-            $theme = DisHeadCtrl::get_data($approve[theme_id]);
+            $approve = DisInfoUserCtrl::get_data($notice['data_id']);
+            $user = DisUserCtrl::get_data($approve['user_id']);
+            $theme = DisHeadCtrl::get_data($approve['theme_id']);
 
-            $notice[theme_id] = $approve[theme_id];
-            $notice[theme] = $theme[content];
-            $notice[approve_user_id] = $approve[user_id];
-            $notice[approve_username] = $user['username'];
+            $notice['theme_id'] = $approve['theme_id'];
+            $notice['theme'] = $theme['content'];
+            $notice['approve_user_id'] = $approve['user_id'];
+            $notice['approve_username'] = $user['username'];
         }
-        else if( $notice[type] == 'apply' )
+        else if( $notice['type'] == 'apply' )
         {
-            $apply = DisChanApplicantCtrl::get_data($notice[data_id]);
-            $user = DisUserCtrl::get_data($apply[user_id]);
-            $channel = DisChannelCtrl::get_data($apply[channel_id]);
+            $apply = DisChanApplicantCtrl::get_data($notice['data_id']);
+            $user = DisUserCtrl::get_data($apply['user_id']);
+            $channel = DisChannelCtrl::get_data($apply['channel_id']);
 
-            $notice[channel] = $channel[name];
-            $notice[channel_id] = $apply[channel_id];
-            $notice[apply_user_id] = $apply[user_id];
-            $notice[apply_username] = $user[username];
-            $notice[status] = $apply[status];
+            $notice['channel'] = $channel['name'];
+            $notice['channel_id'] = $apply['channel_id'];
+            $notice['apply_user_id'] = $apply['user_id'];
+            $notice['apply_username'] = $user['username'];
+            $notice['status'] = $apply['status'];
         }
-        else if( $notice[type] == 'fan' )
+        else if( $notice['type'] == 'fan' )
         {
-            $user = DisUserCtrl::get_data($notice[data_id]);
-            $notice[fan_user_id] = $notice[data_id];
-            $notice[fan_username] = $user[username];
-            
+            $user = DisUserCtrl::get_data($notice['data_id']);
+            $notice['fan_user_id'] = $notice['data_id'];
+            $notice['fan_username'] = $user['username'];
+
 //            $relation = pmCtrlUserRelation::get_data($notice[data_id]);
 //            $user = pmCtrlUser::get_data($relation[from_user]);
 //            $notice[fan_user_id] = $relation[from_user];
@@ -192,26 +194,27 @@ class DisNoticeCtrl extends DisNoticeData
         return $notice_list;
     }
 
+    /**添加新通知
+     * @param string $type 通知的类型
+     * @param Integer $data_id 产生通知的数据ID
+     * @param string $message 通知信息
+     * @throws DisParamException 输入数据类型有误
+     */
     function add_new_notice($type, $data_id, $message = '')
     {
         if( !$this->user_id || !$data_id )
             throw new DisParamException("参数不合法！");
 
-        if( parent::exist('fan', $data_id) )
+        if( parent::exist($type, $data_id) )
             return;
         $id = parent::add_notice($type, $data_id, $message);
 
         $notices = DisUserVectorCache::get_new_notice_ids($this->user_id);
-        if( $notices && $notices[0] != '#E#' )
+        if( $notices != null && $notices[0] != '#E#' )
             array_unshift($notices, $id);
         else
             $notices[0] = $id;
         DisUserVectorCache::set_new_notice_ids($this->user_id, $notices);
-    }
-
-    function add_mail_notice($data_id, $message = '')
-    {
-        $this->add_new_notice('mail', $data_id, $message);
     }
 
     function add_reply_notice($data_id, $message = '')
@@ -221,8 +224,6 @@ class DisNoticeCtrl extends DisNoticeData
 
     function add_approve_notice($data_id, $message = '')
     {
-        if( parent::exist('approve', $data_id) )
-            return;
         $this->add_new_notice('approve', $data_id, $message);
     }
 
@@ -231,11 +232,14 @@ class DisNoticeCtrl extends DisNoticeData
         $this->add_new_notice('apply', $data_id, $message);
     }
 
-    function add_fan_notice($data_id, $message = '')
+    function add_follow_notice($data_id, $message = '')
     {
-        if( parent::exist('fan', $data_id) )
-            return;
-        $this->add_new_notice('fan', $data_id, $message);
+        $this->add_new_notice('follow', $data_id, $message);
     }
+
+//    function add_mail_notice($data_id, $message = '')
+//    {
+//        $this->add_new_notice('mail', $data_id, $message);
+//    }
 }
 ?>
