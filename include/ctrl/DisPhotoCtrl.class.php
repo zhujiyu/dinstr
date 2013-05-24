@@ -2,13 +2,13 @@
 /**
  * @package: DIS.CTRL
  * @file   : DisPhotoCtrl.class.php
- * @abstract  :
+ * @abstract:
  *
- * @author    : 朱继玉<zhuhz82@126.com>
- * @Copyright : 2013 有向信息流
- * @Date      : 2013-04-16
- * @encoding  : UTF-8
- * @version   : 1.0.0
+ * @author   : 朱继玉<zhuhz82@126.com>
+ * @Copyright: 2013 有向信息流
+ * @Date     : 2013-04-16
+ * @encoding : UTF-8
+ * @version  : 1.0.0
  */
 if( !defined('IN_DIS') )
     exit('Access Denied!');
@@ -198,27 +198,6 @@ class DisPhotoCtrl extends DisPhotoData
             $photo = new DisImagePlg($upload['tmp_name']);
             $this->save($photo, $user_id, $base_path);
             @unlink($upload);
-
-//            $this->_generate_name($upload['name'], $base_path);
-//            $_dir = strtoupper(substr(md5($this->name), 0, 2));
-//            $this->name = substr(md5($this->name), 2);
-//            $photo = new pmImage($upload['tmp_name']);
-//
-//            $_sml = "attach/nh100/$_dir/".$this->name;
-//            $photo->DEST_URL = "$base_path/$_sml";
-//            $this->_mkdir(array("nh100", $_dir), $base_path);
-//            $this->cut(100, $photo);
-//            $photo->save_picture();
-//
-//            $_big = "attach/xw500/$_dir/".$this->name;
-//            $photo->DEST_URL = "$base_path/$_big";
-//            $this->_mkdir(array("xw500", $_dir), $base_path);
-//            $this->zoom_width(500, $photo);
-//            $photo->save_picture();
-//
-//            $this->mark("$base_path/$_big");
-//            $this->insert($_big, $_sml, $user_id);
-//            @unlink($upload);
         }
     }
 
@@ -249,19 +228,6 @@ class DisPhotoCtrl extends DisPhotoData
         $this->_generate_name($url, $base_path);
         $photo = new DisImagePlg($url);
         return $this->save($photo, $user_id, $base_path);
-
-//        $this->_generate_name($url, $base_path);
-//        $_dir = strtoupper(substr(md5($this->name), 0, 2));
-//        $this->name = substr(md5($this->name), 2);
-//        $photo = new pmImage($url);
-//
-//        $_sml = "attach/nh100/$_dir/".$this->name;
-//        $photo->DEST_URL = "$base_path/$_sml";
-//        $this->_mkdir(array("nh100", $_dir), $base_path);
-//        $this->cut(100, $photo);
-//        $photo->save_picture();
-//
-//        return $this->insert($url, $_sml, $user_id);
     }
 
     function reduce($param, $step = 1)
@@ -299,266 +265,5 @@ class DisPhotoCtrl extends DisPhotoData
         for( $i = 0; $i < $len; $i ++ )
             DisPhotoTagData::insert($this->ID, $tags[$i]);
     }
-
-//    function remove($path = '.', PDO $pdo = null)
-//    {
-//        $big = $this->detail['big'];
-//        $sml = $this->detail['small'];
-//        @unlink("$path/$big");
-//        @unlink("$path/$sml");
-//        parent::delete($pdo);
-//    }
-
-//    function _upload($upload, $user_id, $base_path = '.')
-//    {
-//            $this->_generate_name($upload['name'], $base_path);
-//
-//            $up_dir = "attach/tmp";
-//            if( !file_exists("$base_path/$up_dir") )
-//                @mkdir("$base_path/$up_dir");
-//            $temp_url = "$up_dir/$this->name";
-//
-//            if( !move_uploaded_file($upload['tmp_name'], "$base_path/$temp_url") )
-//                throw new pmException("文件上传失败！");
-//            @unlink($upload);
-//
-//            $photo = new pmImage("$base_path/$temp_url");
-//            $_dir = strtoupper(substr(md5($this->name), 0, 2));
-//            $this->name = substr(md5($this->name), 2);
-//
-//            $this->cut(100, $photo);
-//            $this->_mkdir(array("nh100", $_dir), $base_path);
-//            $_sml = "attach/nh100/$_dir/".$this->name;
-//            $photo->DEST_URL = "$base_path/$_sml";
-//            $photo->save_picture();
-//
-//            $this->zoom_width(500, $photo);
-//            $this->_mkdir(array("xw500", $_dir), $base_path);
-//            $_big = "attach/xw500/$_dir/".$this->name;
-//            $photo->DEST_URL = "$base_path/$_big";
-//            $photo->save_picture();
-//
-//            $this->mark("$base_path/$_big");
-//            $this->insert($_big, $_sml, $user_id);
-//            self::delete_img($temp_url, $base_path);
-//
-////             $this->_load_temp($upload, $path);
-////             $this->save($user_id, $path);
-////             $this->delete_temp($path);
-//    }
-
-//    protected function photo_path($dirs, $base_path = '.')
-//    {
-//        $img = "attach/";
-//        $len = count($dirs);
-//
-//        for( $i = 0; $i < $len; $i ++ )
-//        {
-//            $img .= $dirs[$i]."/";
-//        }
-//
-//        $img .= $this->name;
-//        $this->_mkdir($dirs, $base_path);
-//        return $img;
-//    }
-
-//    function to_avatar($src, $base_path = '.')
-//    {
-//        $this->temp_url = $this->attr('big');
-//        $matches = array();
-//        preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $this->temp_url, $matches);
-//        $this->name = $matches[1];
-//
-//        $_dir = strtoupper(substr(md5($this->name), 0, 2));
-//        $photo = new pmImage("$base_path/$this->temp_url");
-//
-//        $pathb = "attach/nh200";
-//        $this->_mkdir($base_path, $pathb, $_dir);
-//        $_big = "$pathb/$_dir/$this->name";
-//
-//        $this->cut(200, $photo, $src);
-//        $photo->DEST_URL = "$base_path/$_big";
-//        $photo->save_picture();
-//
-//        $paths = 'attach/nh50';
-//        $this->_mkdir($base_path, $paths, $_dir);
-//        $_sml = "$paths/$_dir/$this->name";
-//
-//        $this->cut(50, $photo, $src);
-//        $photo->DEST_URL = "$base_path/$_sml";
-//        $photo->save_picture();
-//
-//        $this->update(array('small'=>$_sml, 'big'=>$_big));
-//        return $this;
-//    }
-
-//    function move($user_id, $url, $base_path = ".")
-//    {
-//        $FileID = floor(time() / 60).rand(10, 99);
-//        $this->name = substr($FileID, 2).basename($url);
-//
-//        if( strlen($this->name) >= 253 )
-//            throw new pmException("文件名不能超过245字节！");
-//        if( !eregi("(jpe?g|png|gif)$", $this->name) )
-//            throw new pmException("文件格式不正确！请上传 jpeg/jpg/png/gif 类型的图片");
-//
-//        $_dir = strtoupper(substr(md5($this->name), 0, 2));
-//        $photo = new pmImage($url);
-//        $this->save_small($photo, $_dir, $base);
-//
-//        $this->cut(100, $photo);
-//        $photo->mark_domain();
-//        $photo->DEST_URL = "$base/attach/web.".$photo->PICTURE_EXT;
-//        $photo->DEST_URL = "$base/attach/web.".$photo->PICTURE_EXT;
-//        $photo->save_picture();
-//        $this->name = $photo->DEST_URL;
-//    }
-
-//    private function _mkdir($base_path, $path, $_dir)
-//    {
-//        $path = $base_path."/attach/".$path;
-//        if( !file_exists($path) )
-//            @mkdir("$base_path/$path");
-//        if( !file_exists("$base_path/$path") )
-//            @mkdir("$base_path/$path");
-//        if( !file_exists("$base_path/$path/$_dir") )
-//            @mkdir("$base_path/$path/$_dir");
-//    }
-
-//    protected function save_100($photo, $_dir, $base_path = '.')
-//    {
-//        $_sml = $this->photo_path(array("attach", "nh100", $_dir), $base_path);
-//        $photo->DEST_URL = "$base_path/$_sml";
-//        $this->cut(100, $photo);
-//        $photo->save_picture();
-//        return $_sml;
-//    }
-
-//    protected function save_small($photo, $_dir, $base_path = '.')
-//    {
-//        $path = "attach/nh100";
-//        $this->_mkdir($base_path, $path, $_dir);
-//        $_sml = "$path/$_dir/$this->name";
-//
-//        $this->cut(100, $photo);
-//        $photo->DEST_URL = "$base_path/$_sml";
-//        $photo->save_picture();
-//        return $_sml;
-//    }
-//
-//    protected function save_big($photo, $_dir, $base_path = '.')
-//    {
-//        $path = 'attach/xw500';
-//        $this->_mkdir($base_path, $path, $_dir);
-//        $_big = "$path/$_dir/$this->name";
-//
-//        $this->zoom_width(500, $photo);
-//        $photo->DEST_URL = "$base_path/$_big";
-//        $photo->save_picture();
-//        return $_big;
-//    }
-
-//    function delete_temp($base_path = '.')
-//    {
-//        if( !$this->temp_url || $this->temp_url == '' )
-//            throw new pmException('输入路径不正确。');
-//        if( file_exists($this->temp_url) )
-//            unlink("$base_path/$this->temp_url");
-//    }
-//
-//    protected function _load_temp($upload, $path)
-//    {
-//        $FileID = floor(time() / 60).rand(10, 99);
-//        $this->name = substr($FileID, 2).basename($upload['name']);
-//
-//        if( strlen($this->name) >= 253 )
-//            throw new pmException("文件名不能超过245字节！");
-//        if( !eregi("(jpe?g|png|gif)$", $this->name) )
-//            throw new pmException("文件格式不正确！请上传 jpeg/jpg/png/gif 类型的图片");
-//
-//        $up_dir = "attach/tmp";
-//        if( !file_exists("$path/$up_dir") )
-//            @mkdir("$path/$up_dir");
-//        $this->temp_url = "$up_dir/$this->name";
-//
-//        if( !move_uploaded_file($upload['tmp_name'], "$path/$this->temp_url") )
-//            throw new pmException("文件上传失败！");
-//        @unlink($upload);
-//    }
-//
-//    function save($user_id, $base_path = '.')
-//    {
-//        $_dir = strtoupper(substr(md5($this->name), 0, 2));
-//        $photo = new pmImage("$base_path/$this->temp_url");
-//
-//        $path2 = "attach/nh100";
-//        $this->_mkdir($base_path, $path2, $_dir);
-//        $_sml = "$path2/$_dir/$this->name";
-//
-//        $this->cut(100, $photo);
-//        $photo->DEST_URL = "$base_path/$_sml";
-//        $photo->save_picture();
-//
-//        $path1 = 'attach/xw500';
-//        $this->_mkdir($base_path, $path1, $_dir);
-//        $_big = "$path1/$_dir/$this->name";
-//
-//        $this->zoom_width(500, $photo);
-//        $photo->DEST_URL = "$base_path/$_big";
-//        $photo->save_picture();
-//
-//        $bigph = new pmImage("$base_path/$_big");
-//        $bigph->mark_domain();
-//        $bigph->DEST_URL = "$base_path/$_big";
-//        $bigph->save_picture();
-//
-//        return $this->insert($_big, $_sml, $user_id);
-////        return $this;
-//    }
-/*
-    function pm_image_zoom_max($photo, $MAX = 120)
-    {
-        $w = $photo->PICTURE_WIDTH ;
-        $h = $photo->PICTURE_HEIGHT;
-        if( $MAX > max($w, $h) )
-            return ;
-
-        if( $w > $h )
-        {
-           $photo->ZOOM_WIDTH  = $MAX;
-           $photo->ZOOM_HEIGHT = floor( $MAX * $h / $w );
-        }
-        else
-        {
-           $photo->ZOOM_WIDTH  = floor( $MAX * $w / $h );
-           $photo->ZOOM_HEIGHT = $MAX;
-        }
-
-        $photo->zoom();
-        $photo->save_picture(0);
-    }
-
-    function pm_image_zoom_min($photo, $MIN = 440)
-    {
-        $w = $photo->PICTURE_WIDTH ;
-        $h = $photo->PICTURE_HEIGHT;
-        if( $MIN > min($w, $h) )
-            return ;
-
-        if( $w > $h )
-        {
-           $photo->ZOOM_WIDTH  = $MIN;
-           $photo->ZOOM_HEIGHT = floor( $MIN * $h / $w);
-        }
-        else
-        {
-           $photo->ZOOM_WIDTH  = floor( $MIN * $w / $h);
-           $photo->ZOOM_HEIGHT = $MIN;
-        }
-
-        $photo->zoom();
-        $photo->save_picture(0);
-    }
-    */
 }
 ?>

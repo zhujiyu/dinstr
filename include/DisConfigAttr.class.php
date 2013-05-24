@@ -149,10 +149,41 @@ class DisConfigAttr
     );
 }
 
-function start_app()
+// /usr/local/bin/memcached -d -m 1024 -u root -l 192.168.13.236 -p 12001 -c 256 -P /tmp/chenxinhan/memcached.pid
+try
 {
+//    $memcache = new Memcache;
+//    $memcache->connect('127.0.0.1', 11211) or die ("Could not connect");
+//    $version = $memcache->getVersion();
+//    echo "Server's version: ".$version."\n";
 
+//MemcachedClient client1 = new MemcachedClient(new InetSocketAddress("192.168.2.9",11211));
+//DisRowCache::$_memcached = memcache_pconnect('localhost', 11211);
+//wget http://memcached.googlecode.com/files/memcached-1.4.5.tar.gz
+//DisRowCache::$_memcached = memcache_connect(DisConfigAttr::$row_memcached['host'],
+//            DisConfigAttr::$row_memcached['port']);
+DisDBTable::$readPDO  = new PDO("mysql:host=".DisConfigAttr::$dbread ['host'].";dbname=".DisConfigAttr::$dbread ['dbname'], DisConfigAttr::$dbread ['username'], DisConfigAttr::$dbread ['password']);
+DisDBTable::$writePDO = new PDO("mysql:host=".DisConfigAttr::$dbwrite['host'].";dbname=".DisConfigAttr::$dbwrite['dbname'], DisConfigAttr::$dbwrite['username'], DisConfigAttr::$dbwrite['password']);
 }
+catch (Exception $ex)
+{
+echo $ex->getTrace();
+}
+DisVectorCache::$_memcached = new DisMemcachedMock();
+DisRowCache::$_memcached    = new DisMemcachedMock();
+//DisDBTable::$readPDO  = new PDO('mysql:host=localhost;dbname=dinstr', 'jiyu', 'jiyu');
+//DisDBTable::$writePDO = new PDO('mysql:host=localhost;dbname=dinstr', 'jiyu', 'jiyu');
+
+//if( !DisDBTable::$readPDO )
+//{
+//    DisDBTable::$readPDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbread['host'].';dbname='.DisConfigAttr::$dbread['dbname'],
+//            DisConfigAttr::$dbread['username'], DisConfigAttr::$dbread['password']);
+//}
+//if( !DisDBTable::$writePDO )
+//{
+//    DisDBTable::$writePDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbwrite['host'].';dbname='.DisConfigAttr::$dbwrite['dbname'],
+//            DisConfigAttr::$dbwrite['username'], DisConfigAttr::$dbwrite['password']);
+//}
 
 //    public static $guest_chans = array
 //    (

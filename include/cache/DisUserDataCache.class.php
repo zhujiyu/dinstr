@@ -83,9 +83,21 @@ class DisUserDataCache extends DisRowCache
         self::set($key, $user_id);
     }
 
+    static function get_login_id($user_id)
+    {
+        $key = "login-".$user_id;
+        return self::get($key);
+    }
+
+    static function set_login_id($user_id, $login_id)
+    {
+        $key = "login-".$user_id;
+        self::set($key, $login_id);
+    }
+
     static function get_last_inline($user_id)
     {
-        $key = "inline-".$user_id;
+        $key = "inline-time-".$user_id;
         return self::get($key);
     }
 
@@ -93,7 +105,7 @@ class DisUserDataCache extends DisRowCache
     {
         if( $inline_time == 0 )
             $inline_time = time();
-        $key = "inline-".$user_id;
+        $key = "inline-time-".$user_id;
         self::set($key, $inline_time);
     }
 
@@ -109,5 +121,5 @@ class DisUserDataCache extends DisRowCache
         self::set($key, $logs);
     }
 
-}//pmCacheUserData
+}
 ?>

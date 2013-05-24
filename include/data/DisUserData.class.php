@@ -190,7 +190,7 @@ class DisUserData extends DisDBTable
     // 密码是原始密码的MD5值
     // 成功返回1，返回插入操作受影响的行数
     protected function insert($username, $password, $salt, $email = '', $sign = '',
-            $self_intro = '', $gender = 'none', $live_city = '')
+            $gender = 'none', $self_intro = '', $live_city = '')
     {
         if( !$username || !$password || !$email )
             throw new DisParamException('用户名、密码，邮箱地址三项不能为空！');

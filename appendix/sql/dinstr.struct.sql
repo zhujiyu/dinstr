@@ -33,6 +33,7 @@ CREATE TABLE users
     email varchar(255), -- 邮箱注册 安全邮箱，用于找回密码，也可用于登录
     username varchar(32),
     avatar bigint default 0, -- 头像
+    sign varchar(64),  -- 个性签名 一个好的个人签名，可以获得更多的信任
     -- 安全设置
     salt char(32),
     `password` char(32), -- 用md5算法将密码转成32位
@@ -40,12 +41,10 @@ CREATE TABLE users
     errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
     last_pw_check int default 0, -- 最后一次密码检验时间，用于设置密码锁定一小时
     -- 个人基本信息
-    sign varchar(64),  -- 个性签名 一个好的个人签名，可以获得更多的信任
-    introducer int default 0,
+    gender enum('none', 'male', 'female') default 'none',
+    self_intro varchar(255), -- 个人介绍
     `rank` smallint default 0, -- 级别
     live_city varchar(64),
-    self_intro varchar(255), -- 个人介绍
-    gender enum('none', 'male', 'female') default 'none',
     contact varchar(255), -- 详细联系方式
     ID_type varchar(10), -- 身份证件类型
     ID_number varchar(25), -- 证件号码
@@ -138,7 +137,7 @@ CREATE TABLE user_logins
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
     user_id int,
-    login int,
+    login int default 0,
     logout timestamp,
     index (user_id, login)
 )

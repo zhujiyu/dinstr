@@ -19,8 +19,8 @@ require_once 'PHPUnit/Extensions/Database/TestCase.php';
 require_once 'PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
 
 DisVectorCache::$_memcached = new DisMemcachedMock();
-DisRowCache::$_memcached = new DisMemcachedMock();
-DisDBTable::$readPDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
+DisRowCache::$_memcached    = new DisMemcachedMock();
+DisDBTable::$readPDO  = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
 DisDBTable::$writePDO = new PDO('mysql:host=localhost;dbname=test', 'root', 'root');
 
 abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
@@ -48,15 +48,20 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
         return $this->_getDataSet($this->default_data_file);
     }
 
-    protected function _getDataSet($file)
+    protected function _getDataSet($file, $path = null)
     {
-        $path = dirname(__FILE__)."/../res/";
+        if( $path == null )
+            $path = dirname(__FILE__)."/../res/";
+        if( !file_exists($path) )
+            throw new DisException("测试数据源路径 $path 不存在");
+
         if( file_exists($path.$file) )
             $path = $path.$file;
         else if( file_exists("$path../$file") )
             $path = "$path../$file";
         else
             throw new DisException("测试数据源文件 $file 不存在");
+
         return $this->createFlatXMLDataSet($path);
     }
 

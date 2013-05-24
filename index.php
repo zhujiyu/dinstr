@@ -11,6 +11,8 @@
  */
 require_once 'common.inc.php';
 
+$chan_ids = array('100120', '1100011');
+
 function _login($name, $pwrd)
 {
     if( !$name || !$pwrd )

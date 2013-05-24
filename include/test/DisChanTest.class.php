@@ -167,8 +167,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
 
     function testLoadData()
     {
-        $chan = new DisChannelCtrl();
-        $chan->init(1234861);
+        $chan = new DisChannelCtrl(1234861);
         $this->assertEquals('游戏海报', $chan->attr('name'));
         $chan->init(1593490);
         $this->assertEquals('这副海报是新的 高战 ', $chan->attr('description'));

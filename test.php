@@ -10,30 +10,8 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-require_once 'common.inc.php';
+//require_once 'common.inc.php';
 
-$a = array('6685', '325', '54645');
-$b = array('12', '325', '554', '6685', '46574', '54645');
+phpinfo();
 
-$len1 = count($a);
-$len2 = count($b);
-
-        for( $i = 0; $i < $len1; $i ++ )
-        {
-            $len2 = count($b);
-            for( $j = 0; $j < $len2; $j ++ )
-            {
-                if( $b[$j] == $a[$i] )
-                {
-                    array_splice($b, $j, 1);
-                    break;
-                }
-            }
-        }
-
-//$matches = null;
-//$notices = "dasfjoaiwetu464567e98";
-//preg_match_all('/\d+/', $notices, $matches);
-DisObject::print_array($a);
-DisObject::print_array($b);
 ?>

@@ -29,6 +29,7 @@ class DisMysqlAdapter extends DisObject
     {
         if( !$dsn || !$username )
             return ;
+        $matches =  null;
 
         if( preg_match("/host=(\w+);/", $dsn, $matches) )
             $dbhost = $matches[1];
@@ -45,6 +46,17 @@ class DisMysqlAdapter extends DisObject
         $this->pw = $dbpw;
         $this->name = $dbname;
         $this->connect = $pconnect;
+//
+//        if( $pconnect )
+//            $this->link = @mysql_connect($dbhost, $dbuser, $dbpw, 1);
+//        else
+//            $this->link = @mysql_pconnect($dbhost, $dbuser, $dbpw);
+//        if( !$this->link )
+//        {
+//            $halt && $this->halt('Can not connect to MySQL server');
+//        }
+//        echo '59';
+
 
         if( $pconnect )
         {
@@ -55,6 +67,7 @@ class DisMysqlAdapter extends DisObject
         }
         else
         {
+            $this->link = @mysql_connect($dbhost, $dbuser, $dbpw, 1);
             if( !$this->link = @mysql_connect($dbhost, $dbuser, $dbpw, 1) )
             {
                 $halt && $this->halt('Can not connect to MySQL server');

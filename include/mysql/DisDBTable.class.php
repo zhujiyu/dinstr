@@ -434,15 +434,4 @@ abstract class DisDBTable extends DisObject
 //        if( $pdo == null )
 //            throw new DisException('没有建立数据库连接');
 
-if( !DisDBTable::$readPDO )
-{
-    DisDBTable::$readPDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbread['host'].';dbname='.DisConfigAttr::$dbread['dbname'],
-            DisConfigAttr::$dbread['username'], DisConfigAttr::$dbread['password']);
-}
-if( !DisDBTable::$writePDO )
-{
-    DisDBTable::$writePDO = new DisMysqlAdapter('mysql:host='.DisConfigAttr::$dbwrite['host'].';dbname='.DisConfigAttr::$dbwrite['dbname'],
-            DisConfigAttr::$dbwrite['username'], DisConfigAttr::$dbwrite['password']);
-}
-
 ?>

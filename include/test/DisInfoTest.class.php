@@ -179,30 +179,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $this->assertEquals(2, count($user_ids3));
         $this->assertEquals(1000000, $user_ids3[0]);
 
-//        $this->assertEquals(2, $head->attr('interest_num'));
         $this->assertEquals(2, $head->attr('approved_num'));
     }
 }
-
-//    protected function _getDataSet($file)
-//    {
-//        $xml_dataset = $this->createFlatXMLDataSet(dirname(__FILE__).'/_files/'.$file);
-//        $xml_datatable = $xml_dataset->getTable('users');
-//        $count = $xml_datatable->getRowCount();
-//
-//        for ( $i = 0; $i < $count; $i ++ )
-//        {
-//            $value1 = md5(md5($xml_datatable->getValue($i, 'password')).md5($xml_datatable->getValue($i, 'salt')));
-//            $xml_datatable->setValue($i, 'password', $value1);
-//            $value2 = md5(md5($xml_datatable->getValue($i, 'impassword')).md5($xml_datatable->getValue($i, 'salt')));
-//            $xml_datatable->setValue($i, 'impassword', $value2);
-//        }
-//        return $xml_dataset;
-//    }
-//
-//    protected function getDataSet()
-//    {
-//        return $this->_getDataSet('user_table.xml');
-//    }
-
 ?>

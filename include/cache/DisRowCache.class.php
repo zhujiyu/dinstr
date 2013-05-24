@@ -25,6 +25,18 @@ class DisRowCache extends DisMemcached
         parent::set('r-'.$key, $value);
     }
 
+    static function get_photo_data($photo_id)
+    {
+        $key = "pn-$photo_id";
+        return self::get($key);
+    }
+
+    static function set_photo_data($photo_id, $photo)
+    {
+        $key = "pn-$photo_id";
+        self::set($key, $photo);
+    }
+
 //    static function get_good_data($good_id)
 //    {
 //        $key = "gn-$good_id";
@@ -35,18 +47,6 @@ class DisRowCache extends DisMemcached
 //    {
 //        $key = "gn-$good_id";
 //        self::set($key, $good);
-//    }
-//
-//    static function get_photo_data($photo_id)
-//    {
-//        $key = "pn-$photo_id";
-//        return self::get($key);
-//    }
-//
-//    static function set_photo_data($photo_id, $photo)
-//    {
-//        $key = "pn-$photo_id";
-//        self::set($key, $photo);
 //    }
 //
 //    static function get_notice($notice_id)
@@ -62,9 +62,10 @@ class DisRowCache extends DisMemcached
 //    }
 }
 
-if( !DisRowCache::$_memcached && function_exists("memcache_connect") )
-{
-    DisRowCache::$_memcached = memcache_connect(DisConfigAttr::$row_memcached['host'],
-            DisConfigAttr::$row_memcached['port']);
-}
+//if( !DisRowCache::$_memcached && function_exists("memcache_connect") )
+//{
+//    DisRowCache::$_memcached = memcache_connect(DisConfigAttr::$row_memcached['host'],
+//            DisConfigAttr::$row_memcached['port']);
+//    echo __FILE__.":".__LINE__;
+//}
 ?>

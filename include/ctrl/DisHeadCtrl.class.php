@@ -170,7 +170,7 @@ class DisHeadCtrl extends DisInfoHeadData
             throw new DisParamException('没有操作用户！');
 
         if( !$this->check_interest($user_id) )
-            return ;
+            return;
         DisInfoUserData::remove($this->ID, $user_id);
 
         $param = new DisUserParamCtrl($user_id);
@@ -192,7 +192,7 @@ class DisHeadCtrl extends DisInfoHeadData
             throw new DisParamException('没有操作用户！');
 
         if( $this->check_approved($user_id) )
-            return ;
+            return;
         $approve_id = DisInfoUserData::get_interest_id($this->ID, $user_id);
         if( !$approve_id )
             $approve_id = DisInfoUserData::insert($this->ID, $user_id);

@@ -40,33 +40,33 @@ class DisUserCtrl extends DisUserData
         DisUserDataCache::set_user_data($this->ID, $this->detail);
     }
 
-    static function set_inline($user_id)
-    {
-        $login = new DisUserLoginCtrl($user_id);
-        $login->last_login();
-
-        if( $login->ID )
-        {
-            $in_time = time() - strtotime($login->attr('logout'));
-            if( $in_time > 300 )
-            {
-                $login->checkin();
-                $param = new DisUserParamCtrl();
-                $param->ID = $user_id;
-                $param->increase('online_times', $in_time);
-            }
-        }
-
-        DisUserDataCache::set_last_inline($user_id);
-    }
-
-    static function check_inline($user_id)
-    {
-        $ur = DisUserDataCache::get_last_inline($user_id);
-        if( $ur && time() - $ur < 360 )
-            return true;
-        return false;
-    }
+//    static function set_inline($user_id)
+//    {
+//        $login = new DisUserLoginCtrl($user_id);
+//        $login->last_login();
+//
+//        if( $login->ID )
+//        {
+//            $in_time = time() - strtotime($login->attr('logout'));
+//            if( $in_time > 300 )
+//            {
+//                $login->checkin();
+//                $param = new DisUserParamCtrl();
+//                $param->ID = $user_id;
+//                $param->increase('online_times', $in_time);
+//            }
+//        }
+//
+//        DisUserDataCache::set_last_inline($user_id);
+//    }
+//
+//    static function check_inline($user_id)
+//    {
+//        $ur = DisUserDataCache::get_last_inline($user_id);
+//        if( $ur && time() - $ur < 360 )
+//            return true;
+//        return false;
+//    }
 
     static function get_data($user_id)
     {
@@ -555,19 +555,18 @@ class DisUserCtrl extends DisUserData
      * @param string $gender 性别
      * @return DisUserCtrl
      */
-    static function register($username, $password, $email = '',
-            $sign = '', $self_intro = '', $gender = 'none', $live_city = '')
+    static function register($password, $email, $username,
+            $sign = '', $gender = 'none', $self_intro = '', $live_city = '')
     {
         if( self::get_uid_by_name($username) > 0 )
             throw new DisParamException('该用户名已经被占用了！');
         if( $email && self::get_uid_by_email($email) > 0 )
             throw new DisParamException('该邮箱已经注册了！');
 
-        $user = new DisUserCtrl();
         $salt = substr(md5(rand()), 0, 16).substr(md5(rand()), 0, 16);
         $password = md5($password.$salt);
-        $user->insert($username, $password, $salt, $email, $sign, $self_intro,
-                $gender, $live_city);
+        $user = new DisUserCtrl();
+        $user->insert($username, $password, $salt, $email, $sign, $gender, $self_intro, $live_city);
 
         $param = new DisUserParamCtrl();
         $param->insert($user->ID);
@@ -650,32 +649,32 @@ class DisUserCtrl extends DisUserData
 
     function update($info)
     {
-        if( $this->detail['username'] != $info['uname'] )
+        if( isset($info['uname']) && $this->detail['username'] != $info['uname'] )
         {
             if( !name_check( $info['uname'] ) )
                 throw new DisException('用户名格式不正确');
             $update['username'] = $info['uname'];
         }
 
-        if( $info['avatar'] && $this->detail['avatar'] != $info['avatar'] )
+        if( isset($info['avatar']) && $this->detail['avatar'] != $info['avatar'] )
         {
             $oldavatar = (int)$this->detail['avatar'];
             $newavatar = (int)$info['avatar'];
             $update['avatar'] = (int)$info['avatar'];
         }
 
-        if( $this->detail['self_intro'] != $info['self_intro'] )
+        if( isset($info['self_intro']) && $this->detail['self_intro'] != $info['self_intro'] )
             $update['self_intro'] = $info['self_intro'];
-        if( $this->detail['sign'] != $info['sign'] )
+        if( isset($info['sign']) && $this->detail['sign'] != $info['sign'] )
             $update['sign'] = $info['sign'];
-        if( $this->detail['live_city'] != $info['live_city'] )
+        if( isset($info['live_city']) && $this->detail['live_city'] != $info['live_city'] )
             $update['live_city'] = $info['live_city'];
-        if( $this->detail['gender'] != $info['gender'] )
+        if( isset($info['gender']) && $this->detail['gender'] != $info['gender'] )
             $update['gender'] = $info['gender'];
-        if( $this->detail['contact'] != $info['contact'] )
+        if( isset($info['contact']) && $this->detail['contact'] != $info['contact'] )
             $update['contact'] = $info['contact'];
 
-        if( $this->detail['msg_setting'] != $info['msg_setting'] )
+        if( isset($info['msg_setting']) && $this->detail['msg_setting'] != $info['msg_setting'] )
             $update['msg_setting'] = $info['msg_setting'];
 //        if( $this->detail['atme_setting'] != $info['atme_setting'] )
 //            $update['atme_setting'] = $info['atme_setting'];
