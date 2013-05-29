@@ -73,6 +73,7 @@ class DisChanApplicantData extends DisDBTable
         if( !$this->ID )
             throw new DisParamException("对象未初始化！");
         $str = "update $this->table set status = 'accepted' where ID = $this->ID";
+//        return parent::query($str);
         return parent::check_query($str, 1);
     }
 
@@ -81,6 +82,7 @@ class DisChanApplicantData extends DisDBTable
         if( !$this->ID )
             throw new DisParamException("对象未初始化！");
         $str = "update $this->table set status = 'refused' where ID = $this->ID";
+//        return parent::query($str);
         return parent::check_query($str, 1);
     }
 

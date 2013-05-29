@@ -1,8 +1,7 @@
 <?php
 /**
  * @package: DIS.INIT
- * @file   : DisChanTest.class.php
- * Description of DisChanTest
+ * @file   : user.disp.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -13,9 +12,9 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-DisDBTable::query("delete from channels");
-
-$str = "select count";
-$len = DisDBTable::count($str);
-
+$user = new DisUserCtrl('zhuhz82@126.com');
+//DisObject::print_array($user);
+DisObject::print_array($user->info());
+$user->init('zhujiyu.tez@qq.com');
+DisObject::print_array($user->info());
 ?>

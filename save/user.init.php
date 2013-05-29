@@ -1,8 +1,7 @@
 <?php
 /**
  * @package: DIS.INIT
- * @file   : DisChanTest.class.php
- * Description of DisChanTest
+ * @file   : user.init.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -15,7 +14,7 @@ if( !defined('IN_DIS') )
 
 try
 {
-    echo "delete data...\n";
+    echo "delete user data...\n\n";
     DisDBTable::query("delete from users");
     DisDBTable::query("delete from user_params");
     DisDBTable::query("delete from user_supers");
@@ -27,14 +26,14 @@ try
     DisDBTable::query("delete from user_feedbacks");
     DisDBTable::query("delete from photos");
 
-    echo "insert new user data.\n";
-    DisUserCtrl::register(md5('sab123'), 'zhuhz82@126.com', '朱继玉', '海报板一号用户', 'male');
-    DisUserCtrl::register(md5('863sab'), 'zhujiyu.tez@qq.com', '海报板管理员', '海报板二号用户', 'female');
+    echo "insert new users.\n\n";
+    DisUserCtrl::register(md5('sab123'), 'zhuhz82@126.com', '朱继玉', '海报栏01号用户', 'male');
+    DisUserCtrl::register(md5('863sab'), 'zhujiyu.tez@qq.com', '海报栏管理员', '海报栏二号用户', 'female');
     DisUserCtrl::register(md5('121981'), 'chforlove@126.com', '测试用户', '测试用户', 'male');
 
-    echo "update user avatar.\n";
+    echo "update user avatar.\n\n";
     $avatar = new DisPhotoCtrl();
-    $_big = "attach/avatar/xw500/";
+    $_big = "attach/avatar/mw500/";
     $_sml = "attach/avatar/nh100/";
 
     $user = new DisUserCtrl('zhuhz82@126.com');

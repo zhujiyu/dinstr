@@ -6,12 +6,16 @@
 	<users ID="1593490" username="zhujiyu" email="zhujiyu@abc.com" salt="b04e62432a9b64305c874ecaa8520db2" password="9bb28c93afaf386e00a812e1f85f2d50" impassword="d9455fdb9d7e9e9c4ec72774378f4ce2"/>
     <!-- password="gou86.com" impassword="hbb.com" -->
 	<users ID="1593648" username="测试帐号" email="test@abc.com" salt="7d220e7e50a14e50b722d679e18179ea" password="e6171e6125a891036e4644478378bfc7" impassword="2021719ec63d3ff02848667aa3088833"/>
-    <!-- password="asd123" impassword="zxc456"  impassword="346512a0edf1d7e1a2eee1a8ca1f5a7a" -->
-    <users ID="1593649" username="朱继玉" email="zhuhz82@126.com" salt="75fe9ad3edcf1594b4511194d2169962" password="a1180f07f0a300d2a750db135ee44bda"/>
-    
+
+    <user_params ID="1234861" create_num="0" subscribe_num="0" join_num="0" fans_num="10" follow_num="2"/>
+    <user_params ID="1593490" create_num="0" subscribe_num="0" join_num="0" fans_num="1" follow_num="1"/>
+    <user_params ID="1593648" create_num="0" subscribe_num="0" join_num="0" fans_num="2" follow_num="1"/>
+
     <user_relations ID="1000000" from_user="1234861" to_user="1593490" read="1" follow_time="2013-05-15 00:00:00"/>
     <user_relations ID="1000012" from_user="1593490" to_user="1593648" read="1" follow_time="2013-05-15 00:00:00"/>
     <user_relations ID="1000022" from_user="1234861" to_user="1593648" read="1" follow_time="2013-05-15 00:00:00"/>
     <user_relations ID="1000034" from_user="1593648" to_user="1234861" read="1" follow_time="2013-05-15 00:00:00"/>
-    <user_relations ID="1000035" from_user="1593490" to_user="1234861" read="0" follow_time="2013-05-15 00:00:00"/>
+
+    <notices ID="1000000" />
+    <latest_notices ID="1000000" />
 </dataset>

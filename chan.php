@@ -95,7 +95,7 @@ try
     {
         if( isset($_GET['name']) && !empty($_GET['name']) )
         {
-            $channel = DisChannelCtrl::create_new_channel($user_id, $_GET['name'],
+            $channel = DisChannelCtrl::create_channel($user_id, $_GET['name'],
                     $_GET['type'], $_GET['logo'], $_GET['desc'], $_GET['tags']);
             ob_end_clean();
             header('Location: chan?id='.$channel->ID); exit;

@@ -13,6 +13,8 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
+echo __FILE__.":".__LINE__;
+
 class DisMysqlMock implements DisIAdapter
 {
     var $id = 0;

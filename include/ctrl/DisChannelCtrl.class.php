@@ -27,7 +27,6 @@ class DisChannelCtrl extends DisChannelData
         $channel_data = DisChanDataCache::get_chan_data($channel_id);
         if( !$channel_data )
         {
-            echo "$channel_id<br>";
             $channel = new DisChannelCtrl((int)$channel_id);
             if( !$channel->ID )
                 throw new DisException("无法读取到数据！$channel_id");
@@ -51,12 +50,12 @@ class DisChannelCtrl extends DisChannelData
         return $channel_data;
     }
 
-    static function channel($channel_id)
+    static function channel($chan_id)
     {
-        $channel = new DisChannelCtrl();
-        $channel->ID = $channel_id;
-        $channel->detail = self::get_data($channel_id);
-        return $channel;
+        $chan = new DisChannelCtrl();
+        $chan->ID = $chan_id;
+        $chan->detail = self::get_data($chan_id);
+        return $chan;
     }
 
     function increase($param, $step = 1)
@@ -381,8 +380,7 @@ class DisChannelCtrl extends DisChannelData
 //        return $cu;
     }
 
-    /**
-     * 创建一个新社团
+    /**创建一个新社团
      * @param integer $creater 创建者ID
      * @param string $name 频道名字
      * @param string $type 频道类型
@@ -391,13 +389,14 @@ class DisChannelCtrl extends DisChannelData
      * @param string $tags 标签列表
      * @return DisChannelCtrl 对象
      */
-    static function create_new_channel($creater_id, $name, $type = 'social',
-            $description = '对该频道进行简短描述', $logo = 0, $tags = null)
+    static function create_channel($creater_id, $name, $type = 'info',
+            $desc = '对该频道进行简短描述', $logo = 0, $tags = null)
     {
-        $channel = new DisChannelCtrl();
-        $channel->insert((int)$creater_id, $name, $type, (int)$logo, $description);
-        if( $channel->ID == 0 )
+        $chan = new DisChannelCtrl();
+        $chan->insert((int)$creater_id, $name, $type, (int)$logo, $desc);
+        if( $chan->ID == 0 )
             throw new DisDBException('插入失败！');
+        $chan_id = (int)$chan->ID;
 
         if( $logo > 0 )
         {
@@ -410,27 +409,27 @@ class DisChannelCtrl extends DisChannelData
             $tags = keyword_parse($tags);
             $count = count($tags);
             for( $i = 0; $i < $count; $i ++ )
-                DisChanTagData::insert($channel->ID, $tags[$i]);
+                DisChanTagData::insert($chan_id, $tags[$i]);
         }
 
-        $cu = new DisChanUserData($creater_id, (int)$channel->ID);
+        $cu = new DisChanUserData($creater_id, $chan_id);
 //        $cu->load((int)$channel->ID);
         if( !$cu->ID )
         {
-            $channel->add_subscriber($creater_id);
-            $cu->load((int)$channel->ID);
+            $chan->add_subscriber($creater_id);
+            $cu->load($chan_id);
         }
         $cu->change_role('creator');
+        $chan->increase('member_num');
 
-        $param = new DisUserParamCtrl();
-        $param->ID = $creater_id;
+        $param = new DisUserParamCtrl($creater_id);
+//        $param->ID = $creater_id;
         $param->increase('create_num');
         $param->increase("join_num");
         DisUserVectorCache::set_joined_chan_ids($creater_id, null);
         DisUserVectorCache::set_chan_roles($creater_id, null);
 
-        $channel->increase('member_num');
-        return $channel;
+        return $chan;
     }
 
     function apply($user_id, $reason)
@@ -457,13 +456,21 @@ class DisChannelCtrl extends DisChannelData
         $param->increase('applicant_num');
     }
 
-    function accept_apply($applicant_id)
+    function accept_apply($apply_id)
     {
-        if( !$this->ID || !$applicant_id )
+        if( !$this->ID || !$apply_id )
             throw new DisParamException('参数不合法！');
 
-        $apply = new DisChanApplicantCtrl($applicant_id);
-        $apply->accept();
+        $apply = new DisChanApplicantCtrl($apply_id);
+        if( $apply->ID == 0 || $apply->attr('chan_id') != $this->ID )
+            throw new DisParamException('无效的操作，该频道不存在此条申请！');
+//        DisObject::print_array($apply);
+//        return $apply->accept();
+        if( !$apply->accept() )
+            throw new DisParamException('操作失败！');
+        DisChanDataCache::set_applicant_data($apply_id, null);
+//        $apply = new DisChanApplicantCtrl($applicant_id);
+//        DisObject::print_array($apply);
 
         $user_id = $apply->attr('user_id');
         $this->add_member($user_id);
@@ -473,16 +480,20 @@ class DisChannelCtrl extends DisChannelData
         $param->reduce('applicant_num');
 
         $notice = new DisNoticeCtrl($user_id);
-        $notice->add_apply_notice($applicant_id, "你加入".$this->detail['name']."的申请已经通过！");
+        $notice->add_apply_notice($apply_id, "你加入".$this->detail['name']."的申请已经通过！");
     }
 
-    function refuse_apply($applicant_id, $reason = "")
+    function refuse_apply($apply_id, $reason = "")
     {
-        if( !$this->ID || !$applicant_id )
+        if( !$this->ID || !$apply_id )
             throw new DisParamException('参数不合法！');
 
-        $apply = new DisChanApplicantCtrl($applicant_id);
-        $apply->refuse();
+        $apply = new DisChanApplicantCtrl($apply_id);
+        if( $apply->ID == 0 || $apply->attr('chan_id') != $this->ID )
+            throw new DisParamException('无效的操作，该频道不存在此条申请！');
+        if( !$apply->refuse() )
+            throw new DisParamException('操作失败！');
+        DisChanDataCache::set_applicant_data($apply_id, null);
 
         $this->reduce("applicant_num");
         $user_id = $apply->attr('user_id');
@@ -491,7 +502,7 @@ class DisChannelCtrl extends DisChannelData
         $param->reduce('applicant_num');
 
         $notice = new DisNoticeCtrl($user_id);
-        $notice->add_apply_notice($applicant_id, "你加入".$this->detail['name']."的申请被拒绝！原因：".$reason);
+        $notice->add_apply_notice($apply_id, "你加入".$this->detail['name']."的申请被拒绝！原因：".$reason);
     }
 
     function update($name, $desc, $logo)

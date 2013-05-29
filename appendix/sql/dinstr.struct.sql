@@ -1,6 +1,6 @@
 /**
  * @file： dinstr.struct.sql
- * @group: DIS
+ * @group: DIS.DATABASE
  * @brief：DIS项目的核心是提供一个为中小企业和个人发布海报的平台。
  *
  * @author： 朱继玉<zhuhz82@126.com>
@@ -39,7 +39,7 @@ CREATE TABLE users
     `password` char(32), -- 用md5算法将密码转成32位
     impassword char(32),  -- 资金帐号密码，支付密码
     errs tinyint default 0, -- 资金密码输入错误的次数，6次错误则锁定一小时
-    last_pw_check int default 0, -- 最后一次密码检验时间，用于设置密码锁定一小时
+    last_check int default 0, -- 最后一次密码检验时间，用于设置密码锁定一小时
     -- 个人基本信息
     gender enum('none', 'male', 'female') default 'none',
     self_intro varchar(255), -- 个人介绍
@@ -100,8 +100,8 @@ CREATE TABLE user_relations
     `read` tinyint default 0,
     follow_time timestamp,
     unique (`from_user`, `to_user`),
-    index (`to_user`),
-    index (`follow_time`)
+    index(`to_user`),
+    index(`follow_time`)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '用户关系表已经生成' as tip;
@@ -196,11 +196,15 @@ CREATE TABLE channels
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
     `name` varchar(32),
+    `type` enum('info', 'business', 'social') default 'info',
+    -- 商务资讯info
+    -- 商品交易business
+    --  社会交往social
     logo bigint default 0,
-    `type` enum('social', 'business', 'info', 'news') default 'social', --  社会交往social 商品交易business 商务资讯info 社会新闻news
-    description varchar(256), -- 介绍
-    announce varchar(512),    -- 公告
+    `desc` varchar(256), -- 介绍
+    bulletin varchar(512),    -- 公告
     creater int, -- 创建者
+    opened tinyint default 1,
     -- 参数
     member_num int default 0,
     subscriber_num int default 0,

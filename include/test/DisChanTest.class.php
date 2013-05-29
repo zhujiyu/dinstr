@@ -16,21 +16,25 @@ class DisChanTest extends DisDataBaseTest
 {
     function  __construct()
     {
-        $sqls = array("
+        $sqls = array("drop table channels", "
 CREATE TABLE channels
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
     `name` varchar(32),
+    `type` enum('info', 'business', 'social') default 'info',
+    -- 商务资讯info
+    -- 商品交易business
+    --  社会交往social
     logo bigint default 0,
-    `type` enum('social', 'business', 'info', 'news') default 'social', --  社会交往social 商品交易business 商务资讯info 社会新闻news
-    description varchar(256), -- 介绍
-    announce varchar(512),    -- 公告
+    `desc` varchar(256), -- 介绍
+    bulletin varchar(512),    -- 公告
     creater int, -- 创建者
+    opened tinyint default 1,
     -- 参数
     member_num int default 0,
     subscriber_num int default 0,
-    info_num bigint default 0,
     applicant_num int default 0,
+    info_num bigint default 0,
     create_time int,
     unique key (`name`),
     index (creater),
@@ -44,10 +48,8 @@ CREATE TABLE chan_users
     user_id int not null,
     chan_id int not null,
     `role` int default 0, -- 0 表示订阅 1 表示成员 2 表示管理员 3 表示创建者 4 表示超级用户
---    `role` enum('subscriber', 'member', 'editor') default 'subscriber',
     weight int default 1, -- 频道的权值，这里值表示权重值的数量级
     `rank` int default 0, -- 同数量级权值的频道的排序，rank大的频道同样权值的邮件排在前面，
---    opened tinyint default 1,
     join_time int default 0,
     subscribe_time timestamp,
     unique (chan_id, user_id),
@@ -116,7 +118,7 @@ CREATE TABLE user_params
     fans_notice int default 0
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000
-        ", "
+        ", "drop table chan_applicants", "
 CREATE TABLE chan_applicants
 (
     ID int AUTO_INCREMENT PRIMARY KEY,
@@ -170,7 +172,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $chan = new DisChannelCtrl(1234861);
         $this->assertEquals('游戏海报', $chan->attr('name'));
         $chan->init(1593490);
-        $this->assertEquals('这副海报是新的 高战 ', $chan->attr('description'));
+        $this->assertEquals('这副海报是新的 高战 ', $chan->attr('desc'));
     }
 
     function testIncrease()
@@ -256,7 +258,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
     function testCreate()
     {
         $user_id = 1000000;
-        $chan = DisChannelCtrl::create_new_channel($user_id, "添加海报板",
+        $chan = DisChannelCtrl::create_channel($user_id, "添加海报板",
                     "business", "测试添加一个完整的海报板", 0, null);
         $this->assertEquals(0, $chan->attr('info_num'));
         $param = new DisUserParamCtrl($user_id);
@@ -292,8 +294,8 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
 
         $user = new DisUserParamCtrl(1000012);
         $this->assertEquals(0, $user->attr('applicant_num'));
-        $this->assertEquals(1, $user->attr('join_num'));
         $this->assertEquals(1, $user->attr('subscribe_num'));
+        $this->assertEquals(1, $user->attr('join_num'));
 
         $apply = new DisChanApplicantCtrl(1000000);
         $this->assertEquals('accepted', $apply->attr('status'));
@@ -314,11 +316,14 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $this->assertEquals(1000011, $notice['data_id']);
     }
 
+    /**
+     * @expectedException DisParamException 无效的操作，该频道不存在此条申请！
+     */
     function testRefuseApply()
     {
-        $chan1 = new DisChannelCtrl(1234861);
+        $chan1 = new DisChannelCtrl(1593648);
         $chan1->refuse_apply(1000000);
-        $this->assertEquals(0, $chan1->attr('applicant_num'));
+        $this->assertEquals(1, $chan1->attr('applicant_num'));
 
         $user = new DisUserParamCtrl(1000012);
         $this->assertEquals(0, $user->attr('applicant_num'));
@@ -330,6 +335,9 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $notice_ids = $nctrl->get_unread_notice_ids();
         $notice = DisNoticeCtrl::load_notice($notice_ids[0]);
         $this->assertEquals(1000000, $notice['data_id']);
+
+        $chan3 = new DisChannelCtrl(1234861);
+        $chan3->refuse_apply(1000000);
     }
 }
 

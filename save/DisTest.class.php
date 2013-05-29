@@ -12,6 +12,8 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
+echo __FILE__.":".__LINE__;
+
 class DisTest extends DisObject
 {
     // 比较两个值是否一样

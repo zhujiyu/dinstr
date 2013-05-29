@@ -11,10 +11,11 @@
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
-//header('Content-Type:text/html;charset=gb2312');
 header('Content-Type:text/html; charset=utf-8');
-//error_reporting(7);
 date_default_timezone_set("PRC");
+//date_default_timezone_set("Etc/GMT");
+//header('Content-Type:text/html;charset=gb2312');
+//error_reporting(7);
 
 // 错误代码，简码
 define('DIS_SUCCEEDED',    0);
@@ -32,7 +33,6 @@ define('IN_DIS', TRUE);
 define('DIS_ROOT', dirname(__FILE__).'/');
 
 require_once(DIS_ROOT.'templates/libs/Smarty.class.php');
-require_once(DIS_ROOT.'include/core/common.func.php');
 require_once(DIS_ROOT.'include/DisConfigAttr.class.php');
 
 function __autoload($class_name)
@@ -52,19 +52,6 @@ function __autoload($class_name)
     }
 }
 
-function init_smarty()
-{
-    $gSmarty = new Smarty;
-    $gSmarty->config_dir   = DIS_ROOT.'configs/';
-    $gSmarty->cache_dir    = DIS_ROOT.'cache/';
-    $gSmarty->template_dir = DIS_ROOT.'templates/';
-    $gSmarty->compile_dir  = DIS_ROOT.'templates_c/';
-//    $gSmarty->compile_check = true;
-
-    $gSmarty->assign("app", DisConfigAttr::$app);
-    $gSmarty->assign("comp", DisConfigAttr::$comp);
-    return $gSmarty;
-}
-
-session_start();
+require_once(DIS_ROOT.'include/start.inc.php');
+require_once(DIS_ROOT.'include/core/common.func.php');
 ?>

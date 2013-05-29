@@ -113,7 +113,8 @@ class DisPhotoCtrl extends DisPhotoData
         if( !$photo )
             $photo = $this->image;
         if( $srcRect == null )
-            $srcRect = array('left'=>0, 'top'=>0, 'width'=>$photo->PICTURE_WIDTH, 'height'=>$photo->PICTURE_HEIGHT);
+            $srcRect = array('left'=>0, 'top'=>0, 'width'=>$photo->PICTURE_WIDTH,
+                'height'=>$photo->PICTURE_HEIGHT);
 
         $photo->CUT_TYPE = 1; //裁切类型
         $photo->CUT_WIDTH  = min($dst_size, $srcRect['width'] );
@@ -170,9 +171,9 @@ class DisPhotoCtrl extends DisPhotoData
         $this->cut(100, $photo);
         $photo->save_picture();
 
-        $_big = "attach/xw500/$_dir/".$this->name;
+        $_big = "attach/mw500/$_dir/".$this->name;
         $photo->DEST_URL = "$base_path/$_big";
-        $this->_mkdir(array("xw500", $_dir), $base_path);
+        $this->_mkdir(array("mw500", $_dir), $base_path);
         $this->zoom_width(500, $photo);
         $photo->save_picture();
 

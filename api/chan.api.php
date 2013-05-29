@@ -234,7 +234,7 @@ try
     {
         if( isset($_GET['name']) && !empty($_GET['name']) )
         {
-            $channel = DisChannelCtrl::create_new_channel($user_id, $_GET['name'],
+            $channel = DisChannelCtrl::create_channel($user_id, $_GET['name'],
                     $_GET['type'], $_GET['desc'], $_GET['logo'], $_GET['tags']);
             DisObject::print_array($channel);
         }

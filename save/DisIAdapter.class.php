@@ -12,6 +12,8 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
+echo __FILE__.":".__LINE__;
+
 interface DisIAdapter
 {
     function connect($dbhost, $dbuser, $dbpw, $dbname = '', $pconnect = 0, $halt = TRUE);

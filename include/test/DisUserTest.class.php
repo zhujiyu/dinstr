@@ -243,18 +243,18 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
 
     function testRegister()
     {
-        $user = DisUserCtrl::register('朱继玉', md5('332288'), 'zhuhz82@126.com');
+        $user = DisUserCtrl::register(md5('332288'), 'zhuhz82@126.com', '朱继玉');
         $this->assertEquals('朱继玉', $user->attr('username'));
-        $user_t1 = $this->_getDatabaseTable('users', 'ID, username, email, salt, password, impassword');
+        $ut1 = $this->_getDatabaseTable('users', 'ID, username, email, salt, password, impassword');
 
         $row = $this->_getDBRow('users', 'ID, username, email, salt, password, impassword',
                 "username = '朱继玉'");
         $salt = $row['salt'];
 
-        $user_t2 = $this->_getXmlTable('users', 'users_after_insert.xml');
-        $user_t2->setValue(3, 'salt', $salt);
-        $user_t2->setValue(3, 'password', md5(md5('332288').$salt));
-        $this->assertTablesEqual($user_t2, $user_t1);
+        $ut2 = $this->_getXmlTable('users', 'users_after_insert.xml');
+        $ut2->setValue(3, 'salt', $salt);
+        $ut2->setValue(3, 'password', md5(md5('332288').$salt));
+        $this->assertTablesEqual($ut2, $ut1);
     }
 
     function testParam()
@@ -270,7 +270,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $user->reduce('fans_num', 10);
         $this->assertEquals(0, $user->attr('fans_num'));
     }
-    
+
 //    /**
 //     * @expectedException soParamException
 //     */

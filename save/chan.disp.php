@@ -1,8 +1,7 @@
 <?php
 /**
  * @package: DIS.INIT
- * @file   : DisChanTest.class.php
- * Description of DisChanTest
+ * @file   : chan.disp.php
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -13,9 +12,10 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-DisDBTable::query("delete from channels");
+//$c = DisChannelCtrl::channel($channel_id);
 
-$str = "select count";
-$len = DisDBTable::count($str);
-
+$chan1 = new DisChannelCtrl(100004);
+DisObject::print_array($chan1->info());
+$chan2 = new DisChannelCtrl(100005);
+DisObject::print_array($chan2->info());
 ?>

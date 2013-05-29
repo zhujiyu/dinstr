@@ -18,12 +18,12 @@ class DisChanApplicantCtrl extends DisChanApplicantData
     function  __construct($app_id = null)
     {
         parent::__construct();
-//        parent::__construct((int)$app_id);
-        if( $app_id && is_int($app_id) )
-        {
-            $this->ID = $app_id;
-            $this->detail = self::get_data($app_id);
-        }
+        parent::__construct((int)$app_id);
+//        if( $app_id && is_int($app_id) )
+//        {
+//            $this->ID = $app_id;
+//            $this->detail = self::get_data($app_id);
+//        }
     }
 
     static function get_data($app_id)

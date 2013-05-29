@@ -91,7 +91,6 @@ class DisChanUserCtrl extends DisChanUserData
             throw new DisParamException('对象没有初始化！');
         if( $this->detail['weight'] == $weight && $this->detail['rank'] == $rank )
             return;
-
         if( $this->detail['weight'] != $weight )
             parent::set_weight($weight);
         $this->set_rank($rank);
@@ -101,7 +100,6 @@ class DisChanUserCtrl extends DisChanUserData
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
-
         $rank = parent::get_max_rank($this->detail['weight'] + 1);
         parent::plus_weight();
         $this->set_rank($rank + 1);
@@ -111,7 +109,6 @@ class DisChanUserCtrl extends DisChanUserData
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
-
         $rank = parent::get_max_rank($this->detail['weight'] - 1);
         parent::minus_weight();
         $this->set_rank($rank + 1);
@@ -128,7 +125,6 @@ class DisChanUserCtrl extends DisChanUserData
         {
             $join_chan_ids[0] = "#E#";
             $channels = $this->list_joined_channels();
-//            DisObject::print_array($channels);
             $count = count($channels);
             for( $i = 0; $i < $count; $i ++ )
                 $join_chan_ids[$i] = $channels[$i]['chan_id'];
@@ -222,7 +218,6 @@ class DisChanUserCtrl extends DisChanUserData
     {
         if( !$this->user_id )
             throw new DisParamException('对象没有初始化！');
-
         $roles = $this->list_channel_roles();
         if( !isset($roles[$chan_id]) )
             return -1;
@@ -231,12 +226,14 @@ class DisChanUserCtrl extends DisChanUserData
 
     function get_channel_strrole($chan_id)
     {
-        if( !$this->user_id )
-            throw new DisParamException('对象没有初始化！');
-        $roles = $this->list_channel_roles();
-        if( !isset($roles[$chan_id]) )
-            return 'stranger';
-        return DisChanUserData::role((int)$roles[$chan_id]);
+        $role = $this->get_channel_role($chan_id);
+        return $role < 0 ? 'stranger' : DisChanUserData::role((int)$role);
+//        if( !$this->user_id )
+//            throw new DisParamException('对象没有初始化！');
+//        $roles = $this->list_channel_roles();
+//        if( !isset($roles[$chan_id]) )
+//            return 'stranger';
+//        return DisChanUserData::role((int)$roles[$chan_id]);
     }
 }
 ?>

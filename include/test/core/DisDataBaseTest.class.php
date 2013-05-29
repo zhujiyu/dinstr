@@ -2,7 +2,6 @@
 /**
  * @package: DIS.TEST.CORE
  * @file   : DisDataBaseTest.class.php
- * Description of DisDataBaseTest
  *
  * @author    : 朱继玉<zhuhz82@126.com>
  * @Copyright : 2013 有向信息流
@@ -60,7 +59,7 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
         else if( file_exists("$path../$file") )
             $path = "$path../$file";
         else
-            throw new DisException("测试数据源文件 $file 不存在");
+            throw new DisParamException("测试数据源文件 $path $file 不存在");
 
         return $this->createFlatXMLDataSet($path);
     }
@@ -83,5 +82,4 @@ abstract class DisDataBaseTest extends PHPUnit_Extensions_Database_TestCase
         return $this->_getDataSet($file)->getTable($table);
     }
 }
-
 ?>

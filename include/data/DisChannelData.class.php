@@ -27,11 +27,11 @@ class DisChannelData extends DisDBTable
     protected function _strip_tags(&$detail)
     {
         $detail['name'] = strip_tags($detail['name']);
-        $detail['description'] = strip_tags($detail['description']);
-        $detail['announce'] = strip_tags($detail['announce']);
+        $detail['desc'] = strip_tags($detail['desc']);
+        $detail['bulletin'] = strip_tags($detail['bulletin']);
     }
 
-    function init($chan, $slt = "ID, name, logo, `type`, description, announce, creater,
+    function init($chan, $slt = "ID, name, logo, `type`, `desc`, bulletin, creater,
             info_num, member_num, subscriber_num, applicant_num, create_time")
     {
         if( uid_check($chan) )
@@ -47,7 +47,7 @@ class DisChannelData extends DisDBTable
     {
         switch($name)
         {
-            case 'name' :
+            case 'name':
                 if( !name_check($value) )
                     return err(DIS_ERR_PARAM);
                 break;
@@ -55,20 +55,20 @@ class DisChannelData extends DisDBTable
 //                if( !domain_check($value) )
 //                    return err(DIS_ERR_PARAM);
 //                break;
-            case 'type' :
+            case 'type':
                 if( !in_array($value, array('social', 'business', 'info', 'news')) )
                     return err(DIS_ERR_PARAM);
                 break;
-            case 'creater' :
+            case 'creater':
                 if( !uid_check($value) )
                     return err(DIS_ERR_PARAM);
                 break;
-            case 'logo' :
+            case 'logo':
                 if( !is_integer($value) )
                     return err(DIS_ERR_PARAM);
                 break;
-            case 'announce' :
-            case 'description' :
+            case 'bulletin':
+            case 'desc':
                 if( !is_string($value) )
                     return err(DIS_ERR_PARAM);
                 break;
@@ -95,8 +95,7 @@ class DisChannelData extends DisDBTable
         return $o->row_exist(array('name'=>$name));
     }
 
-    /**
-     * 创建一个新的频道
+    /**插入一个新的频道
      * @global string $salt 生成一个随机数
      * @param integer $creater 创建者
      * @param string $name 频道的名字
@@ -106,14 +105,14 @@ class DisChannelData extends DisDBTable
      * @return DisChannelData 对象
      */
     function insert($creater, $name, $type = 'social', $logo = 0,
-            $description = '对该频道进行简短描述')
+            $desc = '对该频道进行简短描述')
     {
         if ( !$creater || !$name )
             throw new DisParamException('名称不能为空！');
         if ( $this->_name_exist($name) )
             throw new DisParamException('该名称已经被占用！');
         return parent::insert( array('creater'=>$creater, 'name'=>$name, 'type'=>$type,
-            'logo'=>$logo, 'description'=>$description) );
+            'logo'=>$logo, 'desc'=>$desc) );
     }
 
     static function get_id_by_name($name)
