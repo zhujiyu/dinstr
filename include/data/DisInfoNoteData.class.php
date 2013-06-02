@@ -32,7 +32,12 @@ class DisInfoNoteData extends DisDBTable
         return parent::init($mail_id, $slt);
     }
 
-    function _check_param($name, $value)
+    protected function _strip_tags($detail)
+    {
+        $detail['content'] = strip_tags($detail['content']);
+    }
+
+    protected function _check_param($name, $value)
     {
         switch($name)
         {
@@ -74,7 +79,7 @@ class DisInfoNoteData extends DisDBTable
         if( !$user_id || !$content )
             throw new DisParamException('必须传入有效的参数。');
         return parent::insert(array('user_id'=>$user_id, 'content'=>$content,
-            'head_id'=>$head_id, 'parent_id'=>$parent_id, 
+            'head_id'=>$head_id, 'parent_id'=>$parent_id,
             'photo_num'=>$photo_num, 'good_num'=>$good_num, 'video'=>$video,
             'create_time'=>time()));
     }

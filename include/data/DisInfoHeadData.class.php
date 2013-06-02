@@ -27,8 +27,7 @@ class DisInfoHeadData extends DisDBTable
         $detail['content'] = strip_tags($detail['content']);
     }
 
-    function init($id, $slt = "ID, content, note_id, note_num, interest_num, approved_num,
-        update_time")
+    function init($id, $slt = "ID, content, note_id, note_num, interest_num, approved_num")
     {
         parent::init($id, $slt);
     }

@@ -21,36 +21,36 @@ class DisChannelCtrl extends DisChannelData
         parent::__construct($id);
     }
 
-    static function get_data($channel_id)
+    static function get_data($chan_id)
     {
 //        pmCacheChanData::set_channel_data($channel_id, null);
-        $channel_data = DisChanDataCache::get_chan_data($channel_id);
-        if( !$channel_data )
+        $chan_data = DisChanDataCache::get_chan_data($chan_id);
+        if( !$chan_data )
         {
-            $channel = new DisChannelCtrl((int)$channel_id);
-            if( !$channel->ID )
-                throw new DisException("无法读取到数据！$channel_id");
-            $channel->detail['tags'] = DisChanTagData::load($channel->ID);
-            $channel_data = $channel->info();
+            $chan = new DisChannelCtrl((int)$chan_id);
+            if( !$chan->ID )
+                throw new DisException("无法读取到数据！$chan_id");
+            $chan->detail['tags'] = DisChanTagData::load($chan->ID);
+            $chan_data = $chan->info();
 
-            if( !isset($channel->detail['logo']) || empty($channel->detail['logo']) )
+            if( !isset($chan->detail['logo']) || empty($chan->detail['logo']) )
             {
 //                $channel_data['logo'] = array('ID'=>0, 'small'=>'css/logo/chanbws.png', 'big'=>'css/logo/chanbwb.png');
 //                $channel_data['logo'] = array('ID'=>0, 'small'=>'css/logo/chanbgs.png', 'big'=>'css/logo/chanbgb.png');
-                $channel_data['logo'] = array('ID'=>0, 'small'=>'css/logo/chanwbs.png', 'big'=>'css/logo/chanwbb.png');
+                $chan_data['logo'] = array('ID'=>0, 'small'=>'css/logo/bulletin_board2.png', 'big'=>'css/logo/bulletin_board2.png');
             }
             else
             {
-                $channel_data['logo'] = DisPhotoCtrl::get_data($channel_data['logo']);
+                $chan_data['logo'] = DisPhotoCtrl::get_data($chan_data['logo']);
             }
 
 //            $channel_data['logo'] = array('ID'=>0, 'small'=>'css/logo/chanbgs.png', 'big'=>'css/logo/chanbgb.png');
-            DisChanDataCache::set_chan_data($channel_id, $channel_data);
+            DisChanDataCache::set_chan_data($chan_id, $chan_data);
         }
-        return $channel_data;
+        return $chan_data;
     }
 
-    static function channel($chan_id)
+    static function chan($chan_id)
     {
         $chan = new DisChannelCtrl();
         $chan->ID = $chan_id;
@@ -444,15 +444,15 @@ class DisChannelCtrl extends DisChannelData
 
         $manager_ids = $this->list_manager_ids();
         $len = count($manager_ids);
-        for ( $i = 0; $i < $len; $i ++ )
+        for( $i = 0; $i < $len; $i ++ )
         {
             $notice = new DisNoticeCtrl($manager_ids[$i]);
             $notice->add_apply_notice($applicant_id);
         }
 
         $this->increase("applicant_num");
-        $param = new DisUserParamCtrl();
-        $param->ID = $user_id;
+        $param = new DisUserParamCtrl($user_id);
+//        $param->ID = $user_id;
         $param->increase('applicant_num');
     }
 

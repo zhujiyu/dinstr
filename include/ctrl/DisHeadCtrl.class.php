@@ -45,8 +45,7 @@ class DisHeadCtrl extends DisInfoHeadData
         $head_data = DisNoteDataCache::get_head_data($head_id);
         if( !$head_data )
         {
-            $head = new DisHeadCtrl();
-            $head->init($head_id);
+            $head = new DisHeadCtrl((int)$head_id);
             if( !$head->ID )
                 throw new DisParamException("对象不存在！$head_id");
             $head_data = $head->info();
@@ -61,7 +60,7 @@ class DisHeadCtrl extends DisInfoHeadData
         $view = $this->detail;
 
         $view['note'] = DisNoteCtrl::get_note_view($view['note_id']);
-        $view['note']['content'] = strip_tags($view['note']['content']);
+//        $view['note']['content'] = strip_tags($view['note']['content']);
         if( $view['chan_id'] > 0 )
             $view['channel'] = DisChannelCtrl::get_data($view['chan_id']);
 
@@ -103,27 +102,44 @@ class DisHeadCtrl extends DisInfoHeadData
         return $status;
     }
 
-    static function new_head($user_id, $chan_id, $title)
+    static function new_head($title, $note_id)
     {
-        if( !$user_id || !$title )
+        if( !$note_id || !$title )
             throw new DisParamException("参数不合法！");
 //        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
 //        $title = preg_replace($rsg, '', $title);
 
         $head = new DisHeadCtrl();
-        $head->insert($title, 0, (int)$chan_id);
+        $head->insert($title, $note_id);
         if( !$head->ID )
             throw new DisDBException("插入信息头失败！");
-        $head->interest($user_id);
 
-        $chan = new DisChannelCtrl($chan_id);
-        $chan->increase('info_num');
-
-        $param = new DisUserParamCtrl($user_id);
-//        $param->ID = $user_id;
-        $param->increase('head_num');
         return $head;
     }
+
+//    static function new_head($user_id, $title)
+//    {
+//        if( !$user_id || !$title )
+//            throw new DisParamException("参数不合法！");
+////        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
+////        $title = preg_replace($rsg, '', $title);
+//
+//        $head = new DisHeadCtrl();
+////        $head->insert($title, 0, (int)$chan_id);
+//        $head->insert($title, 0);
+//        if( !$head->ID )
+//            throw new DisDBException("插入信息头失败！");
+//        $head->interest($user_id);
+//
+////        $chan = new DisChannelCtrl($chan_id);
+////        $chan->increase('info_num');
+//
+//        $param = new DisUserParamCtrl($user_id);
+////        $param->ID = $user_id;
+//        $param->increase('head_num');
+//
+//        return $head;
+//    }
 
     static function head($head_id)
     {

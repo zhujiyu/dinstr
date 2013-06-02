@@ -11,7 +11,7 @@
 if( !defined('IN_DIS') )
     exit('Access Denied!');
 
-function _login($name, $pwrd, $auto = null)
+function user_login($name, $pwrd, $auto = null)
 {
     if( !$name || !$pwrd )
         return false;

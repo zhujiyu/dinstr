@@ -41,21 +41,6 @@ class DisNoteCtrl extends DisInfoNoteData
         DisNoteDataCache::set_note_data($this->ID, null);
     }
 
-    static function parse_mails($note_ids)
-    {
-        $count = count($note_ids);
-        $info_list = array();
-        for( $i = 0; $i < $count; $i ++ )
-        {
-            $note = DisNoteCtrl::get_note_view($note_ids[$i]);
-            $note[content] = strip_tags($note[content]);
-            $head = DisHeadCtrl::head($note['head_id']);
-            $note[theme] = $head->info();
-            array_push($info_list, $note);
-        }
-        return $info_list;
-    }
-
     static function get_data($note_id)
     {
 //        pmRowMemcached::set_mail_data($note_id, null);
@@ -64,12 +49,12 @@ class DisNoteCtrl extends DisInfoNoteData
         {
             $note = new DisNoteCtrl((int)$note_id);
             if( !$note->ID )
-                throw new DisParamException("不存在的信息！");
-
-            if( $note->detail['good_num'] )
-                $note->detail['good_list'] = DisInfoGoodData::list_mail_goods($note_id);
+                throw new DisParamException("不存在的信息 $note_id ！");
             if( $note->detail['photo_num'] )
-                $note->detail['photo_list'] = DisInfoPhotoData::list_mail_photos($note_id);
+                $note->detail['photo_list'] = DisInfoPhotoData::list_info_photos($note_id);
+
+//            if( $note->detail['good_num'] )
+//                $note->detail['good_list'] = DisInfoGoodData::list_info_goods($note_id);
 //            if( $mail->detail['context'] )
 //                $mail->detail['parent_list'] = parent::preg_digit_ids($mail->detail['context']);
 //            if( $mail->detail['channels'] )
@@ -87,15 +72,28 @@ class DisNoteCtrl extends DisInfoNoteData
         try
         {
             $note = DisNoteCtrl::get_data($note_id);
+//            DisObject::print_array($note);
             if( (int)$note['status'] != 0 )
                 $note = array('ID'=>'0', 'content'=>'该信息已被作者删除！');
-//            else
-//                $mail[content] = strip_tags($mail[content]);
             $note['user'] = DisUserCtrl::get_data($note['user_id']);
         }
         catch (DisException $ex)
         {
             return array('ID'=>'0', 'content'=>'该信息已被作者删除！');
+        }
+
+        if( $note['photo_list'] )
+        {
+            $count = count($note['photo_list']);
+            for( $i = 0; $i < $count; $i ++ )
+            {
+                $photo = $note['photo_list'][$i];
+                $photo['photo'] = DisPhotoCtrl::get_data($photo['photo_id']);
+                $rank = $note['photo_list'][$i]['rank'];
+                $note['objects'][$rank] = $photo;
+                $note['objects'][$rank]['type'] = 'photo';
+            }
+            unset($note['photo_list']);
         }
 
         if( $note['good_list'] )
@@ -113,30 +111,16 @@ class DisNoteCtrl extends DisInfoNoteData
             unset($note['good_list']);
         }
 
-        if( $note['photo_list'] )
-        {
-            $count = count($note['photo_list']);
-            for( $i = 0; $i < $count; $i ++ )
-            {
-                $photo = $note['photo_list'][$i];
-                $photo['photo'] = DisPhotoCtrl::get_data($photo['photo_id']);
-                $rank = $note['photo_list'][$i]['rank'];
-                $note['objects'][$rank] = $photo;
-                $note['objects'][$rank]['type'] = 'photo';
-            }
-            unset($note['photo_list']);
-        }
-
-        if( $note['channel_list'] )
-        {
-            $count = count($note['channel_list']);
-            for( $i = 0; $i < $count; $i ++ )
-            {
-                $channel = $note['channel_list'][$i];
-                $note['channel_list'][$i] = DisChannelCtrl::get_data($channel['channel_id']);
-                $note['channel_list'][$i]['weight'] = $channel['weight'];
-            }
-        }
+//        if( $note['channel_list'] )
+//        {
+//            $count = count($note['channel_list']);
+//            for( $i = 0; $i < $count; $i ++ )
+//            {
+//                $channel = $note['channel_list'][$i];
+//                $note['channel_list'][$i] = DisChannelCtrl::get_data($channel['channel_id']);
+//                $note['channel_list'][$i]['weight'] = $channel['weight'];
+//            }
+//        }
 
         return $note;
     }
@@ -152,7 +136,7 @@ class DisNoteCtrl extends DisInfoNoteData
     /**
      * 添加一条新信息
      * @param integer $user_id 发布者ID
-     * @param integer $channel_id 初始发布的频道ID
+     * @param integer $chan_id 初始发布的频道ID
      * @param string $title 邮件标题内容
      * @param string $content 信息内容
      * @param array $photos 图片列表
@@ -169,12 +153,17 @@ class DisNoteCtrl extends DisInfoNoteData
         $photo_num = $photos ? count($photos) : 0;
         $good_num = $goods ? count($goods) : 0;
 
-        $head = DisHeadCtrl::new_head($user_id, $chan_id, $title);
         $note = new DisNoteCtrl();
-        $note->insert($user_id, $content, $head->ID, 0, $photo_num, $good_num, $video);
+        $note->insert($user_id, $content, 0, 0, $photo_num, $good_num, $video);
         if( !$note->ID )
             throw new DisDBException("插入失败！");
-        $head->update(array('note_id'=>$note->ID, 'note_num'=>1));
+
+        $head = DisHeadCtrl::new_head($title, $note->ID);
+        $head->interest($user_id);
+        $note->update(array('head_id'=>$head->ID));
+
+//        $head = DisHeadCtrl::new_head($user_id, $chan_id, $title);
+//        $head->update(array('note_id'=>$note->ID, 'note_num'=>1));
 
         for( $i = 0; $i < $photo_num; $i ++ )
         {
@@ -195,10 +184,15 @@ class DisNoteCtrl extends DisInfoNoteData
 
 //        self::insert_keywords($note->ID, $title);
 //        self::insert_keywords($note->ID, $content);
+//
+//        $chan = new DisChannelCtrl($chan_id);
+//        $chan->increase('info_num');
 
         $param = new DisUserParamCtrl($user_id);
 //        $param->ID = $user_id;
         $param->increase("note_num");
+        $param->increase('head_num');
+
         return $note;
     }
 
@@ -320,7 +314,23 @@ class DisNoteCtrl extends DisInfoNoteData
         DisNoteVectorCache::set_note_ids($this->detail[head_id], null);
         DisNoteDataCache::set_note_data($this->ID, null);
         DisUserVectorCache::set_publish_note_ids($user_id, null);
+
         return $flow_id;
+    }
+
+    static function parse_mails($note_ids)
+    {
+        $count = count($note_ids);
+        $info_list = array();
+        for( $i = 0; $i < $count; $i ++ )
+        {
+            $note = DisNoteCtrl::get_note_view($note_ids[$i]);
+            $note[content] = strip_tags($note[content]);
+            $head = DisHeadCtrl::head($note['head_id']);
+            $note[theme] = $head->info();
+            array_push($info_list, $note);
+        }
+        return $info_list;
     }
 
     /**

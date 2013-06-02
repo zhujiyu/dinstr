@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <photos ID="10000" user_id="10000" small="attach/avatar/nh500/zhujiyu.touxiang.png" big="attach/avatar/mw500/zhujiyu.touxiang.png" quote="1" create_time="2013-05-29 00:00:00"/>
-    <photos ID="20000" user_id="20000" small="attach/avatar/nh500/zhujiyu.touxiang.png" big="attach/avatar/mw500/zhujiyu.touxiang.png" quote="1" create_time="2013-05-29 00:00:00"/>
+    <photos ID="10000" user_id="10000"
+            small="attach/avatar/nh100/zhujiyu.touxiang.png"
+            big  ="attach/avatar/mw500/zhujiyu.touxiang.png"
+            quote="1" create_time="2013-05-29 00:00:00"/>
+    <photos ID="20000" user_id="20000"
+            small="attach/avatar/nh100/editor.touxiang.png"
+            big  ="attach/avatar/mw500/editor.touxiang.png"
+            quote="1" create_time="2013-05-29 00:00:00"/>
+    <photos ID="100001" user_id="10000"
+            small="attach/nh200/20120524.jpg"
+            big  ="attach/mw500/20120524.jpg"
+            quote="1" create_time="2013-06-02 00:00:00"/>
+    <photos ID="100002" user_id="10000"
+            small="attach/nh200/20110605037.jpg"
+            big  ="attach/mw500/20110605037.jpg"
+            quote="1" create_time="2013-06-02 00:00:00"/>
+    <photos ID="100003" user_id="10000"
+            small="attach/nh200/20120208000.jpg"
+            big  ="attach/mw500/20120208000.jpg"
+            quote="1" create_time="2013-06-02 00:00:00"/>
+    <photos ID="100004" user_id="10000"
+            small="attach/nh200/20120421179.jpg"
+            big  ="attach/mw500/20120421179.jpg"
+            quote="1" create_time="2013-06-02 00:00:00"/>
 
     <!-- password="121981" impassword="gou86.com" -->
-	<users ID="10000" username="朱继玉" email="zhuhz82@126.com" salt="750fbffae120d7613936c1c1527284e4" password="7282df6258694c0919adb8419ff4dbb5" impassword="3f4a832c60869dcbbf8d4d07cf8e6848"
+	<users ID="10000" username="朱继玉" email="zhuhz82@126.com"
+           salt="750fbffae120d7613936c1c1527284e4" password="7282df6258694c0919adb8419ff4dbb5" impassword="3f4a832c60869dcbbf8d4d07cf8e6848"
            avatar="10000" gender="male" sign="海报栏01号用户"/>
     <!-- password="kuke.com" impassword="heibaoban" -->
-	<users ID="20000" username="海报栏管理员" email="zhujiyu.tez@qq.com" salt="b04e62432a9b64305c874ecaa8520db2" password="9bb28c93afaf386e00a812e1f85f2d50" impassword="d9455fdb9d7e9e9c4ec72774378f4ce2"
+	<users ID="20000" username="海报栏管理员" email="zhujiyu.tez@qq.com"
+           salt="b04e62432a9b64305c874ecaa8520db2" password="9bb28c93afaf386e00a812e1f85f2d50" impassword="d9455fdb9d7e9e9c4ec72774378f4ce2"
            avatar="20000" gender="female" sign="海报栏二号用户"/>
     <!-- password="gou86.com" impassword="hbb.com" -->
-	<users ID="30000" username="测试用户" email="chforlove@126.com" salt="7d220e7e50a14e50b722d679e18179ea" password="e6171e6125a891036e4644478378bfc7" impassword="2021719ec63d3ff02848667aa3088833"
+	<users ID="30000" username="测试用户" email="chforlove@126.com"
+           salt="7d220e7e50a14e50b722d679e18179ea" password="e6171e6125a891036e4644478378bfc7" impassword="2021719ec63d3ff02848667aa3088833"
            avatar="0" gender="male" sign="测试用户"/>
 
     <user_params ID="10000" create_num="0" subscribe_num="0" join_num="0" fans_num="10" follow_num="2"/>
@@ -22,24 +47,42 @@
     <user_relations ID="1000022" from_user="1234861" to_user="1593648" read="1" follow_time="2013-05-15 00:00:00"/>
     <user_relations ID="1000034" from_user="1593648" to_user="1234861" read="1" follow_time="2013-05-15 00:00:00"/>
 
-	<channels ID="10000" name="游戏海报"   type="business" logo="0" desc="first" bulletin="121981" creater="200" info_num="41" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
-	<channels ID="20000" name="新建海报板" type="business" logo="0" desc="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" bulletin="kuke.com" creater='0' info_num="0" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
-	<channels ID="30000" name="生活海报"   type="business" logo="0" desc="test" bulletin="gou86.com" creater='0' info_num="0" subscriber_num="1" member_num="0" create_time="0" applicant_num="2"/>
+    <!-- 公共海报栏是ID小于10000的栏，只能手动在后台添加 -->
+	<channels ID="9999" name="公共海报栏"  type="business" logo="0" desc="任何注册用户都有权向该栏目张贴海报，且不区分海报类别" bulletin=""
+              creater="200" info_num="41" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+	<channels ID="10000" name="游戏海报"   type="business" logo="0" desc="first" bulletin="121981"
+              creater="200" info_num="41" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+	<channels ID="20000" name="新建海报板" type="business" logo="0" desc="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" bulletin="kuke.com"
+              creater='0' info_num="0" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+	<channels ID="30000" name="生活海报"   type="business" logo="0" desc="test" bulletin="gou86.com"
+              creater='0' info_num="0" subscriber_num="1" member_num="0" create_time="0" applicant_num="2"/>
 
+    <chan_users ID="100002" chan_id="10000" user_id="10000" role="2" subscribe_time="0" join_time="0"/>
+    <chan_users ID="100003" chan_id="10000" user_id="20000" role="1" subscribe_time="0" join_time="0"/>
+    <chan_users ID="100004" chan_id="10000" user_id="30000" role="1" subscribe_time="0" join_time="0"/>
     <chan_users ID="100012" chan_id="30000" user_id="10000" role="0" subscribe_time="0" join_time="0"/>
     <chan_users ID="100015" chan_id="20000" user_id="10000" role="1" subscribe_time="0" join_time="0"/>
-    <chan_users ID="100022" chan_id="10000" user_id="10000" role="2" subscribe_time="0" join_time="0"/>
+
     <chan_applicants ID="100000" chan_id="30000" user_id="20000" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
     <chan_applicants ID="100011" chan_id="30000" user_id="10000" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
 
-    <info_notes ID="100010" user_id="10000" head_id="100020" parent_id="0" content="信息内容"/>
+    <info_notes ID="100010" user_id="10000" head_id="100020" parent_id="0" content="信息内容" photo_num="2"/>
     <info_heads ID="100020" content="信息头" note_id="100010" approved_num="1" interest_num="2"/>
+    <info_photos ID="100001" note_id="100010" photo_id="100001" rank="0"/>
+    <info_photos ID="100002" note_id="100010" photo_id="100002" rank="1"/>
 
-    <info_notes ID="100011" user_id="10000" head_id="100022" parent_id="0" content="信息内容"/>
+    <info_notes ID="100011" user_id="10000" head_id="100022" parent_id="0" content="信息内容" photo_num="2"/>
     <info_heads ID="100022" content="信息头" note_id="100011" approved_num="0" interest_num="0"/>
+    <info_photos ID="100003" note_id="100011" photo_id="100003" rank="0"/>
+    <info_photos ID="100004" note_id="100011" photo_id="100004" rank="1"/>
 
     <info_users ID="100012" head_id="100010" user_id="10000" approve="0" update_time="2013-05-20 00:00:00"/>
     <info_users ID="100015" head_id="100010" user_id="20000" approve="1" update_time="2013-05-20 00:00:00"/>
+
+    <streams ID="1000000" user_id="10000" note_id="100010" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <streams ID="1000001" user_id="10000" note_id="100011" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <latest_streams ID="1000000" user_id="10000" note_id="100010" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <latest_streams ID="1000001" user_id="10000" note_id="100011" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
 
     <notices ID="1000000" />
     <latest_notices ID="1000000" />

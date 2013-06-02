@@ -320,21 +320,6 @@ select '图片资源表已经生成' as tip;
  * 业务模块，包括私信、邮件、邮件主题
 \*************************************/
 -- 业务1：信息流
--- 信息头
-DROP TABLE IF EXISTS info_heads;
-CREATE TABLE info_heads
-(
-    ID bigint AUTO_INCREMENT PRIMARY KEY,
-    content varchar(255),
-    note_id bigint,
-    note_num int default 0,
-    interest_num int default 0,
-    approved_num int default 0
---    update_time timestamp
-)
-ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
-select '信息头表已经生成' as tip;
-
 -- 信息体
 DROP TABLE IF EXISTS info_notes;
 CREATE TABLE info_notes
@@ -352,7 +337,7 @@ CREATE TABLE info_notes
     -- 参数
     good_num  smallint default 0,
     photo_num smallint default 0,
-    reply_num int default 0,
+    reply_num int  default 0,
     status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
     create_time timestamp,
 --    publish_num int default 0, -- 发表次数
@@ -363,6 +348,20 @@ CREATE TABLE info_notes
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息表已经生成' as tip;
+
+-- 信息头
+DROP TABLE IF EXISTS info_heads;
+CREATE TABLE info_heads
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    content varchar(255),
+    note_id bigint,
+    note_num int default 0,
+    interest_num int default 0,
+    approved_num int default 0
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '信息头表已经生成' as tip;
 
 -- 信息头用户关系表
 DROP TABLE IF EXISTS info_users;
@@ -378,6 +377,39 @@ CREATE TABLE info_users
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息头用户关系表已经生成' as tip;
+
+DROP TABLE IF EXISTS latest_streams;
+CREATE TABLE latest_streams
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int, -- 发布者，不一定是邮件的原作者，可能是转发者
+    note_id bigint,
+    chan_id int,
+    weight int default 0,
+    flow_time timestamp,
+    index (user_id),
+    index (chan_id, weight),
+    index (flow_time)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '信息流表已经生成' as tip;
+
+-- 信息发送表
+DROP TABLE IF EXISTS streams;
+CREATE TABLE streams
+(
+    ID bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id int, -- 发布者，不一定是邮件的原作者，可能是转发者
+    chan_id int,
+    note_id bigint,
+    weight int default 0,
+    flow_time timestamp,
+    index (user_id),
+    index (chan_id, weight),
+    index (flow_time)
+)
+ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
+select '信息流表已经生成' as tip;
 
 -- 信息图片表
 DROP TABLE IF EXISTS info_photos;

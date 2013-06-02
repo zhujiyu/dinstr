@@ -16,8 +16,9 @@ if( !defined('IN_DIS') )
 class DisConfigAttr
 {
     public static $app = array('name'=>'海报栏', 'version'=>'1.1', 'status'=>'内测',
-        'goal'=>"无噪音的实用资讯", 'locate'=>'定向有序资讯引擎',
-        'logo'=>'css/logo/haibao.png', 'icon'=>'css/logo/haibao.png',
+        'goal'=>"实用精准的网络海报", 'locate'=>'定向有序资讯引擎',
+        'logo'=>'css/logo/bulletin_board.png', 'icon'=>'css/logo/bulletin_board.png',
+//        'logo'=>'css/logo/hbb2.png', 'icon'=>'css/logo/hbb1.png',
         'url'=>'haibaolan.com', 'icp'=>'京ICP备12012934号-1',
         'keywords'=>'海报，资讯，商务，精准，信息，检索，信息流',
         'desc'=>'网络海报平台：大众的精准网络海报，让你感兴趣的实用资讯送上门！');

@@ -10,8 +10,73 @@
  * @version   : 1.0.0
  */
 require_once 'common.inc.php';
+require_once 'recom.inc.php';
+require_once 'view/user.inc.php';
 
+$gSmarty = init_smarty();
+ob_start();
 
+$user = DisUserCtrl::user(10000);
+$gSmarty->assign("user", $user->info());
+
+try
+{
+    $chan_ids = array(9999, 10000, 20000, 30000);
+    for( $i = 0; $i < 4; $i ++ )
+    {
+        $chan = DisChannelCtrl::chan($chan_ids[$i]);
+        $chan_list[] = $chan->info();
+    }
+    $gSmarty->assign('chan_list', $chan_list);
+
+    $chan = DisChannelCtrl::chan(10000);
+    $member_ids = $chan->list_member_ids();
+    for( $i = 0; $i < count($member_ids); $i ++ )
+    {
+        $u = DisUserCtrl::user($member_ids[$i]);
+        $member_list[] = $u->info();
+    }
+    $gSmarty->assign('member_list', $member_list);
+
+    $manager_ids = $chan->list_manager_ids();
+    for( $i = 0; $i < count($manager_ids); $i ++ )
+    {
+        $u = DisUserCtrl::user($manager_ids[$i]);
+        $manager_list[] = $u->info();
+    }
+    $gSmarty->assign('manager_list', $manager_list);
+
+//    DisObject::print_array($user_list[0]);
+
+    $info_ids = array(100010, 100011);
+    for( $i = 0; $i < 2; $i ++ )
+    {
+        $info = DisNoteCtrl::get_note_view($info_ids[$i]);
+        $head = DisHeadCtrl::head($info['head_id']);
+        $info['head'] = $head->info();
+        $info['head']['status'] = $head->check_status($user->ID);
+        $info_list[] = $info;
+    }
+    $gSmarty->assign('info_list', $info_list);
+//    DisObject::print_array($info_list[0]);
+
+//    $chan = DisChannelCtrl::chan(20000);
+//    $chan_list[0] = $chan->info();
+//    DisObject::print_array($chan);
+//    $gSmarty->assign("chan", $chan->info());
+}
+catch (DisException $ex)
+{
+    $ex->trace_stack();
+}
+
+$err = ob_get_contents();
+ob_end_clean();
+$gSmarty->assign("err", $err);
+
+$file = "pages/home.page.tpl";
+$gSmarty->assign("title", "首页");
+$gSmarty->display($file);
 
 //function _login($name, $pwrd)
 //{

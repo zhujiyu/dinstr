@@ -15,16 +15,15 @@ if( !defined('IN_DIS') )
 
 class DisChanTagData extends DisObject
 {
-    static function load($channel_id)
+    static function load($chan_id)
     {
-        $str = "select ID, channel_id, tag from chan_tags
-            where channel_id = $channel_id";
+        $str = "select ID, chan_id, tag from chan_tags where chan_id = $chan_id";
 	    return DisDBTable::load_datas($str);
     }
 
-    static function insert($channel_id, $tag)
+    static function insert($chan_id, $tag)
     {
-	    $str = "insert into chan_tags (channel_id, tag) values ($channel_id, '$tag')";
+	    $str = "insert into chan_tags (chan_id, tag) values ($chan_id, '$tag')";
 	    $r = DisDBTable::query($str);
         if( $r != 1 )
             throw new DisDBException('添加标签失败！');
@@ -38,19 +37,19 @@ class DisChanTagData extends DisObject
 
     static function list_channel_ids($tag, $page = 0, $count = 40)
     {
-        $str = "select ID, channel_id, tag from chan_tags where tag = '$tag'
+        $str = "select ID, chan_id, tag from chan_tags where tag = '$tag'
             order by ID desc limit " . $page * $count . ", $count";
 	    return DisDBTable::load_datas($str);
     }
 
     static function list_channels($tag, $page = 0, $count = 20,
-            $slt = "c.ID, name, logo, `type`, description, announce, creater,
+            $slt = "c.ID, name, logo, `type`, `desc`, bulletin, creater,
             mail_num, member_num, applicant_num, subscriber_num, create_time")
     {
         if( !$tag || $tag == '' )
             return DisChannelData::list_channels($page, $count);
         $str = " select $slt
-            from chan_tags as t left join channels as c on c.ID = t.channel_id
+            from chan_tags as t left join channels as c on c.ID = t.chan_id
             where tag = '$tag' group by t.channel_id
             order by t.ID desc limit ".$page * $count.", $count";
         return DisDBTable::load_datas($str);

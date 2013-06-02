@@ -1,0 +1,126 @@
+/*!
+ * PMAIL项目 CSS V1.9.25
+ *
+ * @author 朱继玉
+ * @copyright http://gou86.com/ @2011
+ */
+/* 网站的主题样式 */
+.dis-shadow {z-index: 210; top: 0; left: 0; width: 100%; height: 100%; position: absolute;}
+.dis-tip {position: absolute; z-index: 10;}
+.dis-tip .dis-tip-content {z-index: 211; background-color: #fff; position: relative;}
+
+#parsing {left: 0; top: 0; width: 100%; height: 100%; z-index: 999; position: absolute;}
+#parsing span {color: #eb4f01; text-align: center; vertical-align: middle; position: relative; padding: 5px; display: block; width: 120px; margin: auto; background-color: #fff;}
+.dis-loading .dis-loading-pic {padding: 20px; text-align: center;}
+
+.dis-err {padding: 0 10px; border: 1px solid #b94a48;}
+.dis-err .content {font-size: 12px; color: #555;}
+
+.dis-special {padding: 14px; background-color: #eaeaea; border: 1px solid #e1e1e1;}
+.dis-special .dis-special {padding: 0; border: 0;}
+.dis-sorting {border: 1px solid red; background-color: white; padding: 5px;}
+.dis-prompt, .dis-prompt-wrap .dis-prompt {background-color: yellow;}
+.dis-shirt-v, .dis-shirt-h {width: 5px; height: 5px;}
+.dis-veri-data .dis-desc {color: red;}
+
+.dis-arrow {font-family: Arial; line-height: 14px; text-align: center; width: 20px; position: relative; display: block; z-index: 0;}
+.dis-arrow-up .head {height: 8px; margin: 0 0 0 3px; font-size: 28px; overflow: hidden; text-align: left; display: block; position: relative;}
+.dis-arrow-up .tear {height: 8px; margin: -3px 0 4px 4px; font-size: 11px; overflow: hidden; text-align: left; display: block; position: relative;}
+.dis-arrow-dwon .head {height: 8px; margin: 0 0 0 3px; font-size: 28px; overflow: hidden; display: block; position: relative;}
+
+.dis-avatar-img, .dis-tile-img {white-space: nowrap; overflow: hidden; position: relative;}
+.dis-avatar-icon {width: 20px; height: 20px;}
+.dis-avatar-icon img {max-width: 20px; max-height: 20px;}
+.dis-avatar-small {width: 24px; height: 24px;}
+.dis-avatar-small img {max-width: 24px; max-height: 24px;}
+.dis-avatar-middle {width: 50px; height: 50px;}
+.dis-avatar-middle img {max-width: 50px; max-height: 50px;}
+.dis-avatar-big {width: 150px; height: 150px;}
+.dis-avatar-big img {max-width: 150px; max-height: 150px;}
+
+.dis-upload-ctrl img {display: none; vertical-align: middle; margin-left: 20px;}
+.dis-upload-ctrl input {vertical-align: middle; border: 1px solid #aaa;}
+
+.dis-avatar-dialog {width: 720px;}
+.dis-avatar-dialog .dis-dialog-content {padding: 10px;}
+.dis-avatar-source {position: relative; vertical-align: middle; margin-right: 20px; max-width: 500px; overflow: hidden;}
+.dis-avatar-source img {z-index: 20;}
+.dis-avatar-source .dis-overlay {position: absolute; top: 0; left: 0; z-index: 21; display: none; width: 100%; height: 100%;}
+.dis-avatar-source .dis-overlay td {height: 100px; overflow: hidden;}
+.dis-avatar-source #adjust {position: absolute; width: 100px; height: 100px; top: 0; left: 0; z-index: 222; cursor: pointer;}
+.dis-avatar-result {vertical-align: top;}
+.dis-avatar-result .dis-avatar-new {position: relative; vertical-align: middle; margin: 0 auto;}
+
+.dis-tag {display: inline-block; position: relative; padding-right: 10px;}
+.dis-red-star {display: inline-block; width: 16px; height: 16px;}
+.dis-content {text-indent: 2em;}
+.dis-empty-content {font-size: 14px; padding: 20px 0; text-align: center;}
+.dis-page-title {padding: 10px 0; font-size: 20px; font-weight: bold;}
+.dis-module-title {font-size: 14px; font-weight: bold;}
+
+.dis-border-line {background-color: #ddd; height: 1px;}
+.dis-content-border  {background-color: #ddd; height: 2px; margin: 10px 0;}
+.dis-vertical-border {background-color: #ddd; width: 1px; height: 100%;}
+
+.dis-to-top {width: 20px; padding: 15px 5px; background-color: #f1f1f1; cursor: pointer;
+            font-family: Arial; line-height: 14px; text-align: center;
+            position: fixed; _position: absolute; bottom: 100px; left: 50%; margin-left: 200px; display: none;}
+.dis-to-top:hover {background-color: #e1e1e1; color: #222; text-decoration: none;}
+
+.dis-param {font-size: 14px;}
+.dis-param a:hover {text-decoration: none;}
+.dis-param .data {display: block; text-align: center;}
+.dis-param .dis-vertical-border {width: 1px; height: 40px; margin: 0 10px;}
+
+.dis-page-navi {padding: 0 10px; border-bottom: 1px solid #cacaca; position: relative; text-align: right; margin-bottom: 15px;}
+.dis-page-navi .item {position: relative; cursor: pointer; top: 1px; display: inline-block; font-size: 14px; padding: 5px 10px; background-color: #fff; border: 1px solid transparent; border-bottom: 1px solid #cacaca;}
+.dis-page-navi .item:hover {text-decoration: none; border: 1px solid #cacaca; border-bottom: 1px solid transparent;}
+.dis-page-navi .current {color: #444; cursor: text; border: 1px solid #cacaca; border-bottom: 1px solid #fff;}
+.dis-page-navi .dis-module-title {float: left; margin-top: 10px;}
+
+.dis-dialog input[type=text] {font-size: 14px; line-height: 22px; width: 440px; padding: 2px 4px;}
+.dis-dialog input[type=file] {width: 300px;}
+.dis-photo-dialog .dis-dialog-content {min-width: 520px;}
+.dis-photo-dialog .dis-photo-box {text-align: center; margin-bottom: 20px; overflow: auto; max-height: 400px; min-height: 200px;}
+.dis-photo-dialog .dis-photo-param {display: none;}
+.dis-good-dialog .dis-error {padding-top: 10px; color: red;}
+
+.item a {text-decoration: none;}
+.current a {color: #444; cursor: text;}
+
+.dis-content-navi .item {padding: 5px 0 5px 30px; display: block; position: relative; vertical-align: middle;}
+.dis-content-navi .item:hover {background-color: #e1f0f7; text-decoration: none;}
+.dis-content-navi .current {background-color: #dee9ee;}
+
+.dis-manage-box {padding: 10px; text-align: center;}
+.dis-manage-box a {margin: 0 20px; padding: 3px 10px;}
+
+.dis-imagecode-ctrl img {vertical-align: top; vertical-align: middle; width: 120px; height: 40px;}
+.dis-imagecode-ctrl #imagecode {width: 80px; padding: 2px 4px;}
+
+.dis-object-edit {width: 640px; min-height: 500px;}
+.dis-object-edit .dis-logo-list {vertical-align: middle;}
+.dis-object-edit .dis-edit-ctrl {padding: 10px 0; vertical-align: middle;}
+.dis-object-edit .dis-edit-title {padding: 10px 0; text-align: center;}
+.dis-object-edit .dis-upload-ctrl {text-align: left; vertical-align: top; padding: 60px 20px;}
+
+.dis-object-edit .dis-tag-list {padding: 20px 0;}
+.dis-object-edit .dis-tag-list .dis-tag {padding: 0 30px 0 10px; margin-right: 10px; border: 1px solid #ccc; background-color: #f5f1f1;}
+.dis-object-edit .dis-edit-item .name {width: 100px;}
+.dis-object-edit .dis-edit-item .desc {color: #888; padding: 5px 0;}
+
+.dis-object-edit textarea {width: 630px; padding: 5px;}
+.dis-object-edit .dis-edit-info td.name {width: 70px; text-align: right; font-weight: bold; padding-right: 10px;}
+
+.dis-object-item .dis-object-avatar {width: 70px;color: #105cb6}
+.dis-object-item .dis-object-info {width: 480px; vertical-align: top;}
+.dis-object-item .dis-ctrl {width: 100px; vertical-align: top;}
+
+.dis-join-dialog textarea {padding: 3px 5px; width: 510px;}
+.dis-join-dialog .dis-upload-ctrl {display: none;}
+
+.dis-imoney-ctrl {padding: 0; text-align: center;}
+.dis-channel-plaza td {width: 70px;}
+
+.dis-user-simple .dis-user-avatar {width: 70px;}
+.dis-user-simple .dis-user-info {vertical-align: top;}
