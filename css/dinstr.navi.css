@@ -14,14 +14,15 @@
 .dis-navi-logo  {width: 220px; vertical-align: middle;}
 .dis-navi-list  {width: 400px; vertical-align: middle;}
 
-.dis-menu-list {position: absolute; display: block; right: 0; top: -1px; min-width: 120px; padding: 0; background-color: #14589c;}
+.dis-menu-list {position: absolute; display: block; right: 0; top: -1px; min-width: 120px; padding: 0;}
 .dis-menu-list .dis-icon {margin-right: 10px;}
 .dis-menu-list .dis-border-line {display: none;}
 .dis-menu-list .dis-navi-item {display: none; text-align: left; padding-left: 15px; background-color: #14589c;}
-               /*padding: 2px 10px 2px 15px;*/
-/*.dis-menu-list .dis-navi-item:hover {background-color: #1f4974;}*/
 
-.dis-menu-list:hover {background-color: #1f4974;}
+/*.dis-top-navi {background: url("images/back.png") repeat;}*/
+/*.dis-top-navi .dis-navi-item {background: url("images/back.png") repeat;}*/
+/*.dis-top-navi .dis-navi-item:hover {background: url("images/top.png") repeat;}*/
+
 .dis-menu-list:hover .dis-border-line {display: block;}
 .dis-menu-list:hover .dis-navi-item {display: block;}
 

@@ -11,7 +11,8 @@
                 <div class="dis-corner-all dis-menu-list">
                     <div class="dis-navi-item dis-user-name dis-corner-top">
                         <a href="user">
-                            <span class="dis-avatar-img dis-avatar-small dis-tile-img dis-load-display dis-inline-block" imgsrc="{$user.avatar.small}"></span>
+                            <span class="dis-avatar-icon dis-tile-img dis-load-display dis-inline-block"
+                                  imgsrc="{$user.avatar.small}"></span>
                             <span class="username">{$user.username|truncate_utf:10:'...'}</span>
                             <span class="dis-icon-wrap dis-inline-block"><span class="dis-icon ui-icon-triangle-1-s"></span></span>
                         </a>

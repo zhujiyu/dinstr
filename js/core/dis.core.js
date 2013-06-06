@@ -848,7 +848,7 @@ $(function()
     $($('.dis-chan-navi')[0]).addClass('dis-chan-current');
 
 //    dis('<div>').dialog();
-    dis('<div>').tip({mess: '提示一下试试'});
+//    dis('<div>').tip({mess: '提示一下试试'});
 });
 
 //$(function()

@@ -29,10 +29,10 @@
 .dis-arrow-dwon .head {height: 8px; margin: 0 0 0 3px; font-size: 28px; overflow: hidden; display: block; position: relative;}
 
 .dis-avatar-img, .dis-tile-img {white-space: nowrap; overflow: hidden; position: relative;}
-.dis-avatar-icon {width: 20px; height: 20px;}
-.dis-avatar-icon img {max-width: 20px; max-height: 20px;}
-.dis-avatar-small {width: 24px; height: 24px;}
-.dis-avatar-small img {max-width: 24px; max-height: 24px;}
+.dis-avatar-icon {width: 24px; height: 24px;}
+.dis-avatar-icon img {max-width: 24px; max-height: 24px;}
+.dis-avatar-small {width: 32px; height: 32px;}
+.dis-avatar-small img {max-width: 32px; max-height: 32px;}
 .dis-avatar-middle {width: 50px; height: 50px;}
 .dis-avatar-middle img {max-width: 50px; max-height: 50px;}
 .dis-avatar-big {width: 150px; height: 150px;}
@@ -67,7 +67,7 @@
             position: fixed; _position: absolute; bottom: 100px; left: 50%; margin-left: 200px; display: none;}
 .dis-to-top:hover {background-color: #e1e1e1; color: #222; text-decoration: none;}
 
-.dis-param {font-size: 14px;}
+/*.dis-param {font-size: 14px;}*/
 .dis-param a:hover {text-decoration: none;}
 .dis-param .data {display: block; text-align: center;}
 .dis-param .dis-vertical-border {width: 1px; height: 40px; margin: 0 10px;}

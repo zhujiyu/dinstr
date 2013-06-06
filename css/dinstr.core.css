@@ -20,9 +20,10 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 .dis-page-head {padding: 10px 0;}
 .dis-page-left {width: 170px; padding-right: 20px; vertical-align: top; position: relative;}
 .dis-page-right {width: 790px; min-height: 600px; vertical-align: top; position: relative;}
+
 /*.dis-page-main { background-color: gray;}*/
 /*.dis-page-main {width: 440px; padding-right: 30px; vertical-align: top; position: relative;}*/
-.dis-page-ctrl {padding: 10px 0;}
+/*.dis-page-ctrl {padding: 10px 0;}*/
 
 /* ui */
 .dis-inline-block {position: relative; vertical-align: top; display: inline-block; zoom: 1;}
@@ -69,17 +70,20 @@ a .dis-icon {background-image: url("images/ui-icons_2e83ff_256x240.png");}
 .dis-search-form #search {width: 16px; height: 16px; left: -8px; border: 0; background: url("images/find.png") no-repeat; position: relative;}
 
 .dis-chan-navi {padding: 5px; border: 1px solid #e1e1e1; cursor: pointer; margin: 10px 0;}
+.dis-chan-navi .dis-chan-param {padding: 0 10px;}
 .dis-chan-info {width: 220px; padding-left: 20px;}
 /*.dis-chan-info {width: 240px; background-color: red; height: 100px;}*/
 
 .dis-info-brief .dis-info-photo {width: 200px; height: 200px;}
 .dis-info-brief .dis-info-photo img {width: 200px;}
-.dis-info-brief .dis-info-body {width: 350px;}
+.dis-info-brief .dis-info-body {width: 330px; padding: 10px;}
 .dis-info-title a {font-size: 18px;}
 /*.dis-info-list {background-color: gray;}*/
 /*.dis-chan-current {border-bottom: 20px solid transparent; border-top: 20px solid transparent; border-right: 20px solid #105cb6;}*/
 /*.dis-chan-current {border: 1px solid rgb(121, 183, 0);}*/
 /*.dis-chan-current {border: 1px solid #105cb6;}*/
+.dis-user {padding: 10px 0;}
+.dis-user .dis-user-param {padding: 0 10px;}
 
 .dis-dialog {font-size: 14px; line-height: 22px; background-color: #fff; position: absolute; border: 1px solid #ccc;}
 .dis-dialog #close {top: 8px; right: 10px;}

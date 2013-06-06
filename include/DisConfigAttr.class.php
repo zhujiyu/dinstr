@@ -39,24 +39,6 @@ class DisConfigAttr
     public static $taobaoTestAPI = array('url'=>'http://gw.api.tbsandbox.com/router/rest?',
         'key'=>'test', 'secret'=>'test', 'nick'=>'sandbox_c_2', 'signMethod'=>'HmacMD5');
 
-//    public static $app = array('name'=>'海报板', 'version'=>'1.0', 'status'=>'内测',
-//        'goal'=>"无噪音的实用资讯", 'locate'=>'定向有序资讯引擎', //'面向大众的精准化网络资讯平台',
-//        'logo'=>'css/logo/haibao.png', 'icon'=>'css/logo/haibao.png',
-//        'url'=>'tianezhen.com', 'icp'=>'京ICP备12012934号-1',
-//        'keywords'=>'公众邮件，邮件系统，资讯平台，资讯，商务，精准化，主动式，信息技术，信息检索，智能，信息流技术',
-//        'desc'=>'天鹅镇是一款定向信息流引擎，
-//            将每一条信息按照优先级，从特定信息源，发送到特定的接受目标人群，实现信息主次分明方向明确的流动。
-//            让人们从浩如烟海的垃圾信息中解脱出来，时刻掌握住与自身利益休戚相关的资讯。让有用的信息主动找到你。
-//            天鹅镇的最高目标是实现互联网世界里智能的信息流动。
-//            面向大众的精准化网络资讯平台：让重要的信息找到需要它的人，让每个人都有代表他所属的群体发言的机会，
-//            通过公共邮件频道，轻松地把资讯发送给最恰当的用户群，同时帮每个人轻松获取他最感兴趣的资讯！');
-//    public static $comp = array('name'=>'天鹅镇资讯系统', 'copyright'=>'Copyright @2013');
-
-//    public static $intervals = array('five'=>300, 'quarter'=>900, 'hour'=>3600,
-//        'day'=>86400, 'week'=>604800); // 单位秒
-//    public static $periods = array('3h'=>10800, '6h'=>21600, '1d'=>86400, '3d'=>259200,
-//        'week'=>604800, 'month'=>2592000);
-
     public static $autoLoad = array
     (
         'DisObject'        =>'include/core/DisObject.class.php',
@@ -111,24 +93,18 @@ class DisConfigAttr
         'DisGoodCtrl' =>'include/ctrl/DisGoodCtrl.class.php',
         'DisPhotoCtrl'=>'include/ctrl/DisPhotoCtrl.class.php',
 
-        'DisInfoHeadData'  =>'include/data/DisInfoHeadData.class.php',
-        'DisInfoUserData'  =>'include/data/DisInfoUserData.class.php',
-        'DisInfoNoteData'  =>'include/data/DisInfoNoteData.class.php',
-        'DisInfoGoodData'  =>'include/data/DisInfoGoodData.class.php',
-        'DisInfoPhotoData' =>'include/data/DisInfoPhotoData.class.php',
-        'DisInfoReplyData' =>'include/data/DisInfoReplyData.class.php',
+        'DisInfoHeadData' =>'include/data/DisInfoHeadData.class.php',
+        'DisInfoUserData' =>'include/data/DisInfoUserData.class.php',
+        'DisInfoNoteData' =>'include/data/DisInfoNoteData.class.php',
+        'DisInfoGoodData' =>'include/data/DisInfoGoodData.class.php',
+        'DisInfoPhotoData'=>'include/data/DisInfoPhotoData.class.php',
+        'DisInfoReplyData'=>'include/data/DisInfoReplyData.class.php',
 
         'DisNoteCtrl'    =>'include/ctrl/DisNoteCtrl.class.php',
         'DisHeadCtrl'    =>'include/ctrl/DisHeadCtrl.class.php',
         'DisInfoUserCtrl'=>'include/ctrl/DisInfoUserCtrl.class.php',
-
         'DisStreamData'=>'include/data/DisStreamData.class.php',
         'DisStreamCtrl'=>'include/ctrl/DisStreamCtrl.class.php',
-
-//        'DisNoteKeywordData'=>'include/data/DisNoteKeywordData.class.php',
-//        'pmDataMailCollect' =>'include/data/pmDataMailExt.php',
-//        'pmCtrlMailCollect' =>'include/ctrl/pmCtrlMailExt.php',
-//        'pmDataMailCollectTag'=>'include/data/pmDataMailExt.php',
 
         'DisValueData'    =>'include/data/DisValueData.class.php',
         'DisFeedData'     =>'include/data/DisFeedData.class.php',
@@ -157,4 +133,28 @@ class DisConfigAttr
         'DisFeedbackCtrl'=>'include/ctrl/DisFeedbackCtrl.class.php',
     );
 }
+
+//    public static $app = array('name'=>'海报板', 'version'=>'1.0', 'status'=>'内测',
+//        'goal'=>"无噪音的实用资讯", 'locate'=>'定向有序资讯引擎', //'面向大众的精准化网络资讯平台',
+//        'logo'=>'css/logo/haibao.png', 'icon'=>'css/logo/haibao.png',
+//        'url'=>'tianezhen.com', 'icp'=>'京ICP备12012934号-1',
+//        'keywords'=>'公众邮件，邮件系统，资讯平台，资讯，商务，精准化，主动式，信息技术，信息检索，智能，信息流技术',
+//        'desc'=>'天鹅镇是一款定向信息流引擎，
+//            将每一条信息按照优先级，从特定信息源，发送到特定的接受目标人群，实现信息主次分明方向明确的流动。
+//            让人们从浩如烟海的垃圾信息中解脱出来，时刻掌握住与自身利益休戚相关的资讯。让有用的信息主动找到你。
+//            天鹅镇的最高目标是实现互联网世界里智能的信息流动。
+//            面向大众的精准化网络资讯平台：让重要的信息找到需要它的人，让每个人都有代表他所属的群体发言的机会，
+//            通过公共邮件频道，轻松地把资讯发送给最恰当的用户群，同时帮每个人轻松获取他最感兴趣的资讯！');
+//    public static $comp = array('name'=>'天鹅镇资讯系统', 'copyright'=>'Copyright @2013');
+
+//    public static $intervals = array('five'=>300, 'quarter'=>900, 'hour'=>3600,
+//        'day'=>86400, 'week'=>604800); // 单位秒
+//    public static $periods = array('3h'=>10800, '6h'=>21600, '1d'=>86400, '3d'=>259200,
+//        'week'=>604800, 'month'=>2592000);
+
+//        'DisNoteKeywordData'=>'include/data/DisNoteKeywordData.class.php',
+//        'pmDataMailCollect' =>'include/data/pmDataMailExt.php',
+//        'pmCtrlMailCollect' =>'include/ctrl/pmCtrlMailExt.php',
+//        'pmDataMailCollectTag'=>'include/data/pmDataMailExt.php',
+
 ?>

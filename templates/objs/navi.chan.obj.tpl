@@ -6,11 +6,12 @@
         </div>*}
     </div><div class="dis-chan-param dis-inline-block">
         <div class="dis-chan-title dis-module-title">{$chan.name}</div>
+        <span class="dis-notice-count dis-corner-all">{$chan.info_num}</span>条新海报
         {*<div class="dis-chan-title dis-module-title">
             <a href="chan?id={$chan.ID}">{$chan.name}</a>
-        </div>*}
+        </div>
         <div class="dis-chan-param">
             <span class="dis-notice-count dis-corner-all">{$chan.info_num}</span>条新海报
-        </div>
+        </div>*}
     </div>
 </div>
