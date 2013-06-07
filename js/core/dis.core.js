@@ -820,10 +820,10 @@ $(function()
         window.scroll(0, 0);
         return false;
     });
-    if( $('.dis-page-left').length === 0 )
-    {
-        $('.dis-to-top').css({'margin-left': '470px'});
-    }
+//    if( $('.dis-page-left').length === 0 )
+//    {
+//        $('.dis-to-top').css({'margin-left': '470px'});
+//    }
 
     $('.dis-load-display[imgsrc]').each(function()
     {
@@ -843,12 +843,12 @@ $(function()
             _rtop.hide();
     });
 
-    $('.dis-red-star').html('<span class="dis-icon ui-icon-star"></span>');
     dis('.dis-err').close({icon: 'ui-icon-close'});
     $($('.dis-chan-navi')[0]).addClass('dis-chan-current');
+    $('.dis-red-star').html('<span class="dis-icon ui-icon-star"></span>');
 
 //    dis('<div>').dialog();
-    dis('<div>').tip({mess: '提示一下试试'});
+//    dis('<div>').tip({mess: '提示一下试试'});
 });
 
 //$(function()

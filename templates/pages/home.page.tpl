@@ -3,13 +3,6 @@
 {include file="comm/top.navi.tpl"}
 
 <div class="dis-wrap"><div class="dis-page">
-    {include file="comm/page.head.tpl"}
-    {if $err}
-        <div class="dis-content-border"></div>
-        <div class="dis-err">{$err}</div>
-    {/if}
-    <div class="dis-content-border"></div>
-
     <div class="dis-page-left dis-inline-block">
         {include file="modu/chan.navi.tpl"}
     </div><div class="dis-page-right dis-inline-block">
@@ -27,7 +20,6 @@
     {include file="comm/footer.comm.tpl"}
 </div> <!-- end of page --> </div> <!-- end of wrap -->
 
-<link type="text/css" title="style" href="css/dinstr.page.css" rel="stylesheet"/>
 <link type="text/css" title="style" href="css/pmail.mail.css" rel="stylesheet"/>
 <link type="text/css" title="style" href="css/pmail.chan.css" rel="stylesheet"/>
 

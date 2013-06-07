@@ -1,30 +1,24 @@
 {include file="comm/header.comm.tpl"}
 <body>
-<div class="pm-wrap"><div class="pm-page">
-    {if $err}
-        <div class="pm-error">{$err}</div>
-        <div class="pm-content-border"></div>
-    {/if}
+{include file="comm/top.navi.tpl"}
 
-    <div class="pm-shirt-h"></div>
-    <div class="pm-register">
-            <div class="pm-inline-block">
-                {include file="user/pmail.register.form.tpl" err=''}
-            </div><div class="pm-shirt-v pm-inline-block">
-            </div><div class="pm-user-login pm-inline-block">
-                已有帐号，请<a href="login">直接登录</a>
-                {include file="user/pmail.login.form.tpl" err=''}
-            </div>
+<div class="dis-wrap"><div class="dis-page">
+    <div class="dis-register">
+        <div class="dis-inline-block">
+            {include file="modu/regi.form.tpl" err=''}
+        </div><div class="dis-shirt-v dis-inline-block">
+        </div><div class="dis-user-login dis-inline-block">
+            已有帐号，请<a href="login">直接登录</a>
+            {include file="modu/login.form.tpl" err=''}
+        </div>
     </div>
-    <div class="pm-shirt-h"></div>
-
-    <div class="pm-content-border"></div>
-    {include file="comm/pmail.footer.tpl"}
+    <div class="dis-content-border"></div>
+    {include file="comm/footer.comm.tpl"}
 </div> <!-- end of page --> </div> <!-- end of wrap -->
 
-{include file="comm/guest.top.comm.tpl"}
-<link type="text/css" title="style" href="css/pmail.register.css" rel="stylesheet"/>
-<script type="text/JavaScript" src="js.min/user/pmail.user.veri.min.js"></script>
+<link type="text/css" title="style" href="css/dinstr.login.css" rel="stylesheet"/>
+<script type="text/JavaScript" src="js/user/dis.user.veri.js"></script>
+<script type="text/JavaScript" src="js/user/dis.login.js"></script>
 
 </body>
 </html>

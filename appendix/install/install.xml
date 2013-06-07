@@ -3,40 +3,52 @@
     <photos ID="10000" user_id="10000"
             small="attach/avatar/nh100/zhujiyu.touxiang.png"
             big  ="attach/avatar/mw500/zhujiyu.touxiang.png"
-            quote="1" create_time="2013-05-29 00:00:00"/>
+            quote="1" create_time="2013-05-29 00:00:00"
+    />
     <photos ID="20000" user_id="20000"
             small="attach/avatar/nh100/editor.touxiang.png"
             big  ="attach/avatar/mw500/editor.touxiang.png"
-            quote="1" create_time="2013-05-29 00:00:00"/>
+            quote="1" create_time="2013-05-29 00:00:00"
+    />
     <photos ID="100001" user_id="10000"
             small="attach/nh200/20120524.jpg"
             big  ="attach/mw500/20120524.jpg"
-            quote="1" create_time="2013-06-02 00:00:00"/>
+            quote="1" create_time="2013-06-02 00:00:00"
+    />
     <photos ID="100002" user_id="10000"
             small="attach/nh200/20110605037.jpg"
             big  ="attach/mw500/20110605037.jpg"
-            quote="1" create_time="2013-06-02 00:00:00"/>
+            quote="1" create_time="2013-06-02 00:00:00"
+    />
     <photos ID="100003" user_id="10000"
             small="attach/nh200/20120208000.jpg"
             big  ="attach/mw500/20120208000.jpg"
-            quote="1" create_time="2013-06-02 00:00:00"/>
+            quote="1" create_time="2013-06-02 00:00:00"
+    />
     <photos ID="100004" user_id="10000"
             small="attach/nh200/20120421179.jpg"
             big  ="attach/mw500/20120421179.jpg"
-            quote="1" create_time="2013-06-02 00:00:00"/>
+            quote="1" create_time="2013-06-02 00:00:00"
+    />
 
     <!-- password="121981" impassword="gou86.com" -->
 	<users ID="10000" username="朱继玉" email="zhuhz82@126.com"
            salt="750fbffae120d7613936c1c1527284e4" password="7282df6258694c0919adb8419ff4dbb5" impassword="3f4a832c60869dcbbf8d4d07cf8e6848"
-           avatar="10000" gender="male" sign="海报栏01号用户"/>
+           avatar="10000" gender="male" sign="海报栏01号用户"
+           self_intro="独立精神 自由意志"
+    />
     <!-- password="kuke.com" impassword="heibaoban" -->
 	<users ID="20000" username="海报栏管理员" email="zhujiyu.tez@qq.com"
            salt="b04e62432a9b64305c874ecaa8520db2" password="9bb28c93afaf386e00a812e1f85f2d50" impassword="d9455fdb9d7e9e9c4ec72774378f4ce2"
-           avatar="20000" gender="female" sign="海报栏二号用户"/>
+           avatar="20000" gender="female" sign="海报栏二号用户"
+           self_intro="用户在使用海报栏时遇到的各种问题，均可与我联系"
+    />
     <!-- password="gou86.com" impassword="hbb.com" -->
 	<users ID="30000" username="测试用户" email="chforlove@126.com"
            salt="7d220e7e50a14e50b722d679e18179ea" password="e6171e6125a891036e4644478378bfc7" impassword="2021719ec63d3ff02848667aa3088833"
-           avatar="0" gender="male" sign="测试用户"/>
+           avatar="0" gender="male" sign="测试用户"
+           self_intro="测试海报栏web和手机客户端的使用"
+    />
 
     <user_params ID="10000" create_num="0" subscribe_num="0" join_num="0" fans_num="10" follow_num="2"/>
     <user_params ID="20000" create_num="0" subscribe_num="0" join_num="0" fans_num="1" follow_num="1"/>
@@ -50,17 +62,21 @@
     <!-- 公共海报栏是ID小于10000的栏，只能手动在后台添加 -->
 	<channels ID="9999" name="公共海报栏"  type="business" logo="0" creater="200" info_num="41"
               desc="任何注册用户都有权向该栏目张贴海报，且不区分海报类别" bulletin=""
-              subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+              subscriber_num="1" member_num="1" create_time="0" applicant_num="0"
+    />
 	<channels ID="10000" name="游戏海报"   type="business" logo="0" creater="200" info_num="41"
               desc="本版块发布游戏开发团队的各种海报，包括游戏项目，服务器，开发团队，技术等与网络游戏相关的各种信息。"
               bulletin="请勿在本版块发表任何与网络游戏无关的信息，违者将封禁在本版块的发表权，甚至取消本版块会员资格。"
-              subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+              subscriber_num="1" member_num="1" create_time="0" applicant_num="0"
+    />
 	<channels ID="20000" name="新建海报板" type="business" logo="0"
               desc="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" bulletin="kuke.com"
-              creater='0' info_num="0" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+              creater='0' info_num="0" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"
+    />
 	<channels ID="30000" name="生活海报"   type="business" logo="0"
               desc="test" bulletin="gou86.com"
-              creater='0' info_num="0" subscriber_num="1" member_num="0" create_time="0" applicant_num="2"/>
+              creater='0' info_num="0" subscriber_num="1" member_num="0" create_time="0" applicant_num="2"
+    />
 
     <chan_users ID="100002" chan_id="10000" user_id="10000" role="2" subscribe_time="0" join_time="0"/>
     <chan_users ID="100003" chan_id="10000" user_id="20000" role="1" subscribe_time="0" join_time="0"/>

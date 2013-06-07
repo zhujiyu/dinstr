@@ -6,6 +6,5 @@
     <link rel="Shortcut Icon" type="image/x-icon" href="{$app.icon}">
     <meta name="Keywords" content="{$app.keywords}"/>
     <meta name="Description" content="{$app.desc}"/>
-    <link type="text/css" title="style" href="css/dinstr.core.css" rel="stylesheet"/>
     <title>{$title} | {$app.name} | {$app.goal}</title>
 </head>

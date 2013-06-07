@@ -15,7 +15,7 @@ a, .dis-a, .dis-am {cursor: pointer; color: #105cb6;}
 a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 
 /* 两栏结构 */
-.dis-wrap {position: relative; width: 980px; margin: 0 auto; z-index: 1;}
+.dis-wrap {position: relative; width: 980px; margin: 0 auto; z-index: 0;}
 .dis-page {position: relative; min-height: 600px; font-size: 14px;}
 
 .dis-page-left {width: 170px; padding-right: 20px; vertical-align: top; position: relative;}
@@ -81,8 +81,8 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 .dis-logo .dis-logo-url {font-size: 16px;}
 
 .dis-foot {padding-bottom: 15px;}
-.dis-foot .dis-logo {font-size: 12px; line-height: 16px;}
-.dis-foot .dis-logo .name {color: #105cb6; font-size: 14px; line-height: 16px; font-weight: normal;}
+/*.dis-foot .dis-logo {font-size: 12px; line-height: 16px;}*/
+.dis-foot .dis-logo .name {font-size: 14px; line-height: 16px; font-weight: normal;}
 .dis-foot .dis-logo .dis-logo-img {height: 18px;}
 .dis-foot .dis-logo .dis-logo-img img {width: 18px; height: 18px;}
 

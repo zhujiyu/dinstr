@@ -1,0 +1,105 @@
+.dis-navi .dis-manage-account {width: 320px;}
+
+.dis-user-login {background-color: #eee; padding: 20px;}
+.dis-dialog .dis-user-login {background-color: #fff;}
+.dis-login-form {padding: 20px; width: 230px;}
+.dis-dialog .dis-login-form {padding: 0; width: 290px;}
+.dis-dialog .dis-login-form .dis-login-input {width: 246px;}
+
+.dis-login-form #pword {display: none;}
+.dis-login-form .dis-login-input {width: 226px; margin: 10px 0; line-height: 24px; font-size: 14px;}
+.dis-login-form .dis-login-button {float: right;}
+
+.error {color: #b94a48; background-color: #f2dede; border-color: #b94a48;}
+.error > label {color: #b94a48;}
+.error textarea {color: #b94a48; border-color: #b94a48;}
+.error textarea:focus {border-color: #953b39;
+  -webkit-box-shadow: 0 0 6px #d59392;
+     -moz-box-shadow: 0 0 6px #d59392;
+          box-shadow: 0 0 6px #d59392;}
+
+.dis-test-welcome ul {display: block; list-style: circle; text-transform: capitalize;}
+.dis-test-welcome li {display: block; list-style: circle; text-transform: capitalize;}
+
+.dis-button-down {position: relative; width: 18px; height: 18px; display: inline-block;}
+.dis-button-down .tear {top: 0; left: 7px; width: 4px; height: 9px; background-color: red; display: inline-block; position: absolute;}
+.dis-button-down .head {top: 9px; left: 0; width: 0px; height: 0px; border-top: 9px solid red; border-bottom: 9px solid transparent; border-left: 9px solid transparent; border-right: 9px solid transparent; display: inline-block; position: absolute;}
+
+.dis-button-up {position: relative; width: 18px; height: 18px; display: inline-block; vertical-align: middle;}
+.dis-button-up .tear {top: 9px; left: 7px; width: 4px; height: 9px; background-color: red; display: inline-block; position: absolute;}
+.dis-button-up .head {top: -9px; left: 0; width: 0px; height: 0px; border-top: 9px solid transparent; border-bottom: 9px solid red; border-left: 9px solid transparent; border-right: 9px solid transparent; display: inline-block; position: absolute;}
+
+.dis-app-desc {padding: 20px 0; text-align: center; font-size: 20px; margin-top: -10px;}
+.dis-app-desc .dis-button-up {vertical-align: middle; left: 10px; top: -2px;}
+.dis-app-desc .dis-button-down {vertical-align: middle; left: 10px; top: -2px;}
+
+.dis-pindao-desc {font-size: 18px;}
+.dis-pindao-desc .dis-module-title {font-size: 20px;}
+.dis-pindao-desc .dis-desc-img img {max-width: 450px;}
+.dis-pindao-desc .dis-desc-content {width: 440px; vertical-align: top; padding: 10px 20px;}
+
+.mail {width: 400px;}
+
+.dis-channel-manage {background-color: #eee;}
+.dis-channel-manage .dis-check {position: absolute; top: 34px; left: 44px;}
+.dis-channel-manage .dis-border-line {margin: 5px 0;}
+.dis-channel-manage .dis-logo-list {width: 670px;}
+.dis-channel-manage .dis-logo-list .dis-channel {width: 80px; text-align: center;}
+.dis-channel-manage .dis-logo-list .logo {margin: 0 auto 5px;}
+.dis-channel-manage .dis-right-list {width: 260px; position: relative;}
+.dis-channel-manage .dis-right-list .dis-module-title {width: 200px;}
+.dis-channel-manage .dis-right-list .dis-channel-info {font-size: 14px;}
+.dis-intr-user {padding: 20px; background-color: #f1f1f1;}
+.dis-intr-user .dis-user-avatar {width: 70px;}
+.dis-intr-user .dis-user-info {padding: 5px;}
+
+/* 注册 */
+.dis-register .dis-shirt-v {width: 2px; height: 400px; background-color: #14589c; margin: 0 45px;}
+.dis-register-form {width: 520px; padding: 25px;}
+.dis-register-form td {padding: 5px 0;}
+.dis-register-form td.label {width: 80px;}
+.dis-register-form td.data-td {width: 200px;}
+.dis-register-form .dis-ctrl {width: 200px;}
+.dis-register-form .dis-desc {color: #eb4f01;}
+.dis-register-form .dis-light-button, .dis-register-form .dis-gray-button {padding: 3px 15px;}
+
+.dis-login-content {padding: 20px; width: 240px;}
+.dis-login-content .dis-login-input {margin: 10px 0; line-height: 24px; font-size: 14px;}
+.dis-login-content .dis-login-button {float: right;}
+.dis-login-content .dis-login-input {width: 240px;}
+.dis-login-content #pword {display: none;}
+
+/*.dis-ctrl {text-align: right;}*/
+.dis-ctrl input {display: none;}
+.dis-ctrl #cancel, .dis-ctrl #join {margin-right: 5px;}
+
+.dis-reg-navi {font-size: 16px; line-height: 27px; font-weight: bold; margin: 10px 0; background-color: #f1f1f1; text-align: center;}
+.dis-reg-navi .symbol {margin: 0 20px;}
+.dis-reg-navi .arrow {height: 28px; display: inline-block; background-color: #14589c; vertical-align: middle;}
+.dis-reg-navi .arrow .tear {width: 0; height: 0; display: inline-block; border-right: 4px solid transparent; border-left: 14px solid #f1f1f1; border-bottom: 14px solid transparent; border-top: 14px solid transparent;}
+.dis-reg-navi .arrow .head {width: 0; height: 0; display: inline-block; border-right: 4px solid #f1f1f1; border-left: 14px solid transparent; border-bottom: 14px solid #f1f1f1;     border-top: 14px solid #f1f1f1;    }
+.dis-reg-navi .text {width: 160px; display: inline-block; vertical-align: middle; padding-right: 20px;}
+.dis-reg-navi .text span {vertical-align: middle;}
+.dis-reg-navi .current {background-color: #14589c; color: #fff;}
+.dis-reg-navi .current+.arrow .tear {border-left: 14px solid transparent;}
+.dis-reg-navi .arrow-curr .head {border-right: 4px solid transparent; border-bottom: 14px solid transparent; border-top: 14px solid transparent;}
+
+.dis-channel-navi {width: 120px; margin-right: 20px;}
+.dis-channel-navi .item {padding: 5px 0; text-align: right; padding-right: 20px;}
+
+.dis-card-list {width: 800px;}
+.dis-card-list .dis-shirt-v {width: 1px; height: 1px; margin: 0 8px; background-color: #e1e1e1;}
+.dis-card-list .dis-shirt-h {width: 1px; height: 1px; margin: 8px 0; background-color: #e1e1e1;}
+
+.dis-channel-card {position: relative; vertical-align: top; width: 365px; padding: 10px; border: 1px solid #acacac;}
+.dis-channel-card a {color: #888;}
+.dis-channel-card .dis-channel-logo {width: 120px;}
+.dis-channel-card .dis-avatar-img {width: 100px; height: 100px;}
+.dis-channel-card .dis-avatar-img img {max-width: 100px; max-height: 100px;}
+.dis-channel-card .dis-channel-title {padding: 5px 0;}
+.dis-channel-card .dis-channel-info {vertical-align: top; width: 245px;}
+.dis-channel-card .dis-tags-list {padding: 5px 0;}
+.dis-channel-card .dis-channel-type {float: right;}
+.dis-channel-card .dis-channel-desc {height: 40px;}
+.dis-channel-card .dis-channel-ctrl {padding: 5px 15px; background-color: #f1f1f1; margin: 0 -10px -10px;}
+.dis-channel-card .dis-channel-ctrl a {color: #105cb6;}

@@ -1,7 +1,7 @@
 .dis-top-navi {padding: 0; width: 100%; z-index: 10; top: 0; position: relative; background-color: #14589c; color: #eee;}
-.dis-main-navi {padding: 0; width: 100%; z-index: 9; top: 40px; position: relative;}
-.dis-navi-content {font-weight: bold; font-size: 14px; line-height: 22px;
-                 margin: 0 auto; width: 980px; height: 36px; position: relative; text-align: left;}
+.dis-navi-content {margin: 0 auto; width: 980px; position: relative; text-align: left;}
+.dis-top-navi .dis-navi-content {font-weight: bold; font-size: 14px; line-height: 22px; height: 36px;}
+/*.dis-main-navi {padding: 0; width: 100%; z-index: 9; top: 40px; position: relative;}*/
 
 .dis-top-navi a {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;}
 .dis-top-navi a:hover {color: #fff; text-decoration: none;}
