@@ -11,29 +11,42 @@ require_once 'common.inc.php';
 ob_start();
 try
 {
+//    $matches = null;
+//    $url = null;
+//    $val = preg_match('/regi\/([0-9a-z]{12})$/i', $url, $matches);
+//    if( $val )
+//    {
+//        header('Location: ../regi?invi='.$matches[1]); exit;
+//    }
+//
+//    $p = $_GET['p'] ? $_GET['p'] : $_POST['p'];
+//    $intr = $_GET['intr'] ? $_GET['intr'] : $_POST['intr'];
+//    $invi = $_GET['invi'] ? $_GET['invi'] : $_POST['invi'];
+//    $veri = $_GET['veri'] ? $_GET['veri'] : $_POST['veri'];
+    
     $gSmarty = init_smarty();
-    $val = preg_match('/regi\/([0-9a-z]{12})$/i', $url, $matches);
-    if( $val )
-    {
-        header('Location: ../regi?invi='.$matches[1]); exit;
-    }
+    $p = $_REQUEST['p'];
+    $intr = $_REQUEST['intr'];
+    $invi = $_REQUEST['invi'];
+    $veri = $_REQUEST['veri'];
 
-    $p = $_GET['p'] ? $_GET['p'] : $_POST['p'];
-    $intr = $_GET['intr'] ? $_GET['intr'] : $_POST['intr'];
-    $invi = $_GET['invi'] ? $_GET['invi'] : $_POST['invi'];
-    $veri = $_GET['veri'] ? $_GET['veri'] : $_POST['veri'];
-
-    if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 && DisUserCtrl::check_inline($_SESSION['userId']) )
+    if( isset($_SESSION['userId']) && $_SESSION['userId'] > 0 
+            && DisUserLoginCtrl::check_inline($_SESSION['userId']) )
     {
         $user_id = $_SESSION['userId'];
         $user = DisUserCtrl::user($user_id);
         $gSmarty->assign("user", $user->info());
-        DisUserCtrl::set_inline($user_id);
+        DisUserLoginCtrl::set_inline($user_id);
     }
     else
-        $user_id = $_GET['id'] ? $_GET['id'] : $_POST['id'];
-//    $file = "pmail.register.tpl";
+        $user_id = $_REQUEST['id'];
     $file = "register.page.tpl";
+
+    if( $intr )
+    {
+        $intr_user = DisUserCtrl::get_data($intr);
+        $gSmarty->assign("introUser", $intr_user);
+    }
 
     if( $invi )
     {
@@ -44,31 +57,26 @@ try
         $gSmarty->assign("email", $email);
     }
 
-    if( $intr )
+    if( isset($_POST['regi']) || $p == 'regi' )
     {
-        $intr_user = DisUserCtrl::get_data ($intr);
-        $gSmarty->assign("introUser", $intr_user);
-    }
-
-    if( isset($_POST['register']) || $p == 'register' )
-    {
-        $email = $_POST['email'] ? $_POST['email'] : $_GET['email'];
-        $user = DisUserCtrl::register($_POST['uname'], md5($_POST['pword']), $email);
-        $user_id = $user->ID;
+        $email = $_REQUEST['email'];
+        $user = DisUserCtrl::register(md5($_POST['pword']), $email, $_REQUEST['uname']);
 
         // 注册完成后 继续激活操作！
+        $user_id = $user->ID;
+        DisUserLoginCtrl::set_inline($user_id);
         $_SESSION['userId'] = $user_id;
+        
         if( $intr )
             $user->follow((int)$intr);
-        DisUserCtrl::set_inline($user_id);
 
         $user_data = $user->info();
         $user_data['avatar'] = array('ID'=>0, 'small'=>'css/logo/avatar_s.jpg', 'big'=>'css/logo/avatar_b.jpg');
         $gSmarty->assign("user", $user_data);
 
-        if( $_POST['invi'] )
+        if( $invi )
         {
-            DisInviteCtrl::update($_POST['invi'], $user_id);
+            DisInviteCtrl::update($invi, $user_id);
             $veri = DisUserCtrl::verify_code($user_id);
         }
         else
@@ -80,16 +88,16 @@ try
 
     if( isset($_GET['tag']) || $p == 'tag' )
     {
-        $file = "pmail.register.recom.tpl";
+        $file = "register.recom.tpl";
         $tag = $_GET['tag'];
         $gSmarty->assign("tag", $tag);
-        $chan_ids = DisChannelCtrl::list_channel_ids($tag);
-        $channels = DisChannelCtrl::parse_channels($chan_ids);
+        $chan_ids = DisChannelCtrl::list_chan_ids($tag);
+        $channels = DisChannelCtrl::parse_chans($chan_ids);
         $gSmarty->assign("channels", $channels);
     }
     else if( isset($_GET['rank']) || $p == 'rank' )
     {
-        $file = "pmail.register.rank.tpl";
+        $file = "register.rank.tpl";
         $cu = new DisChanUserCtrl($user_id);
         $_ids = $cu->list_subscribed_ids();
         $channels = $user->list_channels($_ids);
@@ -123,6 +131,7 @@ catch (DisException $ex)
     $ex->trace_stack();
 }
 
+//echo $file;
 $err = ob_get_contents();
 ob_end_clean();
 

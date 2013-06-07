@@ -58,11 +58,11 @@ try
             $gSmarty->assign("email", $email);
         }
 
-        $_ids = DisChannelCtrl::list_channel_ids();
+        $_ids = DisChannelCtrl::list_chan_ids();
         if( $user_id > 0 )
             $channels = $user->list_channels($_ids);
         else
-            $channels = DisChannelCtrl::parse_channels($_ids);
+            $channels = DisChannelCtrl::parse_chans($_ids);
         $gSmarty->assign("channels", $channels);
     }
     else if( isset($_GET['fb']) || $p == 'fb' )

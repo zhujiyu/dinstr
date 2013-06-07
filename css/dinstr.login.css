@@ -87,19 +87,22 @@
 .dis-channel-navi {width: 120px; margin-right: 20px;}
 .dis-channel-navi .item {padding: 5px 0; text-align: right; padding-right: 20px;}
 
-.dis-card-list {width: 800px;}
+.dis-card-list {width: 840px;}
 .dis-card-list .dis-shirt-v {width: 1px; height: 1px; margin: 0 8px; background-color: #e1e1e1;}
 .dis-card-list .dis-shirt-h {width: 1px; height: 1px; margin: 8px 0; background-color: #e1e1e1;}
 
-.dis-channel-card {position: relative; vertical-align: top; width: 365px; padding: 10px; border: 1px solid #acacac;}
-.dis-channel-card a {color: #888;}
-.dis-channel-card .dis-channel-logo {width: 120px;}
-.dis-channel-card .dis-avatar-img {width: 100px; height: 100px;}
-.dis-channel-card .dis-avatar-img img {max-width: 100px; max-height: 100px;}
-.dis-channel-card .dis-channel-title {padding: 5px 0;}
-.dis-channel-card .dis-channel-info {vertical-align: top; width: 245px;}
-.dis-channel-card .dis-tags-list {padding: 5px 0;}
-.dis-channel-card .dis-channel-type {float: right;}
-.dis-channel-card .dis-channel-desc {height: 40px;}
-.dis-channel-card .dis-channel-ctrl {padding: 5px 15px; background-color: #f1f1f1; margin: 0 -10px -10px;}
-.dis-channel-card .dis-channel-ctrl a {color: #105cb6;}
+.dis-chan-card {width: 385px; padding: 10px; position: relative; vertical-align: top;}
+.dis-chan-card a {color: #222;}
+.dis-chan-card .dis-chan-logo {width: 70px;}
+.dis-chan-card .dis-chan-title {padding: 5px 0;}
+.dis-chan-card .dis-chan-info {vertical-align: top; width: 310px; padding: 0;}
+.dis-chan-card .dis-tags-list {padding: 5px 0;}
+.dis-chan-card .dis-channel-type {float: right;}
+
+/*.dis-chan-card .dis-channel-desc {height: 40px;}*/
+/*.dis-chan-card .dis-channel-ctrl {padding: 5px 15px; margin: 0 -10px -10px;}*/
+/*.dis-chan-card .dis-channel-ctrl a {color: #105cb6;}*/
+
+/*.dis-chan-card .dis-chan-logo {width: 120px;}*/
+/*.dis-chan-card .dis-avatar-img {width: 100px; height: 100px;}*/
+/*.dis-chan-card .dis-avatar-img img {max-width: 100px; max-height: 100px;}*/

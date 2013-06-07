@@ -1,14 +1,14 @@
 <?php
 /**
  * @package: DINSTR.API
- * @file   : pmail.api.channel.php
+ * @file   : chan.api.php
  * 频道API
  *
- * @author    : 朱继玉<zhuhz82@126.com>
- * @Copyright : 2013 DINSTR(有向信息流)
- * @Date      : 2013-04-16
- * @encoding  : UTF-8
- * @version   : 1.0.0
+ * @author   : 朱继玉<zhuhz82@126.com>
+ * @Copyright: 2013 DINSTR(有向信息流)
+ * @Date     : 2013-04-16
+ * @encoding : UTF-8
+ * @version  : 1.0.0
  */
 require_once '../common.inc.php';
 
@@ -17,10 +17,10 @@ try
 {
     $p = $_GET['p'] ? $_GET['p']: $_POST['p'];
     $_SESSION['userId'] = 1000000;
-    DisUserCtrl::set_inline(1000000);
+    DisUserLoginCtrl::set_inline(1000000);
 
     if( !isset($_SESSION['userId']) || $_SESSION['userId'] == 0
-            || !DisUserCtrl::check_inline($_SESSION['userId']) )
+            || !DisUserLoginCtrl::check_inline($_SESSION['userId']) )
     {
         if( !isset($_GET['disp']) && $p != 'disp' )
             throw new DisException("没有登录！");

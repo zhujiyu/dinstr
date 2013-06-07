@@ -11,6 +11,6 @@
             <span class="dis-notice-count dis-corner-all">{$chan_list[cli].info_num}</span>条新海报
         </div>
     </div>
+{/section}
     {*include file="objs/navi.chan.obj.tpl" chan=$chan_list[cli]*}
     {*if !$smarty.section.cli.last}<div class="dis-border-line"></div>{/if*}
-{/section}

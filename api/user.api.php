@@ -20,7 +20,8 @@ try
 
     if( $p != 'veri' )
     {
-        if( !isset($_SESSION['userId']) || $_SESSION['userId'] == 0 || !DisUserCtrl::check_inline($_SESSION['userId']) )
+        if( !isset($_SESSION['userId']) || $_SESSION['userId'] == 0 
+                || !DisUserLoginCtrl::check_inline($_SESSION['userId']) )
             throw new DisException("没有登录！");
     }
     $user_id = $_SESSION['userId'];
@@ -31,7 +32,7 @@ try
         {
             $target_id = DisUserCtrl::get_uid_by_email($_GET['email']);
             if( $target_id > 0 )
-                echo "邮箱已注册，请直接登录";
+                echo "邮箱已注册，请在右边登录框直接登录";
         }
         else if( $_GET['item'] == 'uname' )
         {
@@ -115,7 +116,8 @@ try
 }
 catch (DisException $ex)
 {
-    $ex->trace_stack();
+    echo $ex->getMessage();
+//    $ex->trace_stack();
 }
 
 $val['msg'] = ob_get_contents();

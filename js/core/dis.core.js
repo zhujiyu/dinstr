@@ -789,30 +789,6 @@ _dis.regs =
 
 $(function()
 {
-    $('.dis-dropdown-menu').each(function()
-    {
-        $(this).prepend('<div class="dis-triangle dis-triangle-top"></div>');
-    }).addClass('dis-corner-all');
-
-    var _srch = $('.dis-search-form #keyword');
-    if( $.ui && $.ui.autocomplete && _srch.length > 0 )
-    {
-        dis(_srch).promptText();
-        try
-        {
-            _srch.autocomplete({source: "api/search.api.php", minLength: 1})
-            .data( "autocomplete" )._renderItem = function( ul, item )
-            {
-                var _str = item.type === 'channel' ? dis.renderStr(item) : "<div class=\"dis-dropdown-item\"><div class=\"dis-inline-block\"><div class=\"name\">" + item.label + "</div>" + item.desc + "</div></div>";
-                return $( "<li></li>" ).data( "item.autocomplete", item ).append( "<a>" + _str + "</a>" ).appendTo( ul );
-            };
-        }
-        catch( err )
-        {
-            alert(err);
-        }
-    }
-
     var _rtop = $('<span class="dis-to-top dis-a ui-corner-all"><span class="dis-arrow dis-arrow-up">'
         + '<em class="head">&diams;</em><em class="tear">▐</em></span>返回顶部</span>');
     _rtop.appendTo($(document.body)).click(function()
@@ -846,6 +822,30 @@ $(function()
     dis('.dis-err').close({icon: 'ui-icon-close'});
     $($('.dis-chan-navi')[0]).addClass('dis-chan-current');
     $('.dis-red-star').html('<span class="dis-icon ui-icon-star"></span>');
+
+    $('.dis-dropdown-menu').each(function()
+    {
+        $(this).prepend('<div class="dis-triangle dis-triangle-top"></div>');
+    }).addClass('ui-corner-all');
+
+    var _srch = $('.dis-search-form #keyword');
+    if( $.ui && $.ui.autocomplete && _srch.length > 0 )
+    {
+        dis(_srch).promptText();
+        try
+        {
+            _srch.autocomplete({source: "api/search.api.php", minLength: 1})
+            .data( "autocomplete" )._renderItem = function( ul, item )
+            {
+                var _str = item.type === 'channel' ? dis.renderStr(item) : "<div class=\"dis-dropdown-item\"><div class=\"dis-inline-block\"><div class=\"name\">" + item.label + "</div>" + item.desc + "</div></div>";
+                return $( "<li></li>" ).data( "item.autocomplete", item ).append( "<a>" + _str + "</a>" ).appendTo( ul );
+            };
+        }
+        catch( err )
+        {
+            alert(err);
+        }
+    }
 
 //    dis('<div>').dialog();
 //    dis('<div>').tip({mess: '提示一下试试'});

@@ -10,74 +10,46 @@ disVeri = function(_edit)
     $('.dis-veri', _edit).hide();
 
     this.edit = _edit;
-    this.lasted = {uname: '', email: '', pword: ''};
+//    this.lasted = {uname: '', email: '', pword: ''};
     this.uname = new Array();
     this.pword = '';
     this.email = new Array();
 
-    var _veri = this;
-    this.lasted.uname = $('input:text#uname', _edit).val();
-    if( this.lasted.uname !== undefined && this.lasted.uname !== '' )
-        this.uname.push(this.lasted.uname);
-    $('input:text#uname', _edit).focus(disVeri.focus).blur(function()
-    {
-        var _name = $(this).val();
-        var _data = $(this).parents('.dis-veri-data');
-
-        if( _veri.checkUname(_name) )
-        {
-            $('.dis-veri', _data).show();
-            return ;
-        }
-        else if( _veri.lasted.uname === _name )
-        {
-            $('.dis-desc', _data).show();
-            return ;
-        }
-        _veri.lasted.uname = _name;
-
-        $.get("api/pmail.api.user.php", 
-        {
-            p: 'veri',
-            item: 'uname',
-            uname: _name
-        },
-
-        function(data)
-        {
-            if( data.msg !== null && data.msg !== '' )
-            {
-                $('.dis-desc', _data).text(data.msg).show();
-            }
-            else
-            {
-                $('.dis-veri', _data).show();
-                _veri.uname.push(_name);
-            }
-        }, 'json');
-    });
-
-    this.lasted.email = $('input:text#email', _edit).val();
-    if( this.lasted.email !== undefined && this.lasted.email !== '' )
-        this.email.push(this.lasted.email);
+    var _veri = this, _lasted = {uname: '', email: '', pword: ''};
+    
+    _lasted.email = $('input:text#email', _edit).val();
+    if( _lasted.email !== undefined && _lasted.email !== '' )
+        this.email.push(_lasted.email);
+    
+    _lasted.pword = $('input:password#pword', _edit).val();
+    if( _lasted.email !== undefined && _lasted.email !== '' )
+        this.pword = _lasted.pword;
+    
+    _lasted.uname = $('input:text#uname', _edit).val();
+    if( _lasted.uname !== undefined && _lasted.uname !== '' )
+        this.uname.push(_lasted.uname);
+//    _lasted = _lasted;
+    
     $('input:text#email', _edit).focus(disVeri.focus).blur(function()
     {
         var _mail = $(this).val();
         var _data = $(this).parents('.dis-veri-data');
 
+//        if( _mail === "" )
+//            return;
         if( _veri.checkEmail(_mail) )
         {
             $('.dis-veri', _data).show();
             return ;
         }
-        else if( _veri.lasted.email === _mail )
+        else if( _lasted.email === _mail )
         {
             $('.dis-desc', _data).show();
             return ;
         }
-        _veri.lasted.email = _mail;
+        _lasted.email = _mail;
 
-        $.get("api/pmail.api.user.php",
+        $.get("api/user.api.php",
         {
             p: 'veri',
             item: 'email',
@@ -89,6 +61,7 @@ disVeri = function(_edit)
             if( data.msg !== null && data.msg !== '' )
             {
                 $('.dis-desc', _data).text(data.msg).show();
+//                dis('<div>').dialog({content: data.msg});
             }
             else
             {
@@ -98,9 +71,6 @@ disVeri = function(_edit)
         }, 'json');
     });
 
-    this.lasted.pword = $('input:password#pword', _edit).val();
-    if( this.lasted.email !== undefined && this.lasted.email !== '' )
-        this.pword = this.lasted.pword;
     $('input:password#pword', _edit).focus(disVeri.focus).blur(function()
     {
         var _word = $(this).val();
@@ -116,12 +86,12 @@ disVeri = function(_edit)
             $('.dis-veri', _data).show();
             return ;
         }
-        else if( _veri.lasted.pword === _word )
+        else if( _lasted.pword === _word )
         {
             $('.dis-desc', _data).show();
             return ;
         }
-        _veri.lasted.pword = _word;
+        _lasted.pword = _word;
 
         if( _word.match(/^\w{6,}$/) )
         {
@@ -161,6 +131,45 @@ disVeri = function(_edit)
         }
     });
     
+    $('input:text#uname', _edit).focus(disVeri.focus).blur(function()
+    {
+        var _name = $(this).val();
+        var _data = $(this).parents('.dis-veri-data');
+
+        if( _veri.checkUname(_name) )
+        {
+            $('.dis-veri', _data).show();
+            return ;
+        }
+        else if( _lasted.uname === _name )
+        {
+            $('.dis-desc', _data).show();
+            return ;
+        }
+        _lasted.uname = _name;
+
+        $.get("api/user.api.php",
+        {
+            p: 'veri',
+            item: 'uname',
+            uname: _name
+        },
+
+        function(data)
+        {
+            if( data.msg !== null && data.msg !== '' )
+            {
+                $('.dis-desc', _data).text(data.msg).show();
+//                dis('<div>').dialog({content: data.msg});
+            }
+            else
+            {
+                $('.dis-veri', _data).show();
+                _veri.uname.push(_name);
+            }
+        }, 'json');
+    });
+
     return this;
 };
 

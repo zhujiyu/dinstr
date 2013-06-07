@@ -568,7 +568,7 @@ class DisChannelCtrl extends DisChannelData
         DisChanDataCache::set_chan_data($this->ID, null);
     }
 
-    static function list_channel_ids($tag = null, $page = 0, $count = 40)
+    static function list_chan_ids($tag = null, $page = 0, $count = 40)
     {
         if( $tag )
             $chans = DisChanTagData::list_channel_ids($tag, $page, $count);
@@ -583,7 +583,7 @@ class DisChannelCtrl extends DisChannelData
         return $chan_ids;
     }
 
-    static function parse_channels($chan_ids)
+    static function parse_chans($chan_ids)
     {
         $chan_list = array();
         $len = count($chan_ids);

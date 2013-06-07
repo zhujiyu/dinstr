@@ -52,7 +52,7 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 .dis-chan-navi:hover {background: url(images/chan_hover.png) repeat-y right;}
 .dis-chan-navi .dis-chan-param {padding: 0 10px;}
 .dis-chan-info {width: 220px; padding-left: 20px;}
-.dis-chan-desc {padding: 10px 0;}
+/*.dis-chan-navi .dis-chan-desc {padding: 10px 0;}*/
 .dis-chan-current {background: url(images/chan_right.png) repeat-y right;}
 
 .dis-info-brief .dis-info-photo {width: 200px; height: 200px;}

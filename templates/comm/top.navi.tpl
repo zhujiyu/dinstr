@@ -53,7 +53,7 @@
     <div class="dis-content-border"></div>
     {if $err}
         <div class="dis-err">
-            <div class="content">{$err}</div>
+            <div class="dis-content">{$err}</div>
             <div class="dis-content-border"></div>
         </div>
     {/if}

@@ -78,11 +78,11 @@ try
     $flow_list = DisStreamCtrl::list_flows($flow_ids);
     $gSmarty->assign("mail_list", $flow_list);
 
-    $_ids = DisChannelCtrl::list_channel_ids();
-    $channels = DisChannelCtrl::parse_channels($_ids);
+    $_ids = DisChannelCtrl::list_chan_ids();
+    $channels = DisChannelCtrl::parse_chans($_ids);
     $gSmarty->assign("channels", $channels);
 
-    $subscribers = DisChannelCtrl::parse_channels($chanids);
+    $subscribers = DisChannelCtrl::parse_chans($chanids);
     $gSmarty->assign("subscribers", $subscribers);
 }
 catch (DisException $ex)

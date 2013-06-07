@@ -17,7 +17,7 @@
     {/if}
     
     <form class="dis-register-form" action="regi" method="post">
-        <input type="hidden" name="p" value="register"/>
+        <input type="hidden" name="p" value="regi"/>
         <input type="hidden" name="invite" value="{$invite.ID}"/>
         <input type="hidden" name="intr" value="{$introUser.ID}"/>
         

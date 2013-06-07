@@ -116,11 +116,11 @@ try
         $file = "pmail.chan.plaza.tpl";
         $gSmarty->assign("title", "频道广场");
 
-        $_ids = DisChannelCtrl::list_channel_ids($_GET['tag']);
+        $_ids = DisChannelCtrl::list_chan_ids($_GET['tag']);
         if( $user_id > 0 )
             $channels = $user->list_channels($_ids);
         else
-            $channels = DisChannelCtrl::parse_channels($_ids);
+            $channels = DisChannelCtrl::parse_chans($_ids);
         $gSmarty->assign("channels", $channels);
     }
     else if( $channel_id > 0 ) //if( $p == 'disp' || $p == 'notice' )

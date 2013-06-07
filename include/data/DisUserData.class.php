@@ -219,7 +219,9 @@ class DisUserData extends DisDBTable
 
     static function get_uid_by_email($email)
     {
-	    if( !$email || !email_check($email) )
+        if( !$email )
+            throw new DisParamException('邮箱地址不能空！');
+	    if( !email_check($email) )
             throw new DisParamException('邮箱地址格式不正确！');
         return self::_get_uid("email = '$email'");
     }
