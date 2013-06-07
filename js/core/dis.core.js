@@ -413,7 +413,7 @@ disDialog.fn = disDialog.prototype =
         this.options = $.extend({
             autoOpen : true,
             modal : false,
-            title: '天鹅镇操作提示',
+            title: '操作提示',
             content: '',
             foot : '',
             zIndex: disDialog.zIndex,
@@ -848,7 +848,7 @@ $(function()
     $($('.dis-chan-navi')[0]).addClass('dis-chan-current');
 
 //    dis('<div>').dialog();
-//    dis('<div>').tip({mess: '提示一下试试'});
+    dis('<div>').tip({mess: '提示一下试试'});
 });
 
 //$(function()

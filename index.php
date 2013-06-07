@@ -30,6 +30,9 @@ try
     $gSmarty->assign('chan_list', $chan_list);
 
     $chan = DisChannelCtrl::chan(10000);
+    $gSmarty->assign("chan", $chan->info());
+//    DisObject::print_array($chan->info());
+
     $member_ids = $chan->list_member_ids();
     for( $i = 0; $i < count($member_ids); $i ++ )
     {
@@ -59,11 +62,6 @@ try
     }
     $gSmarty->assign('info_list', $info_list);
 //    DisObject::print_array($info_list[0]);
-
-//    $chan = DisChannelCtrl::chan(20000);
-//    $chan_list[0] = $chan->info();
-//    DisObject::print_array($chan);
-//    $gSmarty->assign("chan", $chan->info());
 }
 catch (DisException $ex)
 {
@@ -78,6 +76,11 @@ $file = "pages/home.page.tpl";
 $gSmarty->assign("title", "首页");
 $gSmarty->display($file);
 
+//    $chan = DisChannelCtrl::chan(20000);
+//    $chan_list[0] = $chan->info();
+//    DisObject::print_array($chan);
+//    $gSmarty->assign("chan", $chan->info());
+//
 //function _login($name, $pwrd)
 //{
 //    if( !$name || !$pwrd )

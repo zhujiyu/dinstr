@@ -1,40 +1,33 @@
 .dis-top-navi {padding: 0; width: 100%; z-index: 10; top: 0; position: relative; background-color: #14589c; color: #eee;}
 .dis-main-navi {padding: 0; width: 100%; z-index: 9; top: 40px; position: relative;}
 .dis-navi-content {font-weight: bold; font-size: 14px; line-height: 22px;
-                 margin: 0 auto; width: 980px; position: relative; text-align: left;}
+                 margin: 0 auto; width: 980px; height: 36px; position: relative; text-align: left;}
 
 .dis-top-navi a {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;}
 .dis-top-navi a:hover {color: #fff; text-decoration: none;}
 .dis-top-navi .dis-icon-wrap {vertical-align: middle;}
 .dis-top-navi .dis-icon, .dis-top-navi a:hover .dis-icon {background-image: url('images/ui-icons_ffffff_256x240.png');}
 
-.dis-navi-item {padding: 4px 10px; font-weight: bold; position: relative; vertical-align: middle; display: inline-block;}
+.dis-navi-item {padding: 5px 10px; font-weight: bold; display: inline-block; position: relative;}
 .dis-top-navi .dis-navi-item:hover {background-color: #1f4974;}
 
-.dis-navi-logo  {width: 220px; vertical-align: middle;}
-.dis-navi-list  {width: 400px; vertical-align: middle;}
-
-.dis-menu-list {position: absolute; display: block; right: 0; top: -1px; min-width: 120px; padding: 0;}
+.dis-menu-list {position: absolute; display: block; right: 0; top: 0; min-width: 120px; border: 1px solid transparent;}
 .dis-menu-list .dis-icon {margin-right: 10px;}
-.dis-menu-list .dis-border-line {display: none;}
+.dis-menu-list .dis-border-line {display: none; background-color: #607c9b;}
 .dis-menu-list .dis-navi-item {display: none; text-align: left; padding-left: 15px; background-color: #14589c;}
 
-/*.dis-top-navi {background: url("images/back.png") repeat;}*/
-/*.dis-top-navi .dis-navi-item {background: url("images/back.png") repeat;}*/
-/*.dis-top-navi .dis-navi-item:hover {background: url("images/top.png") repeat;}*/
-
+.dis-menu-list:hover {border: 1px solid #1f4974;}
 .dis-menu-list:hover .dis-border-line {display: block;}
 .dis-menu-list:hover .dis-navi-item {display: block;}
 
 .dis-manage-account {width: 220px; text-align: right;}
 .dis-manage-account .dis-user-name {display: block; text-align: right;}
-.dis-manage-account .dis-user-name .username {white-space: nowrap; overflow: hidden; display: inline-block; vertical-align: middle; padding-top: 3px;}
+.dis-manage-account .dis-user-name .username {white-space: nowrap; overflow: hidden; vertical-align: middle;}
 .dis-manage-account .dis-user-name .dis-icon {margin-right: 0;}
 .dis-manage-account .dis-user-name .dis-avatar-img {margin-right: 10px;}
 
-/*.dis-navi-logo {width: 170px; color: #fff;}*/
-/*.dis-navi-logo a {color: #fff;}*/
-/*#add-mail {padding: 3px 10px; vertical-align: middle; position: relative;}*/
+.dis-publish {padding: 2px 20px; margin: 0 auto;}
+.dis-publish a {font-size: 20px;}
 
 .dis-dropdown-menu, .dis-dropdown-list {display: none; color: #555; position: absolute; top: 35px; padding: 5px; z-index: 100; background-color: #fff; border: 1px solid #858585;}
 .dis-dropdown-menu {white-space: nowrap; left: -80px;}
@@ -67,6 +60,23 @@
 .dis-fixed-notices {margin: 0 auto; width: 940px; position: relative;}
 .dis-fixed-notices .dis-close {float: right; position: relative;}
 .dis-fixed-notices .dis-notice-item {position: relative; width: 920px; padding: 5px 0;}
+
+               /*vertical-align: middle; color: #fff; text-decoration: none;*/
+/*.dis-menu-list .dis-border-line {display: none; background-color: #1f4974;}*/
+/*.dis-navi-logo  {width: 220px; vertical-align: middle;}*/
+/*.dis-navi-list  {width: 400px; vertical-align: middle;}*/
+
+/*.dis-menu-list .dis-navi-item {background-color: #1f4974;}*/
+/*.dis-menu-list:hover .dis-navi-item {display: block; background-color: #1f4974;}*/
+/*.dis-menu-list .dis-navi-item:hover {background-color: #14589c;}*/
+
+/*.dis-top-navi {background: url("images/back.png") repeat;}*/
+/*.dis-top-navi .dis-navi-item {background: url("images/back.png") repeat;}*/
+/*.dis-top-navi .dis-navi-item:hover {background: url("images/top.png") repeat;}*/
+
+/*.dis-navi-logo {width: 170px; color: #fff;}*/
+/*.dis-navi-logo a {color: #fff;}*/
+/*#add-mail {padding: 3px 10px; vertical-align: middle; position: relative;}*/
 
 /*.dis-navi {padding: 0; width: 100%; z-index: 0; top: 0; position: absolute;}*/
 /*.dis-navi {padding: 0; width: 100%; z-index: 0; top: 0; position: absolute;}*/

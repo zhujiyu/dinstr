@@ -11,14 +11,7 @@
     <div class="dis-content-border"></div>
 
     <div class="dis-page-left dis-inline-block">
-        <form class="dis-search-form dis-border dis-corner-all" method="get" action="search">
-            <input type="text" name="keyword" id="keyword" value="搜频道" class="dis-no-border">
-            </input><input type="submit" id="search" value=""></input>
-        </form>
-        {section name=cli loop=$chan_list}
-            {include file="objs/navi.chan.obj.tpl" chan=$chan_list[cli]}
-            {*if !$smarty.section.cli.last}<div class="dis-border-line"></div>{/if*}
-        {/section}
+        {include file="modu/chan.navi.tpl"}
     </div><div class="dis-page-right dis-inline-block">
         <div class="dis-info-list dis-inline-block">
             {section name=ili loop=$info_list}
@@ -26,7 +19,7 @@
                 {if !$smarty.section.ili.last}<div class="dis-content-border"></div>{/if}
             {/section}
         </div><div class="dis-chan-info dis-inline-block">
-            {include file="objs/chan.obj.tpl"}
+            {include file="modu/chan.detail.tpl"}
         </div>
     </div>
 
@@ -48,5 +41,15 @@
 <script type="text/JavaScript" src="js.min/mail/pmail.mail.manage.min.js"></script>
 <script type="text/JavaScript" src="js.min/mail/pmail.theme.min.js"></script>
 
+        {*
+        <form class="dis-search-form dis-border dis-corner-all" method="get" action="search">
+            <input type="text" name="keyword" id="keyword" value="搜频道" class="dis-no-border">
+            </input><input type="submit" id="search" value=""></input>
+        </form>
+        {section name=cli loop=$chan_list}
+            {include file="objs/navi.chan.obj.tpl" chan=$chan_list[cli]}
+            {if !$smarty.section.cli.last}<div class="dis-border-line"></div>{/if}
+        {/section}
+        *}
 </body>
 </html>

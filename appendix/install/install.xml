@@ -48,13 +48,18 @@
     <user_relations ID="1000034" from_user="1593648" to_user="1234861" read="1" follow_time="2013-05-15 00:00:00"/>
 
     <!-- 公共海报栏是ID小于10000的栏，只能手动在后台添加 -->
-	<channels ID="9999" name="公共海报栏"  type="business" logo="0" desc="任何注册用户都有权向该栏目张贴海报，且不区分海报类别" bulletin=""
-              creater="200" info_num="41" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
-	<channels ID="10000" name="游戏海报"   type="business" logo="0" desc="first" bulletin="121981"
-              creater="200" info_num="41" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
-	<channels ID="20000" name="新建海报板" type="business" logo="0" desc="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" bulletin="kuke.com"
+	<channels ID="9999" name="公共海报栏"  type="business" logo="0" creater="200" info_num="41"
+              desc="任何注册用户都有权向该栏目张贴海报，且不区分海报类别" bulletin=""
+              subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+	<channels ID="10000" name="游戏海报"   type="business" logo="0" creater="200" info_num="41"
+              desc="本版块发布游戏开发团队的各种海报，包括游戏项目，服务器，开发团队，技术等与网络游戏相关的各种信息。"
+              bulletin="请勿在本版块发表任何与网络游戏无关的信息，违者将封禁在本版块的发表权，甚至取消本版块会员资格。"
+              subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
+	<channels ID="20000" name="新建海报板" type="business" logo="0"
+              desc="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" bulletin="kuke.com"
               creater='0' info_num="0" subscriber_num="1" member_num="1" create_time="0" applicant_num="0"/>
-	<channels ID="30000" name="生活海报"   type="business" logo="0" desc="test" bulletin="gou86.com"
+	<channels ID="30000" name="生活海报"   type="business" logo="0"
+              desc="test" bulletin="gou86.com"
               creater='0' info_num="0" subscriber_num="1" member_num="0" create_time="0" applicant_num="2"/>
 
     <chan_users ID="100002" chan_id="10000" user_id="10000" role="2" subscribe_time="0" join_time="0"/>
@@ -67,12 +72,12 @@
     <chan_applicants ID="100011" chan_id="30000" user_id="10000" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
 
     <info_notes ID="100010" user_id="10000" head_id="100020" parent_id="0" content="信息内容" photo_num="2"/>
+    <info_notes ID="100011" user_id="10000" head_id="100022" parent_id="0" content="信息内容" photo_num="2"/>
     <info_heads ID="100020" content="信息头" note_id="100010" approved_num="1" interest_num="2"/>
+    <info_heads ID="100022" content="信息头" note_id="100011" approved_num="0" interest_num="0"/>
+
     <info_photos ID="100001" note_id="100010" photo_id="100001" rank="0"/>
     <info_photos ID="100002" note_id="100010" photo_id="100002" rank="1"/>
-
-    <info_notes ID="100011" user_id="10000" head_id="100022" parent_id="0" content="信息内容" photo_num="2"/>
-    <info_heads ID="100022" content="信息头" note_id="100011" approved_num="0" interest_num="0"/>
     <info_photos ID="100003" note_id="100011" photo_id="100003" rank="0"/>
     <info_photos ID="100004" note_id="100011" photo_id="100004" rank="1"/>
 
