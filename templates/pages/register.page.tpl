@@ -3,13 +3,12 @@
 {include file="comm/top.navi.tpl"}
 
 <div class="dis-wrap"><div class="dis-page">
-    <div class="dis-register">
-        <div class="dis-inline-block">
-            {include file="modu/regi.form.tpl" err=''}
-        </div><div class="dis-shirt-v dis-inline-block">
-        </div><div class="dis-user-login dis-inline-block">
-            已有帐号，请<a href="login">直接登录</a>
-            {include file="modu/login.form.tpl" err=''}
+    <div class="dis-user-register dis-inline-block">
+        {include file="modu/regi.form.tpl" err=$regiErr}
+    </div><div class="dis-user-login dis-inline-block">
+        <div class="dis-login-wrap">
+        <h3>已有帐号，直接登录</h3>
+        {include file="modu/login.form.tpl" err=$loginErr}
         </div>
     </div>
     <div class="dis-content-border"></div>

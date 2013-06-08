@@ -16,11 +16,11 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 
 /* 两栏结构 */
 .dis-wrap {position: relative; width: 980px; margin: 0 auto; z-index: 0;}
-.dis-page {position: relative; min-height: 600px; font-size: 14px;}
+.dis-page {position: relative; min-height: 600px; font-size: 14px; line-height: 22px;}
 
 .dis-page-left {width: 170px; padding-right: 20px; vertical-align: top; position: relative;}
 .dis-page-right {width: 790px; min-height: 600px; vertical-align: top; position: relative;}
-.dis-page-head {padding: 10px 0;}
+.dis-page-head {padding: 10px 0 0;}
 .dis-page-ctrl {text-align: center;}
 
 /* ui */
@@ -48,13 +48,13 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 .dis-search-form #keyword {width: 140px; padding: 2px 4px; position: relative;}
 .dis-search-form #search {width: 16px; height: 16px; left: -8px; border: 0; background: url("images/find.png") no-repeat; position: relative;}
 
-.dis-chan-navi {padding: 5px; border: 1px solid #e1e1e1; cursor: pointer; margin: 10px 0;}
-.dis-chan-navi:hover {background: url(images/chan_hover.png) repeat-y right;}
+.dis-chan-navi .dis-chan-item {padding: 5px; border: 1px solid #e1e1e1; cursor: pointer; margin: 10px 0;}
+.dis-chan-navi .dis-chan-item:hover {background: url(images/chan_hover.png) repeat-y right;}
 .dis-chan-navi .dis-chan-param {padding: 0 10px;}
-.dis-chan-info {width: 220px; padding-left: 20px;}
+.dis-chan-navi .dis-chan-current {background: url(images/chan_right.png) repeat-y right;}
 /*.dis-chan-navi .dis-chan-desc {padding: 10px 0;}*/
-.dis-chan-current {background: url(images/chan_right.png) repeat-y right;}
 
+.dis-chan-info {width: 220px; padding-left: 20px;}
 .dis-info-brief .dis-info-photo {width: 200px; height: 200px;}
 .dis-info-brief .dis-info-photo img {width: 200px;}
 .dis-info-brief .dis-info-body {width: 330px; padding: 10px;}

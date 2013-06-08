@@ -820,7 +820,7 @@ $(function()
     });
 
     dis('.dis-err').close({icon: 'ui-icon-close'});
-    $($('.dis-chan-navi')[0]).addClass('dis-chan-current');
+    $($('.dis-chan-navi .dis-chan-item')[0]).addClass('dis-chan-current');
     $('.dis-red-star').html('<span class="dis-icon ui-icon-star"></span>');
 
     $('.dis-dropdown-menu').each(function()

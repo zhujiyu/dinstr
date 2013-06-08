@@ -72,9 +72,9 @@ $err = ob_get_contents();
 ob_end_clean();
 $gSmarty->assign("err", $err);
 
-$file = "pages/home.page.tpl";
+//$file = "pages/home.tpl";
 $gSmarty->assign("title", "首页");
-$gSmarty->display($file);
+$gSmarty->display("pages/home.tpl");
 
 //    $chan = DisChannelCtrl::chan(20000);
 //    $chan_list[0] = $chan->info();

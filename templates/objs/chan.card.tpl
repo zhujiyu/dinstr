@@ -4,8 +4,8 @@
             <a href="chan?id={$chan.ID}"></a>
         </div>
     </div><div class="dis-chan-info dis-inline-block">
-        {include file="chan/pmail.channel.type.tpl"}
         <a class="dis-module-title" href="chan?id={$chan.ID}">{$chan.name|truncate_utf:10:'...'}</a>
+        {include file="objs/chan.type.tpl"}
         {if $chan.tags}
         <div class="dis-tags-list">
             {section name=tagi loop=$chan.tags max=6}

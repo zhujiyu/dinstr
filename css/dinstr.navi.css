@@ -1,7 +1,6 @@
 .dis-top-navi {padding: 0; width: 100%; z-index: 10; top: 0; position: relative; background-color: #14589c; color: #eee;}
 .dis-navi-content {margin: 0 auto; width: 980px; position: relative; text-align: left;}
-.dis-top-navi .dis-navi-content {font-weight: bold; font-size: 14px; line-height: 22px; height: 36px;}
-/*.dis-main-navi {padding: 0; width: 100%; z-index: 9; top: 40px; position: relative;}*/
+.dis-top-navi .dis-navi-content {font-weight: bold; font-size: 14px; line-height: 22px; height: 36px; vertical-align: middle;}
 
 .dis-top-navi a {color: #eee; font-weight: bold; font-size: 14px; line-height: 22px;}
 .dis-top-navi a:hover {color: #fff; text-decoration: none;}
@@ -20,7 +19,7 @@
 .dis-menu-list:hover .dis-border-line {display: block;}
 .dis-menu-list:hover .dis-navi-item {display: block;}
 
-.dis-manage-account {width: 220px; text-align: right;}
+.dis-manage-account {text-align: right;}
 .dis-manage-account .dis-user-name {display: block; text-align: right;}
 .dis-manage-account .dis-user-name .username {white-space: nowrap; overflow: hidden; vertical-align: middle;}
 .dis-manage-account .dis-user-name .dis-icon {margin-right: 0;}
@@ -28,7 +27,7 @@
 
 .dis-publish {padding: 2px 20px; margin: 0 auto;}
 .dis-publish a {font-size: 20px;}
-
+/*
 .dis-dropdown-menu, .dis-dropdown-list {display: none; color: #555; position: absolute; top: 35px; padding: 5px; z-index: 100; background-color: #fff; border: 1px solid #858585;}
 .dis-dropdown-menu {white-space: nowrap; left: -80px;}
 .dis-dropdown-menu a {color: #105cb6; padding: 5px 10px; display: inline-block;}
@@ -60,7 +59,9 @@
 .dis-fixed-notices {margin: 0 auto; width: 940px; position: relative;}
 .dis-fixed-notices .dis-close {float: right; position: relative;}
 .dis-fixed-notices .dis-notice-item {position: relative; width: 920px; padding: 5px 0;}
-
+*/
+/*.dis-manage-account {width: 220px; text-align: right;}*/
+/*.dis-main-navi {padding: 0; width: 100%; z-index: 9; top: 40px; position: relative;}*/
                /*vertical-align: middle; color: #fff; text-decoration: none;*/
 /*.dis-menu-list .dis-border-line {display: none; background-color: #1f4974;}*/
 /*.dis-navi-logo  {width: 220px; vertical-align: middle;}*/
@@ -85,3 +86,6 @@
 
 /*.dis-navi {padding: 0; width: 100%; z-index: 0; top: 0; position: absolute;}*/
 /*.dis-main-navi .dis-navi-content {background-color: gray;}*/
+
+/*.dis-navi-list {vertical-align: middle; background-color: red;}*/
+                    /*float: right; display: inline-block; vertical-align: middle;*/

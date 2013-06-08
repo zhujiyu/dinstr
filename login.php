@@ -1,18 +1,79 @@
 <?php
 /**
- * Pmail项目 PHP文件 v1.0.0
+ * DINSTR项目 PHP文件 v1.0.0
  * @package: DIS.PAGE
- * @file   : chan.php
+ * @file   : login.php
  * 用户登录页面
  *
  * @author    : 朱继玉<zhuhz82@126.com>
- * @Copyright : 2013 DIS(有向信息流)
+ * @Copyright : 2013 DINSTR(有向信息流)
  * @Date      : 2013-04-16
  * @encoding  : UTF-8
  * @version   : 1.0.0
  */
 require_once 'common.inc.php';
+require_once 'view/user.inc.php';
 
+$gSmarty = init_smarty();
+$p = $_REQUEST['p'] ? $_REQUEST['p'] : 'login';
+
+ob_start();
+try//
+{
+    if( $p == 'login' )
+    {
+        if( isset($_POST['uname']) && !empty($_POST['uname'])
+            && isset($_POST['pword']) && !empty($_POST['pword']) )
+        {
+            $login = _login($_POST['uname'], md5($_POST['pword']));
+        }
+        else if( isset($_COOKIE['dis-login']) && !empty($_COOKIE['dis-login']) )
+        {
+            $_login = $_COOKIE['dis-login'];
+            setcookie('dis-login', $_login, time() + 168 * 3600);
+            $param = unserialize($_login);
+            $login = _login($param['ID'], $param['pwrd']);
+        }
+        else
+            $login = false;
+
+        if( $login )
+        {
+            ob_end_clean();
+            header('Location: index'); exit; // 转首页
+//            header('Location: home?important'); exit; // 转首页
+        }
+    }
+    else if( $p == 'logout' )
+    {
+        $user_id = $_SESSION['userId'];
+        if( $user_id > 0 )
+        {
+            $login = new DisUserLoginCtrl($user_id);
+            $login->last_login();
+            $login->logout();
+        }
+
+        $_SESSION['userId'] = 0;
+        $_SESSION['feed']  = null;
+        $_SESSION['value'] = null;
+        setcookie('dis-login', '', time() -1);
+    }
+}
+catch (DisException $ex)
+{
+    $ex->trace_stack();
+}
+
+$err = ob_get_contents();
+ob_end_clean();
+
+$gSmarty->assign("title", "用户登录");
+$gSmarty->assign("item", $p);
+$gSmarty->assign("err", $err);
+$gSmarty->display("pages/login.tpl");
+
+/*
 function _login($name, $pwrd)
 {
     if( !$name || !$pwrd )
@@ -118,4 +179,5 @@ if( $p == 'desc' )
 else
     $file = "pmail.login.tpl";
 $gSmarty->display("pages/$file");
+*/
 ?>

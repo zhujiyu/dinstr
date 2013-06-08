@@ -12,7 +12,7 @@
     </div>
     <div class="dis-content-border"></div>
 
-    <div class="dis-channel-navi dis-inline-block">
+    <div class="dis-chan-navi dis-inline-block">
         {include file="modu/chan.tags.tpl"}
     </div><div class="dis-card-list dis-inline-block">
         {section name=i loop=$channels max=8}
