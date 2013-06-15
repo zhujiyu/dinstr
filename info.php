@@ -1,18 +1,63 @@
 <?php
 /**
- * Pmail项目 PHP文件 v2.4.16
- * @package: PMAIL.FILE
- * @file   : ls.php
- * 列出当前的各种信息
+ * DINSTR项目 PHP文件 v1.0.0
+ * @package: DIS.PAGE
+ * @file   : info.php
+ * 信息详细
  *
- * @author    : 朱继玉<zhuhz82@126.com>
- * @Copyright : 2013 有向信息流
- * @Date      : 2013-04-16
- * @encoding  : UTF-8
- * @version   : 1.0.0
+ * @author   : 朱继玉<zhuhz82@126.com>
+ * @Copyright: 2013 有向信息流
+ * @Date     : 2013-04-16
+ * @encoding : UTF-8
+ * @version  : 1.0.0
  */
 require_once 'common.inc.php';
 
+$uri = $_SERVER['REQUEST_URI'];
+$matches = null;
+preg_match('/info\?([0-9]*)$/i', $uri, $matches);
+$head_id = $matches[1];
+
+$gSmarty = init_smarty();
+ob_start();
+
+try
+{
+    $user = DisUserCtrl::user(10000);
+    $gSmarty->assign("user", $user->info());
+
+    $head = DisHeadCtrl::head($head_id);
+    $gSmarty->assign("title", $head->attr('content'));
+    
+    $note_id = $head->attr('note_id');
+    $info = DisNoteCtrl::get_note_view($note_id);
+    $info['head'] = $head->info();
+    $gSmarty->assign("info", $info);
+    
+    $notes = DisNoteCtrl::list_user_infos($user->ID);
+//    DisObject::print_array($notes);
+//    $user->list_infos($mail_ids);
+//    $gSmarty->assign("info", DisNoteCtrl::get_note_view($note_id));
+    
+//    $gSmarty->assign("head", $head->info());
+//    DisObject::print_array($head);
+//    $head_view = $head->head_view();
+//    DisObject::print_array($head_view);
+//    DisObject::print_array($info);
+//    $info_view = DisNoteCtrl::get_note_view($note_id);
+//    DisObject::print_array($info_view);
+}
+catch (DisException $ex)
+{
+    $ex->trace_stack();
+}
+
+$err = ob_get_contents();
+ob_end_clean();
+
+$gSmarty->assign("err", $err);
+$gSmarty->display("page/info.tpl");
+/*
 function merge($notices)
 {
     $mails = $replies = $approves = array();
@@ -136,4 +181,5 @@ ob_end_clean();
 $gSmarty->assign("title", '写新邮件');
 $gSmarty->assign("err", $err);
 $gSmarty->display("pages/$file");
+*/
 ?>

@@ -20,11 +20,19 @@ class DisInfoTest extends DisDataBaseTest
 CREATE TABLE info_heads
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    content varchar(255),
+    user_id int,
+    chan_id int,
     note_id bigint,
+    content varchar(255),
+    weight int default 0,
+    status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
     note_num int default 0,
     interest_num int default 0,
-    approved_num int default 0
+    approved_num int default 0,
+    create_time timestamp,
+    index (user_id, status),
+    index (chan_id, weight),
+    index (create_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         ", "
@@ -32,17 +40,15 @@ CREATE TABLE info_notes
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null,
-    head_id bigint default 0,
+    head_id   bigint default 0,
     parent_id bigint default 0,
     content varchar(2560), -- 信息内容
     video varchar(255),
     -- 参数
     good_num  smallint default 0,
     photo_num smallint default 0,
-    reply_num int default 0,
-    status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
-    create_time int,
-    index (user_id, status),
+    reply_num int  default 0,
+    create_time timestamp,
     index (head_id),
     index (parent_id)
 )
@@ -120,15 +126,16 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
 
     function testNewInfo()
     {
-        $note = DisNoteCtrl::new_info(1000000, 1234861, "信息头", "信息内容", 0);
-        $this->assertEquals(1000203, $note->attr('head_id'));
+        $head = DisHeadCtrl::new_info(1000000, 1234861, 100, "信息头", "信息内容");
+        $this->assertEquals(1000203, $head->ID);
+        $note = new DisNoteCtrl((int)$head->attr('note_id'));
         $this->assertEquals(0, $note->attr('photo_num'));
-
-        $param = new DisUserParamCtrl(1000000);
-        $this->assertEquals(1, $param->attr('note_num'));
 
         $chan = new DisChannelCtrl(1234861);
         $this->assertEquals(1, $chan->attr('info_num'));
+
+        $param = new DisUserParamCtrl(1000000);
+        $this->assertEquals(1, $param->attr('note_num'));
     }
 
     function testReply()
@@ -137,7 +144,6 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
         $reply = $note->reply(1000012, "回复信息");
         $this->assertEquals(1000200, $reply->attr('head_id'));
         $this->assertEquals(0, $reply->attr('photo_num'));
-
         $param = new DisUserParamCtrl(1000012);
         $this->assertEquals(2, $param->attr('note_num'));
     }
@@ -145,9 +151,9 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000
     function testLoadInfos()
     {
         $user = new DisUserCtrl(1000000);
-        $note_ids = $user->list_publish_note_ids(0);
-        $this->assertEquals(1000101, $note_ids[0]);
-        $this->assertEquals(1000100, $note_ids[1]);
+        $note_ids = $user->list_publish_head_ids(0);
+        $this->assertEquals(1000202, $note_ids[1]);
+        $this->assertEquals(1000200, $note_ids[0]);
     }
 
     function testInterest()

@@ -119,16 +119,16 @@ class DisUserVectorCache extends DisVectorCache
         self::set($key, $mail_ids);
     }
 
-    static function get_publish_note_ids($user_id)
+    static function get_publish_head_ids($user_id)
     {
-        $key = "pmids-$user_id";
+        $key = "phids-$user_id";
         return self::get($key);
     }
 
-    static function set_publish_note_ids($user_id, $mail_ids)
+    static function set_publish_head_ids($user_id, $head_ids)
     {
-        $key = "pmids-$user_id";
-        self::set($key, $mail_ids);
+        $key = "phids-$user_id";
+        self::set($key, $head_ids);
     }
 
     /**

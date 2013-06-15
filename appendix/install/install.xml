@@ -30,6 +30,11 @@
             big  ="attach/mw500/20120421179.jpg"
             quote="1" create_time="2013-06-02 00:00:00"
     />
+    <photos ID="100005" user_id="10000"
+            small="http://u.img.huxiu.com/portal/201306/13/172126x7zotw7ejcyjybdb.jpg.thumb.jpg"
+            big  ="http://u.img.huxiu.com/portal/201306/13/172126x7zotw7ejcyjybdb.jpg"
+            quote="1" create_time="2013-06-02 00:00:00"
+    />
 
     <!-- password="121981" impassword="gou86.com" -->
 	<users ID="10000" username="朱继玉" email="zhuhz82@126.com"
@@ -87,23 +92,76 @@
     <chan_applicants ID="100000" chan_id="30000" user_id="20000" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
     <chan_applicants ID="100011" chan_id="30000" user_id="10000" reason="申请加入" status="untreated" apply_time="2013-05-15 00:00:00"/>
 
-    <info_notes ID="100010" user_id="10000" head_id="100020" parent_id="0" content="信息内容" photo_num="2"/>
-    <info_notes ID="100011" user_id="10000" head_id="100022" parent_id="0" content="信息内容" photo_num="2"/>
-    <info_heads ID="100020" content="信息头" note_id="100010" approved_num="1" interest_num="2"/>
-    <info_heads ID="100022" content="信息头" note_id="100011" approved_num="0" interest_num="0"/>
+    <info_notes ID="100008" user_id="10000" head_id="100012" parent_id="0" photo_num="1" good_num="0" status="1"
+                content="回看起来，五月于虎嗅有跌荡、有惊险、有被强烈吐槽、也有比吐槽更热烈的投稿与点击。\n
+当我们回过头去整理五月份（5月10日-6月9日）的外部作者稿件，我们前所未有深刻感到：虎嗅这个平台如果说能有一些能量，\n
+绝不在于我们区区几个编辑，而是来自于离虎嗅办公室百里千里甚至万里之外的数不清的作者。他们写出了对相关企业、产业与\n
+话题最生动新鲜的观察，他们分享他们最宝贵的经验教训。\n
+不管是自称专业“自媒体”，还是有感而发偶尔客串，他们汇聚起来的江湖河海，非常精彩！所有免费享受这一切的读者、用户，\n
+都应该感谢他们。而想表达对他人与这个社区感谢的最好手段，就是你也加入，顺手给我们分享点儿什么。你的经验与思考，会\n
+因被分享、被交流而增发出更多价值。我们特别欢迎业内人来跟我们讲讲你产业里的那些事儿。\n
+下面，是本月的特别感谢名单。特别要指出的是：本月，我们头一遭开出了特等奖。这篇文章的专业性、及时性、重要性都无可\n
+争议，带来的影响力与点击量也巨大，仅看其被分享次数即可看出。它就是来自某物流人士的：《八问八答，解剖“菜鸟”》。
+"
+    />
+    <info_notes ID="100010" user_id="10000" head_id="100020" parent_id="0" photo_num="2" good_num="0" status="0"
+                content="信息内容" 
+    />
+    <info_notes ID="100011" user_id="10000" head_id="100022" parent_id="0" photo_num="2" good_num="0" status="0"
+                content="信息内容" 
+    />
+    <info_notes ID="100012" user_id="10000" head_id="100023" parent_id="0" photo_num="0" good_num="0" status="1"
+                content='
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none; font-size: medium; color: rgb(102, 102, 102); font-family: 微软雅黑, "Microsoft Yahei", STXihei, 黑体, arial, sans-serif; line-height: 28px; -webkit-text-size-adjust: none;"&gt;
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;
 
-    <info_photos ID="100001" note_id="100010" photo_id="100001" rank="0"/>
-    <info_photos ID="100002" note_id="100010" photo_id="100002" rank="1"/>
-    <info_photos ID="100003" note_id="100011" photo_id="100003" rank="0"/>
-    <info_photos ID="100004" note_id="100011" photo_id="100004" rank="1"/>
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;
+&lt;a href="http://files.leiphone.com/uploads/08-4/-3/08-46-34-96.gif" style="margin: 0px; padding: 0px; list-style: none; color: rgb(255, 54, 0);"&gt;
+&lt;img class="alignleft size-thumbnail wp-image-258853" title="_67394357_solar_impulse_304" src="http://files.leiphone.com/uploads/08-4/-3/08-46-34-96-150x150.gif" alt="_67394357_solar_impulse_304" width="150" height="150" style="margin-right: 15px; margin-bottom: 15px; list-style: none; border-style: none; height: auto; float: left; max-width: 100%;"&gt;
+&lt;/a&gt;6月4日，圣路易斯跑道，一架银白色、宽翅膀的太阳能动力飞机HB-SLA平稳着陆。HB-SLA历经美国西海岸至东海岸的穿越，这是它完成的第三次着陆。&lt;/p&gt;
+
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;这架100%纯加州鲜果橙阳光动力的飞机，从达拉斯至圣地路易斯只用了21小时22分钟。&lt;/p&gt;
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;HB-SLA的设计具有空中客车A340同样臂展，但重量仅1.6吨。在路易斯当地时间上午1点28分（格林威治6时28分）降落在Lambert-St Louis国际机场。&lt;/p&gt;
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;第四次启程将会在几周后飞往华盛顿DC。&lt;/p&gt;
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;这项由两名瑞士人 Bertrand Piccard与 Andre Borschberg组织的“穿越美洲”的行动，已经破了飞行师自身最长飞行记录。&lt;/p&gt;
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;在第三站旅程中，经历了不少阴天，飞机大部分时间都在厚云下面飞行，但电池依旧在持续充电。&lt;/p&gt;
+
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;
+&lt;a href="http://files.leiphone.com/uploads/08-4/-2/08-42-28-6.jpg" style="margin: 0px; padding: 0px; list-style: none; color: rgb(255, 54, 0);"&gt;
+&lt;img src="http://files.leiphone.com/uploads/08-4/-2/08-42-28-6.jpg"&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"&gt;此段旅行总长10140公里（560海里），从达拉斯至圣路易斯，平均时速为49公里/小时&lt;/p&gt;'
+    />
+    <!--  <p style="margin: 0px 0px 1em; padding: 0px; list-style: none;">以下为飞机的具体尺寸：</p><ul style="margin-top: 20px; margin-bottom: 20px; margin-left: 40px; list-style: none;"><li style="list-style-type: disc;">The Solar Impulse HB-SIA</li><li style="list-style-type: disc;">翼展：63米（208英尺）</li><li style="list-style-type: disc;">重量：1.6吨（3500磅）</li><li style="list-style-type: disc;">全身覆盖11628粒太阳能电池</li><li style="list-style-type: disc;">携带400公斤（900磅）锂电池</li><li style="list-style-type: disc;">极限巡航高度：8500米（28000英尺）</li></ul><p style="margin: 0px 0px 1em; padding: 0px; list-style: none;">“阳光动力”团队已经在圣路易斯搭建了临时机库。最近该地区正遭受风暴，损害了原先准备的机库。工作人员在当地临时搭建起充气式仓库。</p><p style="margin: 0px 0px 1em; padding: 0px; list-style: none;">这也是首个横穿整个美国大陆的太阳能飞机计划。</p><p style="margin: 0px 0px 1em; padding: 0px; list-style: none;">不过，这也只是Piccard与 Borschberg整个飞行计划的前奏，2015年，它的团队将会尝试跨洋甚至环球飞行。</p><p style="margin: 0px 0px 1em; padding: 0px; list-style: none;"><a href="http://files.leiphone.com/uploads/08-4/-0/08-44-00-44.jpg" style="margin: 0px; padding: 0px; list-style: none; color: rgb(255, 54, 0);"><img class="aligncenter size-full wp-image-258851" title="Solar-Impulse-HB-SIA-Airplane" src="http://files.leiphone.com/uploads/08-4/-0/08-44-00-44.jpg" alt="Solar-Impulse-HB-SIA-Airplane" width="818" height="453" style="margin-right: auto; margin-left: auto; list-style: none; border-style: none; height: auto; display: block; max-width: 100%;"></a></p><p style="margin: 0px 0px 1em; padding: 0px; list-style: none;">这架太阳能动力的飞机曾在2011被制造出来，并在2012年完成第一个洲际飞行。</p><p style="margin: 0px 0px 1em; padding: 0px; list-style: none;">该飞机完成的第一站是旧金山至三藩市、凤凰城之间的地区，那是在五月初，全程18小时飞行时间。第二站是从凤凰城至达拉斯，时间为五月下旬，行径距离1541公里，破了当时太阳能动力飞机的续航记录。</p><p style="margin: 0px 0px 1em; padding: 0px; list-style: none;">这项行动旨在宣传Piccard与Borschberg先生的清洁能源发电倡议，鼓励更多政府与企业开发者采用可持续能源技术。</p></p></p>"  -->
+    
+    <info_heads ID="100012" note_id="100008" approved_num="1" interest_num="2"
+                content="前所未有的丰富、多采、多元！虎嗅第19期获奖作者揭晓" 
+    />
+    <info_heads ID="100020" note_id="100010" approved_num="1" interest_num="2"
+                content="信息头" 
+    />
+    <info_heads ID="100022" note_id="100011" approved_num="0" interest_num="0"
+                content="信息头" 
+    />
+    <info_heads ID="100023" note_id="100012" approved_num="0" interest_num="0"
+                content="阳光动力牌飞机再破纪录" 
+    />
+
+    <info_photos ID="100001" note_id="100010" photo_id="100002" rank="0"/>
+    <info_photos ID="100002" note_id="100010" photo_id="100001" rank="1"/>
+    <info_photos ID="100003" note_id="100011" photo_id="100004" rank="0"/>
+    <info_photos ID="100004" note_id="100011" photo_id="100003" rank="1"/>
+    <info_photos ID="100005" note_id="100008" photo_id="100005" rank="0"/>
 
     <info_users ID="100012" head_id="100010" user_id="10000" approve="0" update_time="2013-05-20 00:00:00"/>
     <info_users ID="100015" head_id="100010" user_id="20000" approve="1" update_time="2013-05-20 00:00:00"/>
 
-    <streams ID="1000000" user_id="10000" note_id="100010" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
-    <streams ID="1000001" user_id="10000" note_id="100011" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
-    <latest_streams ID="1000000" user_id="10000" note_id="100010" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
-    <latest_streams ID="1000001" user_id="10000" note_id="100011" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <streams ID="1000000" user_id="10000" note_id="100008" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <streams ID="1000001" user_id="10000" note_id="100010" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <streams ID="1000002" user_id="10000" note_id="100011" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <latest_streams ID="1000000" user_id="10000" note_id="100008" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <latest_streams ID="1000001" user_id="10000" note_id="100010" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
+    <latest_streams ID="1000002" user_id="10000" note_id="100011" chan_id="9999" flow_time="2013-05-30 00:00:00"/>
 
     <notices ID="1000000" />
     <latest_notices ID="1000000" />

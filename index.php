@@ -49,10 +49,8 @@ try
     }
     $gSmarty->assign('manager_list', $manager_list);
 
-//    DisObject::print_array($user_list[0]);
-
-    $info_ids = array(100010, 100011);
-    for( $i = 0; $i < 2; $i ++ )
+    $info_ids = array(100008, 100010, 100011);
+    for( $i = 0; $i < 3; $i ++ )
     {
         $info = DisNoteCtrl::get_note_view($info_ids[$i]);
         $head = DisHeadCtrl::head($info['head_id']);
@@ -74,7 +72,7 @@ $gSmarty->assign("err", $err);
 
 //$file = "pages/home.tpl";
 $gSmarty->assign("title", "首页");
-$gSmarty->display("pages/home.tpl");
+$gSmarty->display("page/home.tpl");
 
 //    $chan = DisChannelCtrl::chan(20000);
 //    $chan_list[0] = $chan->info();

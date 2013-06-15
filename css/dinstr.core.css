@@ -16,17 +16,19 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 
 /* 两栏结构 */
 .dis-wrap {position: relative; width: 980px; margin: 0 auto; z-index: 0;}
-.dis-page {position: relative; min-height: 600px; font-size: 14px; line-height: 22px;}
+.dis-page {position: relative; font-size: 14px; line-height: 22px;}
 
-.dis-page-left {width: 170px; padding-right: 20px; vertical-align: top; position: relative;}
-.dis-page-right {width: 790px; min-height: 600px; vertical-align: top; position: relative;}
+.dis-page-left  {min-height: 600px; vertical-align: top; padding-right: 25px;}
+.dis-page-right {min-height: 600px; vertical-align: top;}
+/*.dis-page-left  {width: 170px; min-height: 600px; vertical-align: top; position: relative; padding-right: 25px;}*/
+/*.dis-page-right {width: 780px; min-height: 600px; vertical-align: top; position: relative;}*/
 .dis-page-head {padding: 10px 0 0;}
 .dis-page-ctrl {text-align: center;}
 
 /* ui */
 .dis-inline-block {position: relative; vertical-align: top; display: inline-block; zoom: 1;}
-.dis-box-shadow { box-shadow: 4px 4px #e8e1e1; -moz-box-shadow: 4px 4px #e1e1e1; -webkit-box-shadow: 4px 4px #e1e1e1;}
 .dis-layout-table {width: 100%; border-spacing: 0; border-collapse: collapse; border: 0;}
+.dis-box-shadow   {box-shadow: 4px 4px #e8e1e1; -moz-box-shadow: 4px 4px #e1e1e1; -webkit-box-shadow: 4px 4px #e1e1e1;}
 
 .dis-icon {background-image: url("images/ui-icons_454545_256x240.png"); width: 16px; height: 16px;
            display: block; position: relative; text-indent: -99999px; padding: 0; margin: 0;
@@ -48,22 +50,30 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 .dis-search-form #keyword {width: 140px; padding: 2px 4px; position: relative;}
 .dis-search-form #search {width: 16px; height: 16px; left: -8px; border: 0; background: url("images/find.png") no-repeat; position: relative;}
 
+.dis-chan-navi {width: 170px;}
 .dis-chan-navi .dis-chan-item {padding: 5px; border: 1px solid #e1e1e1; cursor: pointer; margin: 10px 0;}
 .dis-chan-navi .dis-chan-item:hover {background: url(images/chan_hover.png) repeat-y right;}
 .dis-chan-navi .dis-chan-param {padding: 0 10px;}
 .dis-chan-navi .dis-chan-current {background: url(images/chan_right.png) repeat-y right;}
-/*.dis-chan-navi .dis-chan-desc {padding: 10px 0;}*/
 
-.dis-chan-info {width: 220px; padding-left: 20px;}
-.dis-info-brief .dis-info-photo {width: 200px; height: 200px;}
-.dis-info-brief .dis-info-photo img {width: 200px;}
-.dis-info-brief .dis-info-body {width: 330px; padding: 10px;}
+.dis-info-board {width: 780px;}
+.dis-chan-info {width: 220px; float: right;}
+.dis-info .dis-info-photo {max-width: 530px; text-align: center;}
+.dis-info .dis-info-photo img {max-width: 530px;}
+.dis-info, .dis-info-list {width: 530px;}
+.dis-info-full img {max-width: 530px;}
+/*.dis-info-full .dis-info-detial {white-space: pre-wrap;}*/
 .dis-info-title a {font-size: 18px;}
+.dis-info-list .dis-content-border {clear: both;}
 
-.dis-user {padding: 10px 0;}
+/*.dis-info-brief {width: 530px;}*/
+/*.dis-info-brief .dis-info-photo {width: 200px; max-height: 200px; float: left; margin-right: 10px; margin-bottom: 10px;}*/
+/*.dis-info-brief .dis-info-photo img {max-width: 200px;}*/
+/*.dis-info-brief .dis-info-objs {float: left; padding: 10px;}*/
+/*.dis-info-brief .dis-info-body {width: 530px; padding: 10px;}*/
+
 .dis-user .dis-user-param {padding: 0 10px;}
 .dis-user-list .dis-module-title a {float: right; font-weight: normal;}
-/*.dis-user-list .dis-list-ctrl .dis-ctrl {float: right;}*/
 
 .dis-dialog {font-size: 14px; line-height: 22px; background-color: #fff; position: absolute; border: 1px solid #ccc;}
 .dis-dialog #close {top: 8px; right: 10px;}
@@ -81,7 +91,6 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 .dis-logo .dis-logo-url {font-size: 16px;}
 
 .dis-foot {padding-bottom: 15px;}
-/*.dis-foot .dis-logo {font-size: 12px; line-height: 16px;}*/
 .dis-foot .dis-logo .name {font-size: 14px; line-height: 16px; font-weight: normal;}
 .dis-foot .dis-logo .dis-logo-img {height: 18px;}
 .dis-foot .dis-logo .dis-logo-img img {width: 18px; height: 18px;}
@@ -131,6 +140,11 @@ a:hover, .dis-a:hover, .dis-am-hover {color: #444; text-decoration: underline;}
 .dis-light-button:hover .dis-icon {background-image: url("images/ui-icons_cccccc_256x240.png");}
 .dis-light-button .dis-icon-wrap, .dis-gray-button .dis-icon-wrap {vertical-align: middle; /*top: -2px;*/}
 .dis-light-button, .dis-gray-button {display: inline-block; padding: 0 10px; font-size: 14px; line-height: 22px;}
+
+/*.dis-foot .dis-logo {font-size: 12px; line-height: 16px;}*/
+/*.dis-chan-navi .dis-chan-desc {padding: 10px 0;}*/
+/*.dis-user {padding: 10px 0;}*/
+/*.dis-user-list .dis-list-ctrl .dis-ctrl {float: right;}*/
 
                    /*height: 27px; line-height: 27px; */
 /*a .dis-icon {background-image: url("images/ui-icons_2e83ff_256x240.png");}*/

@@ -214,7 +214,7 @@ class DisChanUserCtrl extends DisChanUserData
         return $roles;
     }
 
-    function get_channel_role($chan_id)
+    function get_chan_role($chan_id)
     {
         if( !$this->user_id )
             throw new DisParamException('对象没有初始化！');
@@ -226,7 +226,7 @@ class DisChanUserCtrl extends DisChanUserData
 
     function get_channel_strrole($chan_id)
     {
-        $role = $this->get_channel_role($chan_id);
+        $role = $this->get_chan_role($chan_id);
         return $role < 0 ? 'stranger' : DisChanUserData::role((int)$role);
 //        if( !$this->user_id )
 //            throw new DisParamException('对象没有初始化！');

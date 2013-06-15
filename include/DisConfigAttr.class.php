@@ -1,7 +1,7 @@
 <?php
 /**
  * @file : DisConfigAttr.class.php
- *
+ * @group: DINSTR.CORE
  * DIS系统常量表
  *
  * @author    : 朱继玉<zhuhz82@126.com>

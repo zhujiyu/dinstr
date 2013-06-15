@@ -43,7 +43,7 @@ class DisNoteKeywordData extends DisObject
         return DisDBTable::load_datas($str);
     }
 
-    static function list_mails($keyword, $page = 0, $size = 20)
+    static function list_infos($keyword, $page = 0, $size = 20)
     {
         $str = "select ID, mail_id, keyword from mail_keywords where keyword = '$keyword'
             order by mail_id desc limit ".$page*$size.", ".$size."";

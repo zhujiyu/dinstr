@@ -10,8 +10,9 @@ require_once 'common.inc.php';
 ob_start();
 try
 {
+    $gSmarty = init_smarty();
     $p = $_GET['p'] ? $_GET['p'] : $_POST['p'];
-    $invi = $_GET['invi'] ? $_GET['invi'] : $_POST['invi'];
+//    $invi = $_GET['invi'] ? $_GET['invi'] : $_POST['invi'];
     $view = $_GET['view'] ? $_GET['view'] : $_POST['view'];
     $email = $_GET['email'] ? $_GET['email'] : $_POST['email'];
 

@@ -54,7 +54,7 @@ try
         $file = 'pmail.home.reply.tpl';
 
         $mail_ids = $user->list_reply_mail_ids(0, 20);
-        $mail_list = $user->list_mails($mail_ids);
+        $mail_list = $user->list_infos($mail_ids);
         $gSmarty->assign("mail_list", $mail_list);
     }
     else //if ( isset($_GET['feed']) || $view == 'feed' )

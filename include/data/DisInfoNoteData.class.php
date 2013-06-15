@@ -19,10 +19,10 @@ if( !defined('IN_DIS') )
 class DisInfoNoteData extends DisDBTable
 {
     // 构造函数
-    function __construct($mail_id = 0)
+    function __construct($note_id = 0)
     {
         $this->table = "info_notes";
-        parent::__construct($mail_id);
+        parent::__construct($note_id);
     }
 
     // context, depth, channels, publish_num,
@@ -127,17 +127,17 @@ class DisInfoNoteData extends DisDBTable
         return parent::load_line_data($str);
     }
 
-    static function list_user_infos($user_id, $max_id = 0, $count = 20)
-    {
-        if( !$user_id )
-            throw new DisParamException('参数不合法！');
-        $whr = $max_id > 0 ? "and ID < $max_id" : "";
-        $str = "select ID, user_id, content, head_id, parent_id, photo_num, good_num, reply_num, create_time
-            from info_notes where user_id = $user_id $whr
-            order by ID desc limit $count";
-        return parent::load_datas($str);
-    }
-
+//    static function list_user_infos($user_id, $max_id = 0, $count = 20)
+//    {
+//        if( !$user_id )
+//            throw new DisParamException('参数不合法！');
+//        $whr = $max_id > 0 ? "and ID < $max_id" : "";
+//        $str = "select ID, user_id, content, head_id, parent_id, photo_num, good_num, reply_num, create_time
+//            from info_notes where user_id = $user_id and status > 0 and parent_id = 0 $whr
+//            order by ID desc limit $count";
+//        return parent::load_datas($str);
+//    }
+//
 //        if( $max_id > 0 )
 //            $whr = "and ID < $max_id";
 //        else

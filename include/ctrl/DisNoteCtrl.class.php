@@ -21,26 +21,6 @@ class DisNoteCtrl extends DisInfoNoteData
         parent::__construct($note_id);
     }
 
-    function increase($param, $step = 1)
-    {
-        if( !$this->ID )
-            throw new DisParamException('对象没有初始化！');
-        if( !$this->detail )
-            $this->detail = self::get_data($this->ID);
-        parent::increase($param, $step);
-        DisNoteDataCache::set_note_data($this->ID, null);
-    }
-
-    function reduce($param, $step = 1)
-    {
-        if( !$this->ID )
-            throw new DisParamException('对象没有初始化！');
-        if( !$this->detail )
-            $this->detail = self::get_data($this->ID);
-        parent::reduce($param, $step);
-        DisNoteDataCache::set_note_data($this->ID, null);
-    }
-
     static function get_data($note_id)
     {
 //        pmRowMemcached::set_mail_data($note_id, null);
@@ -133,10 +113,32 @@ class DisNoteCtrl extends DisInfoNoteData
         return $note;
     }
 
+    function increase($param, $step = 1)
+    {
+        if( !$this->ID )
+            throw new DisParamException('对象没有初始化！');
+        if( !$this->detail )
+            $this->detail = self::get_data($this->ID);
+        parent::increase($param, $step);
+        DisNoteDataCache::set_note_data($this->ID, null);
+    }
+
+    function reduce($param, $step = 1)
+    {
+        if( !$this->ID )
+            throw new DisParamException('对象没有初始化！');
+        if( !$this->detail )
+            $this->detail = self::get_data($this->ID);
+        parent::reduce($param, $step);
+        DisNoteDataCache::set_note_data($this->ID, null);
+    }
+
     /**
      * 添加一条新信息
      * @param integer $user_id 发布者ID
-     * @param integer $chan_id 初始发布的频道ID
+     * @param integer $chan_id 发布信息的频道ID
+     * @param integer $weight 发布信息的权重值
+     * @param integer $status 发布信息的状态
      * @param string $title 邮件标题内容
      * @param string $content 信息内容
      * @param array $photos 图片列表
@@ -144,8 +146,8 @@ class DisNoteCtrl extends DisInfoNoteData
      * @param string $video 视频地址
      * @return DisNoteCtrl 生成的信息对象
      */
-    static function new_info($user_id, $chan_id, $title, $content, $photos = null,
-            $goods = null, $video = "")
+    static function new_info($user_id, $chan_id, $weight, $status,
+            $title, $content, $photos = null, $goods = null, $video = "")
     {
         if( !$user_id || !$content || !$title )
             throw new DisParamException("参数不合法！");
@@ -158,7 +160,9 @@ class DisNoteCtrl extends DisInfoNoteData
         if( !$note->ID )
             throw new DisDBException("插入失败！");
 
-        $head = DisHeadCtrl::new_head($title, $note->ID);
+        $head = new DisHeadCtrl();
+        $head->new_head($title, $note->ID, $user_id, $chan_id, $weight, $status);
+//        $head = DisHeadCtrl::new_head($title, $note->ID);
         $head->interest($user_id);
         $note->update(array('head_id'=>$head->ID));
 
@@ -313,7 +317,7 @@ class DisNoteCtrl extends DisInfoNoteData
 
         DisNoteVectorCache::set_note_ids($this->detail[head_id], null);
         DisNoteDataCache::set_note_data($this->ID, null);
-        DisUserVectorCache::set_publish_note_ids($user_id, null);
+        DisUserVectorCache::set_publish_head_ids($user_id, null);
 
         return $flow_id;
     }

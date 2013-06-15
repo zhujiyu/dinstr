@@ -108,7 +108,7 @@ class DisUserCtrl extends DisUserData
     static function parse_users($user_ids)
     {
         $len = count($user_ids);
-        for ( $i = 0; $i < $len; $i ++ )
+        for( $i = 0; $i < $len; $i ++ )
         {
             try
             {
@@ -139,57 +139,60 @@ class DisUserCtrl extends DisUserData
         return $user_list;
     }
 
-    function list_channels($channel_ids)
+    function list_channels($chan_ids)
     {
-        $channels = array();
-        $len = count($channel_ids);
+        $chan_list = array();
+        $len = count($chan_ids);
         for( $i = 0; $i < $len; $i ++ )
         {
             try
             {
-                $channel = DisChannelCtrl::get_data($channel_ids[$i]);
-                $channel[member] = $this->get_channel_status($channel_ids[$i]);
+                $chan = DisChannelCtrl::get_data($chan_ids[$i]);
+                $chan['member'] = $this->get_chan_status($chan_ids[$i]);
             }
             catch (DisException $ex)
             {
                 $ex->trace_stack();
                 continue;
             }
-            $channels[] = $channel;
+            $chan_list[] = $chan;
         }
-        return $channels;
+        return $chan_list;
     }
 
-    function list_themes($theme_ids)
+    function list_themes($head_ids)
     {
-        $themes = array();
-        $len = count($theme_ids);
+        $head_list = array();
+        $len = count($head_ids);
+        
         for( $i = 0; $i < $len; $i ++ )
         {
-            $theme = DisHeadCtrl::head($theme_ids[$i]);
-            $data = $theme->head_view();
-            $data['status'] = $theme->check_status($this->ID);
-            $data['last_mail'] = $theme->last_note();
-            array_push($themes, $data);
+            $head = DisHeadCtrl::head($head_ids[$i]);
+            $data = $head->head_view();
+            $data['status'] = $head->check_status($this->ID);
+            $data['last_info'] = $head->last_note();
+            array_push($head_list, $data);
         }
-        return $themes;
+        
+        return $head_list;
     }
 
-    function list_mails($mail_ids)
+    function list_infos($info_ids)
     {
-        $mail_list = array();
-        $count = count($mail_ids);
+        $info_list = array();
+        $count = count($info_ids);
 
         for( $i = 0; $i < $count; $i ++ )
         {
-            $mail = DisNoteCtrl::get_note_view($mail_ids[$i]);
-            $mail[content] = strip_tags($mail[content]);
-            $theme = DisHeadCtrl::head($mail['theme_id']);
-            $mail[theme] = $theme->info();
-            $mail[theme][status] = $theme->check_status($this->ID);
-            array_push($mail_list, $mail);
+            $info = DisNoteCtrl::get_note_view($info_ids[$i]);
+//            $info['content'] = strip_tags($mail['content']);
+            $head = DisHeadCtrl::head($info['head_id']);
+            $info['head'] = $head->info();
+            $info['head']['status'] = $head->check_status($this->ID);
+            array_push($info_list, $info);
         }
-        return $mail_list;
+        
+        return $info_list;
     }
 
     function list_flows($flow_ids)
@@ -289,24 +292,24 @@ class DisUserCtrl extends DisUserData
         return $roles[$channel_id] > 1;
     }
 
-    function get_channel_role($channel_id)
+    function get_chan_role($channel_id)
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
         $cu = new DisChanUserCtrl($this->ID);
-        return $cu->get_channel_role($channel_id);
+        return $cu->get_chan_role($channel_id);
     }
 
-    function get_channel_status($channel_id)
+    function get_chan_status($chan_id)
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
 
-        $role = $this->get_channel_role($channel_id);
+        $role = $this->get_chan_role($chan_id);
         if( $role >= 0 )
-            $status = DisChanUserCtrl::get_data((int)$this->ID, (int)$channel_id);
+            $status = DisChanUserCtrl::get_data((int)$this->ID, (int)$chan_id);
         else
-            $status = array('ID'=>0, 'channel_id'=>$channel_id, 'user_id'=>$this->ID,
+            $status = array('ID'=>0, 'channel_id'=>$chan_id, 'user_id'=>$this->ID,
                 'role'=>-1, 'weight'=>0, 'rank'=>0);
 
         $user_ids = $this->list_super_user_ids();
@@ -444,9 +447,10 @@ class DisUserCtrl extends DisUserData
         return list_slice($note_ids, $left, $count);
     }
 
-    protected function _list_publish_note_ids($max_id = 0, $count = 20)
+    protected function _list_publish_head_ids($max_id = 0, $count = 20)
     {
-        $notes = DisNoteCtrl::list_user_infos($this->ID, $max_id, $count);
+//        $notes = DisNoteCtrl::list_user_infos($this->ID, $max_id, $count);
+        $notes = DisHeadCtrl::list_publish_infos($this->ID, $max_id, $count);
         $count = count($notes);
         $note_ids = array();
         for( $i = 0; $i < $count; $i ++ )
@@ -454,36 +458,34 @@ class DisUserCtrl extends DisUserData
         return $note_ids;
     }
 
-    function list_publish_note_ids($page = 0, $count = 20)
+    function list_publish_head_ids($page = 0, $count = 20)
     {
         if( !$this->ID )
             throw new DisParamException('对象没有初始化！');
 
         $start = $page * $count;
         $hope = $start + $count;
-//        pmCacheUserVector::set_publish_mail_ids($this->ID, null);
-        $note_ids = DisUserVectorCache::get_publish_note_ids($this->ID);
+        $head_ids = DisUserVectorCache::get_publish_head_ids($this->ID);
 
-        if( !$note_ids )
+        if( !$head_ids )
         {
-            $note_ids = $this->_list_publish_note_ids(0, $hope);
-            if( count($note_ids) == 0 )
-                $note_ids[0] = "#E#";
-            DisUserVectorCache::set_publish_note_ids($this->ID, $note_ids);
+            $head_ids = $this->_list_publish_head_ids(0, $hope);
+            if( count($head_ids) == 0 )
+                $head_ids[0] = "#E#";
+            DisUserVectorCache::set_publish_head_ids($this->ID, $head_ids);
         }
-        else if( $note_ids[0] != "#E#" )
+        else if( $head_ids[0] != "#E#" )
         {
-            $len = count($note_ids);
+            $len = count($head_ids);
             if( $len < $hope )
             {
-                $temp_ids = $this->_list_publish_note_ids($note_ids[$len - 1],
-                        $hope - $len);
-                $note_ids = array_merge($note_ids, $temp_ids);
-                DisUserVectorCache::set_publish_note_ids($this->ID, $note_ids);
+                $temp_ids = $this->_list_publish_head_ids($head_ids[$len - 1], $hope - $len);
+                $head_ids = array_merge($head_ids, $temp_ids);
+                DisUserVectorCache::set_publish_head_ids($this->ID, $head_ids);
             }
         }
 
-        return list_slice($note_ids, $start, $count);
+        return list_slice($head_ids, $start, $count);
     }
 
     static function get_last_note_id($user_id)

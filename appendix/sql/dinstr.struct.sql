@@ -1,14 +1,14 @@
 /**
- * @file： dinstr.struct.sql
- * @group: DIS.DATABASE
- * @brief：DIS项目的核心是提供一个为中小企业和个人发布海报的平台。
+ * @file : dinstr.struct.sql
+ * @group: DINSTR.DATABASE
+ * @brief: DINSTR项目的核心是提供一个为中小企业和个人发布海报的平台。
  *
- * @author： 朱继玉<zhuhz82@126.com>
  * DIS系统由原PMAIL项目简化而来。
  * Pmail以频道channel和邮件mail为中心。
  * Pmail项目为用户提供一个以频道为中心的公共信息发布和社交平台，核心
  * 理念是让重要信息主动找到用户，也就是用户一上线就能看到最重要的信息/邮件。
  *
+ * @author： 朱继玉<zhuhz82@126.com>
  * @history:
  * 2012-4-11
  *    sOffice 项目正式更名为公众邮件系统，英文简写为Pmail项目。
@@ -326,7 +326,7 @@ CREATE TABLE info_notes
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
     user_id int not null,
-    head_id bigint default 0,
+    head_id   bigint default 0,
     parent_id bigint default 0,
     content varchar(2560), -- 信息内容
     video varchar(255),
@@ -338,11 +338,11 @@ CREATE TABLE info_notes
     good_num  smallint default 0,
     photo_num smallint default 0,
     reply_num int  default 0,
-    status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
     create_time timestamp,
+--    status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
 --    publish_num int default 0, -- 发表次数
 --    index (user_id, publish_num),
-    index (user_id, status),
+--    index (user_id, status),
     index (head_id),
     index (parent_id)
 )
@@ -354,11 +354,19 @@ DROP TABLE IF EXISTS info_heads;
 CREATE TABLE info_heads
 (
     ID bigint AUTO_INCREMENT PRIMARY KEY,
-    content varchar(255),
+    user_id int,
+    chan_id int,
     note_id bigint,
-    note_num int default 0,
+    content varchar(255),
+    weight int default 0,
+    status tinyint default 0, -- 0 表示草稿 1 表示发表，-1表示已经删除
+    note_num   int default 0,
     interest_num int default 0,
-    approved_num int default 0
+    approved_num int default 0,
+    create_time timestamp,
+    index (user_id, status),
+    index (chan_id, weight),
+    index (create_time)
 )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=100000;
 select '信息头表已经生成' as tip;

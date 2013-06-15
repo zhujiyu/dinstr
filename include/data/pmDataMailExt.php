@@ -31,7 +31,7 @@ class pmDataMailCollect extends DisObject
         return DisDBTable::query($str);
     }
 
-    function list_mails($page = 0, $count = 40)
+    function list_infos($page = 0, $count = 40)
     {
         $str = "select * from mail_collects where user_id = $this->user_id
                     order by collect_time desc limit ".$page*$count.", $count";

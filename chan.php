@@ -76,7 +76,7 @@ try
 
         if( $user_id > 0 )
         {
-            $status = $user->get_channel_status($channel_id);
+            $status = $user->get_chan_status($channel_id);
             $gSmarty->assign("status", $status);
             $role = $status[role];
         }

@@ -24,6 +24,7 @@ require_once 'common.inc.php';
 ob_start();
 try
 {
+    $gSmarty = init_smarty();
     $view = $_GET['view'];
     if( !isset($_SESSION['userId']) || $_SESSION['userId'] == 0 || !DisUserCtrl::check_inline($_SESSION['userId']) )
     {
@@ -39,8 +40,8 @@ try
     {
         $title = "我发出的邮件";
         $file = 'pmail.ls.mail.tpl';
-        $mail_ids = $user->list_publish_note_ids(0, 20);
-        $mails = $user->list_mails($mail_ids);
+        $mail_ids = $user->list_publish_head_ids(0, 20);
+        $mails = $user->list_infos($mail_ids);
         $gSmarty->assign("mail_list", $mails);
     }
     else if( isset($_GET['collect']) || $view == 'collect' )
@@ -49,7 +50,7 @@ try
         $file = 'pmail.ls.collect.tpl';
         $collect = new DisNoteCollectCtrl($user_id);
         $mail_ids = $collect->list_note_ids(0, 20);
-        $mails = $user->list_mails($mail_ids);
+        $mails = $user->list_infos($mail_ids);
         $gSmarty->assign("mail_list", $mails);
     }
     else if( $view == 'interest' || isset($_GET['interest']) )

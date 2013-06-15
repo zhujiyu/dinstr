@@ -27,7 +27,8 @@ class DisInfoHeadData extends DisDBTable
         $detail['content'] = strip_tags($detail['content']);
     }
 
-    function init($id, $slt = "ID, content, note_id, note_num, interest_num, approved_num")
+    function init($id, $slt = "ID, user_id, chan_id, weight, status, note_id, content, 
+        note_num, interest_num, approved_num, create_time")
     {
         parent::init($id, $slt);
     }
@@ -36,16 +37,20 @@ class DisInfoHeadData extends DisDBTable
     {
         switch($name)
         {
-            case 'content' :
+            case 'content':
                 if( !is_string($value) )
                     return err(DIS_ERR_PARAM);
                 break;
-            case 'note_id' :
+            case 'user_id':
+            case 'chan_id':
+            case 'note_id':
+            case 'weight':
+            case 'status':
             case 'note_num':
                 if( !is_integer($value) )
                     return err(DIS_ERR_PARAM);
                 break;
-            default :
+            default:
                 return err(DIS_ERR_PARAM);
         }
         return err(DIS_SUCCEEDED);
@@ -56,11 +61,48 @@ class DisInfoHeadData extends DisDBTable
         return in_array($param, array('interest_num', 'approved_num', 'note_num'));
     }
 
-    function insert($content, $note_id = 0)
+    function new_head($title, $note_id, $user_id, $chan_id, $weight = 0)
     {
-        return parent::insert(array('content'=>$content, 'note_id'=>$note_id));
+        if( !$note_id || !$title )
+            throw new DisParamException("参数不合法！");
+        return parent::insert(array('content'=>$title, 'note_id'=>$note_id,
+            'user_id'=>$user_id,  'chan_id'=>$chan_id, 'weight'=>$weight));
+    }
+    
+    function publish()
+    {
+        $this->update(array('status'=>1));
     }
 
+//    function new_head($title, $note_id, $user_id, $chan_id, $weight = 0, $status = 0)
+//    {
+//        if( !$note_id || !$title )
+//            throw new DisParamException("参数不合法！");
+//        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
+//        $title = preg_replace($rsg, '', $title);
+//
+//        $head = new DisHeadCtrl();
+//        $head->insert($title, $note_id);
+//        if( !$head->ID )
+//            throw new DisDBException("插入信息头失败！");
+//
+//        return $head;
+//    }
+//
+//    function insert($content, $note_id, $user_id, $chan_id, $weight = 0, $status = 0)
+//    {
+//        return parent::insert(array('content'=>$content, 'note_id'=>$note_id, 
+//            'user_id'=>$user_id, 'chan_id'=>$chan_id, 'weight'=>$weight, 'status'=>$status));
+//    }
+
+    static function list_publish_infos($user_id)
+    {
+        $str = "select ID, user_id, chan_id, weight, status, note_id, content, 
+            note_num, interest_num, approved_num, create_time
+            from ".DisInfoHeadData::$stable." where user_id = $user_id and status > 0";
+        return parent::load_datas($str);
+    }
+    
 //    protected static function list_channel_themes($channel_id, $page = 0, $count = 40)
 //    {
 //        $str = "select ID from ".DisHeadData::$stable." where channel_id = $channel_id order by ID desc limit ".$page*$count.", $count";

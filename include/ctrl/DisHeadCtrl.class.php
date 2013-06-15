@@ -62,9 +62,17 @@ class DisHeadCtrl extends DisInfoHeadData
         $view['note'] = DisNoteCtrl::get_note_view($view['note_id']);
 //        $view['note']['content'] = strip_tags($view['note']['content']);
         if( $view['chan_id'] > 0 )
-            $view['channel'] = DisChannelCtrl::get_data($view['chan_id']);
+            $view['chan'] = DisChannelCtrl::get_data($view['chan_id']);
 
         return $view;
+    }
+
+    static function head($head_id)
+    {
+        $head = new DisHeadCtrl();
+        $head->ID = $head_id;
+        $head->detail = self::get_data($head_id);
+        return $head;
     }
 
     static function parse_heads($head_ids)
@@ -102,21 +110,82 @@ class DisHeadCtrl extends DisInfoHeadData
         return $status;
     }
 
-    static function new_head($title, $note_id)
+    /**
+     * 添加一条新信息
+     * @param integer $user_id 发布者ID
+     * @param integer $chan_id 发布信息的频道ID
+     * @param integer $weight 发布信息的权重值
+     * @param integer $status 发布信息的状态
+     * @param string $title 邮件标题内容
+     * @param string $content 信息内容
+     * @param array $photos 图片列表
+     * @param array $goods 商品列表
+     * @param string $video 视频地址
+     * @return DisNoteCtrl 生成的信息对象
+     */
+    static function new_info($user_id, $chan_id, $weight,
+            $title, $content, $photos = null, $goods = null, $video = "")
     {
-        if( !$note_id || !$title )
+        if( !$user_id || !$content || !$title )
             throw new DisParamException("参数不合法！");
-//        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
-//        $title = preg_replace($rsg, '', $title);
+
+        $photo_num = $photos ? count($photos) : 0;
+        $good_num = $goods ? count($goods) : 0;
+
+        $note = new DisNoteCtrl();
+        $note->insert($user_id, $content, 0, 0, $photo_num, $good_num, $video);
+        if( !$note->ID )
+            throw new DisDBException("插入失败！");
+
+        for( $i = 0; $i < $photo_num; $i ++ )
+        {
+            DisInfoPhotoData::insert($note->ID, $photos[$i]['id'], $photos[$i]['rank'],
+                    $photos[$i]['desc']);
+            $photo = new DisPhotoCtrl($photos[$i]['id']);
+            if( $photo->ID )
+                $photo->increase('quote');
+        }
+        for( $i = 0; $i < $good_num; $i ++ )
+        {
+            DisInfoGoodData::insert($note->ID, $goods[$i]['id'], $goods[$i]['rank'],
+                    $goods[$i]['desc']);
+            $good = new DisGoodCtrl((int)$goods[$i]['id']);
+            if( $good->ID )
+                $good->increase('quote');
+        }
 
         $head = new DisHeadCtrl();
-        $head->insert($title, $note_id);
-        if( !$head->ID )
-            throw new DisDBException("插入信息头失败！");
+        $head->new_head($title, $note->ID, $user_id, $chan_id, $weight);
+        $head->interest($user_id);
+        
+        $note->update(array('head_id'=>$head->ID));
+        $chan = new DisChannelCtrl($chan_id);
+        $chan->increase('info_num');
+
+        $param = new DisUserParamCtrl($user_id);
+        $param->increase("note_num");
+        $param->increase('head_num');
 
         return $head;
     }
 
+//    static function new_head($title, $note_id, $user_id, $chan_id, $weight = 0, $status = 0)
+//    {
+//        if( !$note_id || !$title )
+//            throw new DisParamException("参数不合法！");
+////        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
+////        $title = preg_replace($rsg, '', $title);
+//
+//        return parent::insert(array('content'=>$title, 'note_id'=>$note_id, 
+//            'user_id'=>$user_id, 'chan_id'=>$chan_id, 'weight'=>$weight, 'status'=>$status));
+//        $head = new DisHeadCtrl();
+//        $head->insert($title, $note_id);
+//        if( !$head->ID )
+//            throw new DisDBException("插入信息头失败！");
+//
+//        return $head;
+//    }
+//
 //    static function new_head($user_id, $title)
 //    {
 //        if( !$user_id || !$title )
@@ -140,14 +209,6 @@ class DisHeadCtrl extends DisInfoHeadData
 //
 //        return $head;
 //    }
-
-    static function head($head_id)
-    {
-        $head = new DisHeadCtrl();
-        $head->ID = $head_id;
-        $head->detail = self::get_data($head_id);
-        return $head;
-    }
 
     function interest($user_id)
     {

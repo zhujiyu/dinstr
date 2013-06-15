@@ -382,6 +382,118 @@ _dis.fn.extend(
 _dis.extend = _dis.fn.extend = $.extend;
 _dis.fn.init.prototype = _dis.fn;
 window.dis = _dis;
+
+disLoadImg = function (_pic)
+{
+    if( $(_pic).hasClass('dis-loaded-pic') || $(_pic).hasClass('dis-loading-pic') )
+        return;
+
+    // 第一步，加未加载标志
+    if( $(_pic).hasClass('dis-unload-pic') === false )
+        $(_pic).addClass('dis-unload-pic');
+
+    // 第二步，判断是否可见
+    if( _pic.offset().top + _pic.height() < $(window).scrollTop()
+        || _pic.offset().top > $(window).scrollTop() + document.documentElement.clientHeight )
+        return;
+
+    // 第三步，打上正在加载标志
+    if( _pic.attr('imgsrc') === undefined || _pic.attr('imgsrc') === '' )
+        _pic.attr('imgsrc', 'css/logo/avatar.png');
+    $(_pic).addClass('dis-loading-pic').removeClass('dis-unload-pic');
+
+    // 第四步，加载
+    // 3.1 先插入一个<img>结点
+    if( $('img', _pic).length < 1 )
+    {
+        if( $('a', _pic).length === 1 )
+            $('a', _pic).append('<img>');
+        else
+            $(_pic).append('<img>');
+    }
+
+    // 3.2 加载图片
+    $('img', _pic).css('display', 'none').attr('src', _pic.attr('imgsrc')).fadeIn('fast', function()
+    {
+        if( _pic.hasClass('dis-tile-img') )
+            disLoadImg.Adjust(_pic);
+        $(_pic).addClass('dis-loaded-pic').removeClass('dis-loading-pic');
+    });
+};
+
+disLoadImg.Adjust = function(pic)
+{
+    $(pic).filter('div').each(function()
+    {
+        var _img = $('img', this), _pic = $(this),
+            iw = _img.width(), ih = _img.height(), dw = _pic.width(),
+            mwh, px, py;
+
+        if( _img.attr('src') === undefined || _img.attr('src') === '' )
+            return;
+
+        if( iw > ih )
+        {
+            mwh = Math.round(dw * iw / ih);
+            px = Math.round((dw - mwh) * 0.5);
+            py = 0;
+            _img.css({width: mwh + 'px', height: dw + 'px'});
+        }
+        else
+        {
+            mwh = Math.round(dw * ih / iw);
+            px = 0;
+            py = Math.round((dw - mwh) * 0.5);
+            _img.css({width: dw + 'px', height: mwh + 'px'});
+        }
+        _img.css({'left': px + "px", 'top': py + "px"});
+//        alert(iw + ", " + ih + ", " + dw);
+//        alert(mwh + ", " + px + ", " + py);
+
+//        _img.css({'max-width': mwh + "px", 'max-height': mwh + "px"});
+//        _img.css({'max-width': Math.round(mwh) + "px", 'max-height': Math.round(mwh) + "px"});
+//        _img.css({'left': Math.round(px) + "px", 'top': Math.round(py) + "px"});
+    });
+};
+
+_dis.fn.extend(
+{
+    loadImg: function()
+    {
+        $(this[0]).each(function()
+        {
+            disLoadImg($(this));
+        });
+    },
+
+    chanType : function(type)
+    {
+        if( type === 'social' )
+            return "\u793e\u4ea4";
+        else if( type === 'business' )
+            return "\u5546\u52a1";
+        else if( type === 'info' )
+            return "\u8d44\u8baf";
+        else if( type === 'news' )
+            return "\u65b0\u95fb";
+        return "\u793e\u4ea4";
+    },
+
+    renderStr : function( _chan )
+    {
+        var
+            _logo = _chan.logo ? _chan.logo.small : 'css/logo/chanbgs.png',
+            _desc = _chan.desc ? _chan.desc : '';
+
+        _desc = _desc.length > 25 ? _desc.substr(0, 25) + '...' : _desc;
+        return  '<div class="dis-dropchan-item"><div class="dis-dropdown-icon dis-avatar-small dis-avatar-img dis-inline-block" imgsrc="'
+            + _logo + '"></div><div class="dis-dropdown-cont dis-inline-block"><div><div class="name dis-inline-block">'
+            + _chan.name + '</div><div class="param dis-inline-block">'
+            + '\u6210\u5458 ' + _chan.member_num + ' \u8ba2\u9605 ' + _chan.subscriber_num + ' \u4fe1\u606f ' + _chan.mail_num + '</div></div><div class="desc">'
+            + _desc + '</div></div><div class="type dis-inline-block">' + dis.chanType(_chan.type) + '</div></div><div class="dis-border-line"></div>';
+    }
+});
+
 window.pMail = _pMail = _dis;
 
 disDialog = function(_dialog, _options)
@@ -573,112 +685,6 @@ _dis.fn.extend(
         this.disDialog = new disDialog(_tip, $option);
 
         return this;
-    }
-});
-
-disLoadImg = function (_pic)
-{
-    if( $(_pic).hasClass('dis-loaded-pic') || $(_pic).hasClass('dis-loading-pic') )
-        return;
-
-    // 第一步，加未加载标志
-    if( $(_pic).hasClass('dis-unload-pic') === false )
-        $(_pic).addClass('dis-unload-pic');
-
-    // 第二步，判断是否可见
-    if( _pic.offset().top + _pic.height() < $(window).scrollTop()
-        || _pic.offset().top > $(window).scrollTop() + document.documentElement.clientHeight )
-        return;
-
-    // 第三步，打上正在加载标志
-    if( _pic.attr('imgsrc') === undefined || _pic.attr('imgsrc') === '' )
-        _pic.attr('imgsrc', 'css/logo/avatar.png');
-    $(_pic).addClass('dis-loading-pic').removeClass('dis-unload-pic');
-
-    // 第四步，加载
-    // 3.1 先插入一个<img>结点
-    if( $('img', _pic).length < 1 )
-    {
-        if( $('a', _pic).length === 1 )
-            $('a', _pic).append('<img>');
-        else
-            $(_pic).append('<img>');
-    }
-
-    // 3.2 加载图片
-    $('img', _pic).css('display', 'none').attr('src', _pic.attr('imgsrc')).fadeIn('fast', function()
-    {
-        if( _pic.hasClass('dis-tile-img') )
-            disLoadImg.Adjust(_pic);
-        $(_pic).addClass('dis-loaded-pic').removeClass('dis-loading-pic');
-    });
-};
-
-disLoadImg.Adjust = function(pic)
-{
-    $(pic).filter('div').each(function()
-    {
-        var _img = $('img', this), _pic = $(this),
-            iw = _img.width(), ih = _img.height(),
-            dw = _pic.width(),
-            mwh, px, py;
-
-        if( _img.attr('src') === undefined || _img.attr('src') === '' )
-            return;
-
-        if( iw > ih )
-        {
-            mwh = dw * iw / ih;
-            px = Math.round((dw - mwh) * 0.5);
-            py = 0;
-        }
-        else
-        {
-            mwh = dw * ih / iw;
-            px = 0;
-            py = Math.round((dw - mwh) * 0.5);
-        }
-
-        _img.css({'max-width': Math.round(mwh) + "px", 'max-height': Math.round(mwh) + "px"});
-        _img.css({'left': Math.round(px) + "px", 'top': Math.round(py) + "px"});
-    });
-};
-
-_dis.fn.extend(
-{
-    loadImg: function()
-    {
-        $(this[0]).each(function()
-        {
-            disLoadImg($(this));
-        });
-    },
-
-    chanType : function(type)
-    {
-        if( type === 'social' )
-            return "\u793e\u4ea4";
-        else if( type === 'business' )
-            return "\u5546\u52a1";
-        else if( type === 'info' )
-            return "\u8d44\u8baf";
-        else if( type === 'news' )
-            return "\u65b0\u95fb";
-        return "\u793e\u4ea4";
-    },
-
-    renderStr : function( _chan )
-    {
-        var
-            _logo = _chan.logo ? _chan.logo.small : 'css/logo/chanbgs.png',
-            _desc = _chan.desc ? _chan.desc : '';
-
-        _desc = _desc.length > 25 ? _desc.substr(0, 25) + '...' : _desc;
-        return  '<div class="dis-dropchan-item"><div class="dis-dropdown-icon dis-avatar-small dis-avatar-img dis-inline-block" imgsrc="'
-            + _logo + '"></div><div class="dis-dropdown-cont dis-inline-block"><div><div class="name dis-inline-block">'
-            + _chan.name + '</div><div class="param dis-inline-block">'
-            + '\u6210\u5458 ' + _chan.member_num + ' \u8ba2\u9605 ' + _chan.subscriber_num + ' \u4fe1\u606f ' + _chan.mail_num + '</div></div><div class="desc">'
-            + _desc + '</div></div><div class="type dis-inline-block">' + dis.chanType(_chan.type) + '</div></div><div class="dis-border-line"></div>';
     }
 });
 

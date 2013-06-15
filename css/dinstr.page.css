@@ -1,10 +1,11 @@
 /*!
- * PMAIL项目 CSS V1.9.25
+ * DINSTR项目 CSS V1.0.0
  *
- * @author 朱继玉
- * @copyright http://gou86.com/ @2011
+ * @author 朱继玉<zhuhz82@126.com>
+ * @copyright @2013
  */
 /* 网站的主题样式 */
+.dis-red-star {display: inline-block; width: 16px; height: 16px;}
 .dis-shadow {z-index: 210; top: 0; left: 0; width: 100%; height: 100%; position: absolute;}
 .dis-tip {position: absolute; z-index: 10;}
 .dis-tip .dis-tip-content {z-index: 211; background-color: #fff; position: relative;}
@@ -13,21 +14,31 @@
 #parsing span {color: #eb4f01; text-align: center; vertical-align: middle; position: relative; padding: 5px; display: block; width: 120px; margin: auto; background-color: #fff;}
 .dis-loading .dis-loading-pic {padding: 20px; text-align: center;}
 
+.dis-content {text-indent: 2em;}
 .dis-err .dis-content {padding: 0 10px; font-size: 14px; color: #555; border: 1px solid #b94a48;}
 
-.dis-special {padding: 14px; background-color: #eaeaea; border: 1px solid #e1e1e1;}
-.dis-special .dis-special {padding: 0; border: 0;}
-.dis-sorting {border: 1px solid red; background-color: white; padding: 5px;}
-.dis-prompt, .dis-prompt-wrap .dis-prompt {background-color: yellow;}
-.dis-shirt-v, .dis-shirt-h {width: 5px; height: 5px;}
-.dis-veri-data .dis-desc {color: red;}
+.dis-module-title {font-size: 14px; font-weight: bold;}
+.dis-border-line {background-color: #ddd; height: 1px;}
+.dis-content-border  {background-color: #ddd; height: 2px; margin: 10px 0;}
+.dis-vertical-border {background-color: #ddd; width: 1px; height: 100%;}
+
+.dis-page-navi {padding: 0 10px; border-bottom: 1px solid #cacaca; position: relative; margin-bottom: 15px;}
+.dis-page-navi .item {position: relative; cursor: pointer; top: 1px; display: inline-block; font-size: 14px; padding: 5px 10px; background-color: #fff; border: 1px solid transparent; border-bottom: 1px solid #cacaca;}
+.dis-page-navi .item:hover {text-decoration: none; border: 1px solid #cacaca; border-bottom: 1px solid transparent;}
+.dis-page-navi .current {color: #444; cursor: text; border: 1px solid #cacaca; border-bottom: 1px solid #fff;}
+.dis-page-navi .dis-module-title {float: left; margin-top: 10px;}
 
 .dis-arrow {font-family: Arial; line-height: 14px; text-align: center; width: 20px; position: relative; display: block; z-index: 0;}
 .dis-arrow-up .head {height: 8px; margin: 0 0 0 3px; font-size: 28px; overflow: hidden; text-align: left; display: block; position: relative;}
 .dis-arrow-up .tear {height: 8px; margin: -3px 0 4px 4px; font-size: 11px; overflow: hidden; text-align: left; display: block; position: relative;}
 .dis-arrow-dwon .head {height: 8px; margin: 0 0 0 3px; font-size: 28px; overflow: hidden; display: block; position: relative;}
 
-.dis-avatar-img, .dis-tile-img {white-space: nowrap; overflow: hidden; position: relative;}
+.dis-to-top {width: 20px; padding: 15px 5px; background-color: #f1f1f1; cursor: pointer;
+            font-family: Arial; line-height: 14px; text-align: center; z-index: 901;
+            position: fixed; _position: absolute; bottom: 100px; left: 50%; margin-left: 220px; display: none;}
+.dis-to-top:hover {background-color: #e1e1e1; color: #222; text-decoration: none;}
+
+.dis-img, .dis-avatar-img, .dis-tile-img {white-space: nowrap; overflow: hidden; position: relative;}
 .dis-avatar-icon {width: 24px; height: 24px;}
 .dis-avatar-icon img {max-width: 24px; max-height: 24px;}
 .dis-avatar-small {width: 32px; height: 32px;}
@@ -36,6 +47,13 @@
 .dis-avatar-middle img {max-width: 50px; max-height: 50px;}
 .dis-avatar-big {width: 150px; height: 150px;}
 .dis-avatar-big img {max-width: 150px; max-height: 150px;}
+
+.dis-special {padding: 14px; background-color: #eaeaea; border: 1px solid #e1e1e1;}
+.dis-special .dis-special {padding: 0; border: 0;}
+.dis-sorting {border: 1px solid red; background-color: white; padding: 5px;}
+.dis-prompt, .dis-prompt-wrap .dis-prompt {background-color: yellow;}
+.dis-shirt-v, .dis-shirt-h {width: 5px; height: 5px;}
+.dis-veri-data .dis-desc {color: red;}
 
 .dis-upload-ctrl img {display: none; vertical-align: middle; margin-left: 20px;}
 .dis-upload-ctrl input {vertical-align: middle; border: 1px solid #aaa;}
@@ -51,31 +69,13 @@
 .dis-avatar-result .dis-avatar-new {position: relative; vertical-align: middle; margin: 0 auto;}
 
 .dis-tag {display: inline-block; position: relative; padding-right: 10px;}
-.dis-red-star {display: inline-block; width: 16px; height: 16px;}
-.dis-content {text-indent: 2em;}
 .dis-empty-content {font-size: 14px; padding: 20px 0; text-align: center;}
 .dis-page-title {padding: 10px 0; font-size: 20px; font-weight: bold;}
-.dis-module-title {font-size: 14px; font-weight: bold;}
-
-.dis-border-line {background-color: #ddd; height: 1px;}
-.dis-content-border  {background-color: #ddd; height: 2px; margin: 10px 0;}
-.dis-vertical-border {background-color: #ddd; width: 1px; height: 100%;}
-
-.dis-to-top {width: 20px; padding: 15px 5px; background-color: #f1f1f1; cursor: pointer;
-            font-family: Arial; line-height: 14px; text-align: center; z-index: 901;
-            position: fixed; _position: absolute; bottom: 100px; left: 50%; margin-left: 220px; display: none;}
-.dis-to-top:hover {background-color: #e1e1e1; color: #222; text-decoration: none;}
 
 /*.dis-param {font-size: 14px;}*/
 .dis-param a:hover {text-decoration: none;}
 .dis-param .data {display: block; text-align: center;}
 .dis-param .dis-vertical-border {width: 1px; height: 40px; margin: 0 10px;}
-
-.dis-page-navi {padding: 0 10px; border-bottom: 1px solid #cacaca; position: relative; text-align: right; margin-bottom: 15px;}
-.dis-page-navi .item {position: relative; cursor: pointer; top: 1px; display: inline-block; font-size: 14px; padding: 5px 10px; background-color: #fff; border: 1px solid transparent; border-bottom: 1px solid #cacaca;}
-.dis-page-navi .item:hover {text-decoration: none; border: 1px solid #cacaca; border-bottom: 1px solid transparent;}
-.dis-page-navi .current {color: #444; cursor: text; border: 1px solid #cacaca; border-bottom: 1px solid #fff;}
-.dis-page-navi .dis-module-title {float: left; margin-top: 10px;}
 
 .dis-dialog input[type=text] {font-size: 14px; line-height: 22px; width: 440px; padding: 2px 4px;}
 .dis-dialog input[type=file] {width: 300px;}

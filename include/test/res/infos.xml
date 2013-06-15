@@ -6,15 +6,30 @@
     <user_params ID="1000012" interest_num="0" head_num="2" note_num="1"/>
 
     <info_notes ID="1000100" user_id="1000000" head_id="1000200" parent_id="0" content="信息内容"/>
-    <info_heads ID="1000200" content="信息头" note_id="1000100" approved_num="1" interest_num="2"/>
-
     <info_notes ID="1000101" user_id="1000000" head_id="1000202" parent_id="0" content="信息内容"/>
-    <info_heads ID="1000202" content="信息头" note_id="1000101" approved_num="0" interest_num="0"/>
+    
+    <info_heads ID="1000200" note_id="1000100" content="信息头" 
+                user_id="1000000" chan_id="1234861" weight="100" status="1" create_time="2013-06-16 00:00:00"
+                approved_num="1" interest_num="2"
+    />
+    <info_heads ID="1000202" note_id="1000101" content="信息头" 
+                user_id="1000000" chan_id="1234861" weight="100" status="1" create_time="2013-06-16 00:00:00"
+                approved_num="0" interest_num="0"
+    />
 
     <info_users ID="10000012" head_id="1000200" user_id="1000000" approve="0" create_time="2013-05-20 00:00:00"/>
     <info_users ID="10000015" head_id="1000200" user_id="1000012" approve="1" create_time="2013-05-20 00:00:00"/>
 
-	<channels ID="1234861" name="游戏海报"   type="business" logo="0" desc="first" bulletin="121981" creater="200" info_num="0" subscriber_num="0" member_num="0" create_time="0"/>
-	<channels ID="1593490" name="新建海报板" type="business" logo="0" desc="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" bulletin="kuke.com" creater='0' info_num="0" subscriber_num="1" member_num="1" create_time="0"/>
-	<channels ID="1593648" name="生活海报"   type="business" logo="0" desc="test" bulletin="gou86.com" creater='0' info_num="0" subscriber_num="1" member_num="0" create_time="0"/>
+	<channels ID="1234861" type="business" logo="0" creater="200" 
+              name="游戏海报" desc="first" bulletin="121981" 
+              info_num="0" subscriber_num="0" member_num="0" create_time="133"
+    />
+	<channels ID="1593490" type="business" logo="0" creater='0' 
+              name="新建海报板" desc="这副海报是新的&lt;div&gt; 高战 &lt;/div&gt;" bulletin="kuke.com" 
+              info_num="0" subscriber_num="1" member_num="1" create_time="2013"
+    />
+	<channels ID="1593648" type="business" logo="0" creater='0' 
+              name="生活海报" desc="test" bulletin="gou86.com" 
+              info_num="0" subscriber_num="1" member_num="0" create_time="2013"
+    />
 </dataset>

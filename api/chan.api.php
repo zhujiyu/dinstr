@@ -39,7 +39,7 @@ try
         if( $user_id > 0 )
         {
             $user = DisUserCtrl::user($user_id);
-            $chan_info['status'] = $user->get_channel_status($channel_id);
+            $chan_info['status'] = $user->get_chan_status($channel_id);
         }
         $val['channel'] = $chan_info;
     }
