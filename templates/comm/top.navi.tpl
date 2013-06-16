@@ -42,8 +42,37 @@
         </td>
     </tr></table>
 </div>
-    {*
-    <div class="dis-navi-content">
+
+{if $err}
+    <div class="dis-err">
+        <div class="dis-content">{$err}</div>
+        <div class="dis-content-border"></div>
+    </div>
+{/if}
+
+<link type="text/css" title="style" href="css/jquery.ui.core.css" rel="stylesheet"/>
+<link type="text/css" title="style" href="css/jquery.ui.theme.css" rel="stylesheet"/>
+<link type="text/css" title="style" href="css/dinstr.core.css" rel="stylesheet"/>
+<link type="text/css" title="style" href="css/dinstr.navi.css" rel="stylesheet"/>
+<link type="text/css" title="style" href="css/dinstr.page.css" rel="stylesheet"/>
+
+{*<div class="dis-page-head dis-navi-content">
+    <a class="dis-inline-block dis-navi-logo" href="index">
+        {include file="comm/logo.comm.tpl"}
+    </a>
+    <div class="dis-inline-block">
+        <h3>&nbsp;此处放置推荐的频道给用户</h3>
+    </div>
+    <div class="dis-content-border"></div>
+    {if $err}
+        <div class="dis-err">
+            <div class="dis-content">{$err}</div>
+            <div class="dis-content-border"></div>
+        </div>
+    {/if}
+</div>*}
+
+    {*<div class="dis-navi-content">
         <div class="dis-manage-account">
             {if $user}
                 <div class="ui-corner-all dis-menu-list">
@@ -85,27 +114,4 @@
             <a class="dis-navi-item" href="chan?plaza">游戏</a>
             <a class="dis-navi-item" href="chan?plaza">社交</a>
         </div>
-    </div>
-    *}
-
-<div class="dis-page-head dis-navi-content">
-    <a class="dis-inline-block dis-navi-logo" href="index">
-        {include file="comm/logo.comm.tpl"}
-    </a>
-    <div class="dis-inline-block">
-        <h3>&nbsp;此处放置推荐的频道给用户</h3>
-    </div>
-    <div class="dis-content-border"></div>
-    {if $err}
-        <div class="dis-err">
-            <div class="dis-content">{$err}</div>
-            <div class="dis-content-border"></div>
-        </div>
-    {/if}
-</div>
-
-<link type="text/css" title="style" href="css/jquery.ui.core.css" rel="stylesheet"/>
-<link type="text/css" title="style" href="css/jquery.ui.theme.css" rel="stylesheet"/>
-<link type="text/css" title="style" href="css/dinstr.core.css" rel="stylesheet"/>
-<link type="text/css" title="style" href="css/dinstr.navi.css" rel="stylesheet"/>
-<link type="text/css" title="style" href="css/dinstr.page.css" rel="stylesheet"/>
+    </div>*}

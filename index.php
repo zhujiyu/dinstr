@@ -16,11 +16,11 @@ require_once 'view/user.inc.php';
 $gSmarty = init_smarty();
 ob_start();
 
-$user = DisUserCtrl::user(10000);
-$gSmarty->assign("user", $user->info());
-
 try
 {
+    $user = DisUserCtrl::user(10000);
+    $gSmarty->assign("user", $user->info());
+
     $chan_ids = array(9999, 10000, 20000, 30000);
     for( $i = 0; $i < 4; $i ++ )
     {
@@ -49,16 +49,28 @@ try
     }
     $gSmarty->assign('manager_list', $manager_list);
 
-    $info_ids = array(100008, 100010, 100011);
-    for( $i = 0; $i < 3; $i ++ )
+    $head_ids = array(100023, 100012, 100020, 100022);
+    for( $i = 0; $i < 4; $i ++ )
     {
-        $info = DisNoteCtrl::get_note_view($info_ids[$i]);
-        $head = DisHeadCtrl::head($info['head_id']);
+        $head = DisHeadCtrl::head($head_ids[$i]);
+        $info = DisNoteCtrl::get_note_view($head->attr('note_id'));
+        $info['content'] = strip_tags($info['content']);
         $info['head'] = $head->info();
         $info['head']['status'] = $head->check_status($user->ID);
         $info_list[] = $info;
     }
     $gSmarty->assign('info_list', $info_list);
+    
+//    $info_ids = array(100008, 100010, 100011);
+//    for( $i = 0; $i < 3; $i ++ )
+//    {
+//        $info = DisNoteCtrl::get_note_view($info_ids[$i]);
+//        $head = DisHeadCtrl::head($info['head_id']);
+//        $info['head'] = $head->info();
+//        $info['head']['status'] = $head->check_status($user->ID);
+//        $info_list[] = $info;
+//    }
+//    $gSmarty->assign('info_list', $info_list);
 //    DisObject::print_array($info_list[0]);
 }
 catch (DisException $ex)

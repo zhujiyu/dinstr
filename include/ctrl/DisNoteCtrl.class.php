@@ -53,8 +53,8 @@ class DisNoteCtrl extends DisInfoNoteData
         {
             $note = DisNoteCtrl::get_data($note_id);
 //            DisObject::print_array($note);
-            if( (int)$note['status'] != 0 )
-                $note = array('ID'=>'0', 'content'=>'该信息已被作者删除！');
+//            if( !isset($note['status']) && (int)$note['status'] != 0 )
+//                $note = array('ID'=>'0', 'content'=>'该信息已被作者删除！');
             $note['user'] = DisUserCtrl::get_data($note['user_id']);
         }
         catch (DisException $ex)
@@ -83,9 +83,8 @@ class DisNoteCtrl extends DisInfoNoteData
             {
                 $good = $note['good_list'][$i];
                 $good['good'] = DisGoodCtrl::get_data($good['good_id']);
-//                $mail['good_list'][$i]['good'] = $good;
                 $rank = $note['good_list'][$i]['rank'];
-                $note['objects'][$rank] = $good; //$mail['good_list'][$i];
+                $note['objects'][$rank] = $good;
                 $note['objects'][$rank]['type'] = 'good';
             }
             unset($note['good_list']);
@@ -131,73 +130,6 @@ class DisNoteCtrl extends DisInfoNoteData
             $this->detail = self::get_data($this->ID);
         parent::reduce($param, $step);
         DisNoteDataCache::set_note_data($this->ID, null);
-    }
-
-    /**
-     * 添加一条新信息
-     * @param integer $user_id 发布者ID
-     * @param integer $chan_id 发布信息的频道ID
-     * @param integer $weight 发布信息的权重值
-     * @param integer $status 发布信息的状态
-     * @param string $title 邮件标题内容
-     * @param string $content 信息内容
-     * @param array $photos 图片列表
-     * @param array $goods 商品列表
-     * @param string $video 视频地址
-     * @return DisNoteCtrl 生成的信息对象
-     */
-    static function new_info($user_id, $chan_id, $weight, $status,
-            $title, $content, $photos = null, $goods = null, $video = "")
-    {
-        if( !$user_id || !$content || !$title )
-            throw new DisParamException("参数不合法！");
-
-        $photo_num = $photos ? count($photos) : 0;
-        $good_num = $goods ? count($goods) : 0;
-
-        $note = new DisNoteCtrl();
-        $note->insert($user_id, $content, 0, 0, $photo_num, $good_num, $video);
-        if( !$note->ID )
-            throw new DisDBException("插入失败！");
-
-        $head = new DisHeadCtrl();
-        $head->new_head($title, $note->ID, $user_id, $chan_id, $weight, $status);
-//        $head = DisHeadCtrl::new_head($title, $note->ID);
-        $head->interest($user_id);
-        $note->update(array('head_id'=>$head->ID));
-
-//        $head = DisHeadCtrl::new_head($user_id, $chan_id, $title);
-//        $head->update(array('note_id'=>$note->ID, 'note_num'=>1));
-
-        for( $i = 0; $i < $photo_num; $i ++ )
-        {
-            DisInfoPhotoData::insert($note->ID, $photos[$i]['id'], $photos[$i]['rank'],
-                    $photos[$i]['desc']);
-            $ph = new DisPhotoCtrl($photos[$i]['id']);
-            if( $ph->ID )
-                $ph->increase('quote');
-        }
-        for( $i = 0; $i < $good_num; $i ++ )
-        {
-            DisInfoGoodData::insert($note->ID, $goods[$i]['id'], $goods[$i]['rank'],
-                    $goods[$i]['desc']);
-            $good = new DisGoodCtrl((int)$goods[$i]['id']);
-            if( $good->ID )
-                $good->increase('quote');
-        }
-
-//        self::insert_keywords($note->ID, $title);
-//        self::insert_keywords($note->ID, $content);
-//
-//        $chan = new DisChannelCtrl($chan_id);
-//        $chan->increase('info_num');
-
-        $param = new DisUserParamCtrl($user_id);
-//        $param->ID = $user_id;
-        $param->increase("note_num");
-        $param->increase('head_num');
-
-        return $note;
     }
 
     /**
@@ -277,51 +209,6 @@ class DisNoteCtrl extends DisInfoNoteData
 //        }
     }
 
-    /**
-     * 新版的发布信息
-     * @param <integer> $user_id 用户ID
-     * @param <integer> $channel_id 频道ID
-     * @param <integer> $weight 邮件的优先级
-     * @return <integer> 发布ID
-     */
-    function send($user_id, $chan_id, $weight = 0)
-    {
-        if( !$this->ID )
-            throw new DisParamException("对象没有初始化！");
-        if( !$user_id || !$chan_id )
-            throw new DisParamException("参数不合法！");
-
-        $cu = new DisChanUserCtrl( $user_id );
-        $joined_ids = $cu->list_joined_ids( );
-        if( !in_array($chan_id, $joined_ids) )
-            throw new DisParamException('你没有加入这个频道，无权发送邮件');
-        $flow = new DisStreamCtrl();
-        $flow_id = $flow->insert($user_id, $this->ID, $chan_id, $weight);
-
-//        if( !$this->detail )
-//            $this->detail = self::get_data($this->ID);
-//        $num = (int)$this->detail["publish_num"] + 1;
-//        $channels = $this->detail['channels']."$channel_id|$weight#";
-//        $this->update(array("publish_num"=>$num, "channels"=>$channels));
-//        $channel = DisChannelCtrl::channel($channel_id);
-//        $channel->increase("mail_num");
-
-        if( $weight > 0 )
-        {
-            $param = new DisUserParamCtrl($user_id);
-            $param->pay_money($weight);
-        }
-        $feed = DisFeedCtrl::read_ctrler($user_id);
-        $feed->push_flow($flow_id);
-        DisFeedCtrl::save_ctrler($feed);
-
-        DisNoteVectorCache::set_note_ids($this->detail[head_id], null);
-        DisNoteDataCache::set_note_data($this->ID, null);
-        DisUserVectorCache::set_publish_head_ids($user_id, null);
-
-        return $flow_id;
-    }
-
     static function parse_mails($note_ids)
     {
         $count = count($note_ids);
@@ -335,27 +222,6 @@ class DisNoteCtrl extends DisInfoNoteData
             array_push($info_list, $note);
         }
         return $info_list;
-    }
-
-    /**
-     * 保存信息所含有的关键词
-     * @param integer $note_id 信息ID
-     * @param string $content 信息内容
-     * @return integer 插入关键词的个数
-     */
-    static function insert_keywords($note_id, $content)
-    {
-        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
-        $matches = null;
-        if( preg_match_all($rsg, $content, $matches) )
-            $keywords = $matches[1];
-        else
-            return 0;
-
-        $len = count($keywords);
-        for( $r = 0, $i = 0; $i < $len; $i ++ )
-            $r += soNewsKeywordDataTable::insert($note_id, $keywords[$i]);
-        return $r;
     }
 
     function list_child_ids()
@@ -409,9 +275,142 @@ class DisNoteCtrl extends DisInfoNoteData
         return $parent_mids;
     }
 
-    static function list_flow_ids_by_keyword($keyword, $page = 0, $size = 20)
-    {
-        return DisNoteKeywordData::list_releases($keyword, $page, $size);
-    }
+//    /**
+//     * 保存信息所含有的关键词
+//     * @param integer $note_id 信息ID
+//     * @param string $content 信息内容
+//     * @return integer 插入关键词的个数
+//     */
+//    static function insert_keywords($note_id, $content)
+//    {
+//        $rsg = '/#([\w\x{4e00}-\x{9fa5}]+)#/ui';
+//        $matches = null;
+//        if( preg_match_all($rsg, $content, $matches) )
+//            $keywords = $matches[1];
+//        else
+//            return 0;
+//
+//        $len = count($keywords);
+//        for( $r = 0, $i = 0; $i < $len; $i ++ )
+//            $r += soNewsKeywordDataTable::insert($note_id, $keywords[$i]);
+//        return $r;
+//    }
+//
+//    /**
+//     * 添加一条新信息
+//     * @param integer $user_id 发布者ID
+//     * @param integer $chan_id 发布信息的频道ID
+//     * @param integer $weight 发布信息的权重值
+//     * @param integer $status 发布信息的状态
+//     * @param string $title 邮件标题内容
+//     * @param string $content 信息内容
+//     * @param array $photos 图片列表
+//     * @param array $goods 商品列表
+//     * @param string $video 视频地址
+//     * @return DisNoteCtrl 生成的信息对象
+//     */
+//    static function new_info($user_id, $chan_id, $weight, $status,
+//            $title, $content, $photos = null, $goods = null, $video = "")
+//    {
+//        if( !$user_id || !$content || !$title )
+//            throw new DisParamException("参数不合法！");
+//
+//        $photo_num = $photos ? count($photos) : 0;
+//        $good_num = $goods ? count($goods) : 0;
+//
+//        $note = new DisNoteCtrl();
+//        $note->insert($user_id, $content, 0, 0, $photo_num, $good_num, $video);
+//        if( !$note->ID )
+//            throw new DisDBException("插入失败！");
+//
+//        $head = new DisHeadCtrl();
+//        $head->new_head($title, $note->ID, $user_id, $chan_id, $weight, $status);
+////        $head = DisHeadCtrl::new_head($title, $note->ID);
+//        $head->interest($user_id);
+//        $note->update(array('head_id'=>$head->ID));
+//
+////        $head = DisHeadCtrl::new_head($user_id, $chan_id, $title);
+////        $head->update(array('note_id'=>$note->ID, 'note_num'=>1));
+//
+//        for( $i = 0; $i < $photo_num; $i ++ )
+//        {
+//            DisInfoPhotoData::insert($note->ID, $photos[$i]['id'], $photos[$i]['rank'],
+//                    $photos[$i]['desc']);
+//            $ph = new DisPhotoCtrl($photos[$i]['id']);
+//            if( $ph->ID )
+//                $ph->increase('quote');
+//        }
+//        for( $i = 0; $i < $good_num; $i ++ )
+//        {
+//            DisInfoGoodData::insert($note->ID, $goods[$i]['id'], $goods[$i]['rank'],
+//                    $goods[$i]['desc']);
+//            $good = new DisGoodCtrl((int)$goods[$i]['id']);
+//            if( $good->ID )
+//                $good->increase('quote');
+//        }
+//
+////        self::insert_keywords($note->ID, $title);
+////        self::insert_keywords($note->ID, $content);
+////
+////        $chan = new DisChannelCtrl($chan_id);
+////        $chan->increase('info_num');
+//
+//        $param = new DisUserParamCtrl($user_id);
+////        $param->ID = $user_id;
+//        $param->increase("note_num");
+//        $param->increase('head_num');
+//
+//        return $note;
+//    }
+//
+//    /**
+//     * 新版的发布信息
+//     * @param <integer> $user_id 用户ID
+//     * @param <integer> $channel_id 频道ID
+//     * @param <integer> $weight 邮件的优先级
+//     * @return <integer> 发布ID
+//     */
+//    function send($user_id, $chan_id, $weight = 0)
+//    {
+//        if( !$this->ID )
+//            throw new DisParamException("对象没有初始化！");
+//        if( !$user_id || !$chan_id )
+//            throw new DisParamException("参数不合法！");
+//
+//        $cu = new DisChanUserCtrl( $user_id );
+//        $joined_ids = $cu->list_joined_ids( );
+//        if( !in_array($chan_id, $joined_ids) )
+//            throw new DisParamException('你没有加入这个频道，无权发送邮件');
+//        $flow = new DisStreamCtrl();
+//        $flow_id = $flow->insert($user_id, $this->ID, $chan_id, $weight);
+//
+////        if( !$this->detail )
+////            $this->detail = self::get_data($this->ID);
+////        $num = (int)$this->detail["publish_num"] + 1;
+////        $channels = $this->detail['channels']."$channel_id|$weight#";
+////        $this->update(array("publish_num"=>$num, "channels"=>$channels));
+////        $channel = DisChannelCtrl::channel($channel_id);
+////        $channel->increase("mail_num");
+//
+//        if( $weight > 0 )
+//        {
+//            $param = new DisUserParamCtrl($user_id);
+//            $param->pay_money($weight);
+//        }
+//        $feed = DisFeedCtrl::read_ctrler($user_id);
+//        $feed->push_flow($flow_id);
+//        DisFeedCtrl::save_ctrler($feed);
+//
+//        DisNoteVectorCache::set_note_ids($this->detail[head_id], null);
+//        DisNoteDataCache::set_note_data($this->ID, null);
+//        DisUserVectorCache::set_publish_head_ids($user_id, null);
+//
+//        return $flow_id;
+//    }
+//
+//    static function list_flow_ids_by_keyword($keyword, $page = 0, $size = 20)
+//    {
+//        return DisNoteKeywordData::list_releases($keyword, $page, $size);
+//    }
 }
 ?>

@@ -19,7 +19,7 @@
 
 .dis-module-title {font-size: 14px; font-weight: bold;}
 .dis-border-line {background-color: #ddd; height: 1px;}
-.dis-content-border  {background-color: #ddd; height: 2px; margin: 10px 0;}
+.dis-content-border  {background-color: #ddd; height: 2px; margin: 10px 0; clear: both;}
 .dis-vertical-border {background-color: #ddd; width: 1px; height: 100%;}
 
 .dis-page-navi {padding: 0 10px; border-bottom: 1px solid #cacaca; position: relative; margin-bottom: 15px;}

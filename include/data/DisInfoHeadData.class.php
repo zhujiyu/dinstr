@@ -74,6 +74,14 @@ class DisInfoHeadData extends DisDBTable
         $this->update(array('status'=>1));
     }
 
+    static function list_publish_infos($user_id)
+    {
+        $str = "select ID, user_id, chan_id, weight, status, note_id, content, 
+            note_num, interest_num, approved_num, create_time
+            from ".DisInfoHeadData::$stable." where user_id = $user_id and status > 0";
+        return parent::load_datas($str);
+    }
+    
 //    function new_head($title, $note_id, $user_id, $chan_id, $weight = 0, $status = 0)
 //    {
 //        if( !$note_id || !$title )
@@ -94,15 +102,7 @@ class DisInfoHeadData extends DisDBTable
 //        return parent::insert(array('content'=>$content, 'note_id'=>$note_id, 
 //            'user_id'=>$user_id, 'chan_id'=>$chan_id, 'weight'=>$weight, 'status'=>$status));
 //    }
-
-    static function list_publish_infos($user_id)
-    {
-        $str = "select ID, user_id, chan_id, weight, status, note_id, content, 
-            note_num, interest_num, approved_num, create_time
-            from ".DisInfoHeadData::$stable." where user_id = $user_id and status > 0";
-        return parent::load_datas($str);
-    }
-    
+//
 //    protected static function list_channel_themes($channel_id, $page = 0, $count = 40)
 //    {
 //        $str = "select ID from ".DisHeadData::$stable." where channel_id = $channel_id order by ID desc limit ".$page*$count.", $count";

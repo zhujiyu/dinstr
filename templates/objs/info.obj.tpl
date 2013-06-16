@@ -4,9 +4,12 @@
     {if $info.objects && $info.objects[0].type == 'photo'}
         <div class="dis-load-display dis-info-photo dis-img" imgsrc={$info.objects[0].photo.big}></div>
     {/if}
-    <div class="dis-info-detial">{$info.content|truncate_utf:110:'...'}<a>查看详细</a></div>
+    {$info.content|truncate_utf:80:'...'}<a>查看详细</a>
 </div>
     {*
+    <a href="info?{$info.head.ID}" target="_blank"><h3>{$info.head.content}</h3></a>
+    <a href="user?{$info.user.ID}" target="_blank"><h4>{$info.user.username}——{$info.user.sign}</h4></a>
+    <div class="dis-info-content">{$info.content|truncate_utf:100:'...'}<a>查看详细</a></div>
     <div class="dis-info-user">{$info.user.username}</div>
     {if $info.objects}
         {if $info.objects[0].type == 'photo'}

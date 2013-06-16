@@ -1,7 +1,8 @@
-<form class="dis-search-form dis-border dis-corner-all" method="get" action="search">
-    <input type="text" name="keyword" id="keyword" value="搜栏目" class="dis-no-border">
-    </input><input type="submit" id="search" value=""></input>
-</form>
+<div class="dis-navi-logo">
+    <a href="index">{include file="comm/logo.comm.tpl"}</a>
+</div>
+<div class="dis-content-border"></div>
+<div class="dis-chan-navi">
 {section name=cli loop=$chan_list}
     <div class="dis-chan-item dis-box-shadow ui-corner-all" id="{$chan_list[cli].ID}" title="{$chan_list[cli].name}">
         <div class="dis-chan-logo dis-inline-block">
@@ -12,9 +13,14 @@
         </div>
     </div>
 {/section}
-{*
-<div class="dis-chan-navi">
 </div>
+<div class="dis-content-border"></div>
+<form class="dis-search-form" method="get" action="search">
+    <input type="text" name="keyword" id="keyword" value="搜栏目" class="dis-no-border">
+    </input><input type="submit" id="search" value=""></input>
+</form>
+{*
+<div class="dis-chan-navi"></div>
 *}
     {*include file="objs/navi.chan.obj.tpl" chan=$chan_list[cli]*}
     {*if !$smarty.section.cli.last}<div class="dis-border-line"></div>{/if*}

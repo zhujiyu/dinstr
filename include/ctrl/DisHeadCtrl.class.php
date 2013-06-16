@@ -17,28 +17,6 @@ class DisHeadCtrl extends DisInfoHeadData
 {
     public $mail;
 
-    function _chack_init()
-    {
-        if( !$this->ID )
-            throw new DisParamException('对象没有初始化！');
-        if( !$this->detail )
-            $this->detail = self::get_data($this->ID);
-    }
-
-    function increase($param, $step = 1)
-    {
-        $this->_chack_init();
-        parent::increase($param, $step);
-        DisNoteDataCache::set_head_data($this->ID, null);
-    }
-
-    function reduce($param, $step = 1)
-    {
-        $this->_chack_init();
-        parent::reduce($param, $step);
-        DisNoteDataCache::set_head_data($this->ID, null);
-    }
-
     static function get_data($head_id)
     {
 //        pmRowMemcached::set_theme_data($theme_id, null);
@@ -75,6 +53,11 @@ class DisHeadCtrl extends DisInfoHeadData
         return $head;
     }
 
+    static function list_publish_info_ids($user_id)
+    {
+        $heads = parent::list_publish_infos($user_id);
+    }
+
     static function parse_heads($head_ids)
     {
         $len = count($head_ids);
@@ -108,6 +91,28 @@ class DisHeadCtrl extends DisInfoHeadData
         $approved_uids = $this->list_approved_user_ids();
         $status['approved'] = in_array($user_id, $approved_uids) ? 1 : 0;
         return $status;
+    }
+
+    function _chack_init()
+    {
+        if( !$this->ID )
+            throw new DisParamException('对象没有初始化！');
+        if( !$this->detail )
+            $this->detail = self::get_data($this->ID);
+    }
+
+    function increase($param, $step = 1)
+    {
+        $this->_chack_init();
+        parent::increase($param, $step);
+        DisNoteDataCache::set_head_data($this->ID, null);
+    }
+
+    function reduce($param, $step = 1)
+    {
+        $this->_chack_init();
+        parent::reduce($param, $step);
+        DisNoteDataCache::set_head_data($this->ID, null);
     }
 
     /**

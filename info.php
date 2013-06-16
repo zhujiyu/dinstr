@@ -12,6 +12,7 @@
  * @version  : 1.0.0
  */
 require_once 'common.inc.php';
+require_once 'view/info.inc.php';
 
 $uri = $_SERVER['REQUEST_URI'];
 $matches = null;
@@ -26,6 +27,14 @@ try
     $user = DisUserCtrl::user(10000);
     $gSmarty->assign("user", $user->info());
 
+    $chan_ids = array(9999, 10000, 20000, 30000);
+    for( $i = 0; $i < 4; $i ++ )
+    {
+        $chan = DisChannelCtrl::chan($chan_ids[$i]);
+        $chan_list[] = $chan->info();
+    }
+    $gSmarty->assign('chan_list', $chan_list);
+
     $head = DisHeadCtrl::head($head_id);
     $gSmarty->assign("title", $head->attr('content'));
     
@@ -34,8 +43,13 @@ try
     $info['head'] = $head->info();
     $gSmarty->assign("info", $info);
     
-    $notes = DisNoteCtrl::list_user_infos($user->ID);
-//    DisObject::print_array($notes);
+    $head_ids = $user->list_publish_head_ids(0);
+    $info_list = parse_infos($head_ids, $user->ID);
+    $gSmarty->assign('info_list', $info_list);
+//    DisObject::print_array($info_list);
+    
+//    $notes = DisHeadCtrl::list_publish_infos($user->ID);
+//    $notes = DisNoteCtrl::list_user_infos($user->ID);
 //    $user->list_infos($mail_ids);
 //    $gSmarty->assign("info", DisNoteCtrl::get_note_view($note_id));
     

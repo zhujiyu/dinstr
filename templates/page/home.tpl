@@ -2,7 +2,45 @@
 <body>
 {include file="comm/top.navi.tpl"}
 
-<div class="dis-wrap"><div class="dis-page">
+<div class="dis-page dis-wide-page">
+    <div class="dis-slide-menu ui-corner-all">
+        {include file="modu/chan.navi.tpl"}
+    </div>
+    <div class="dis-info-board">
+        <div class="dis-page-left dis-inline-block">
+            <div class="dis-page-navi dis-range-navi" view="{$range}">
+                <a class="current all item" href="home?feed">今日海报</a>
+                <a class="follow item" href="home?feed&follow">一周之内</a>
+                <a class="follow item" href="home?feed&follow">半月之内</a>
+                <a class="follow item" href="home?feed&follow">更早时期</a>
+            </div>
+            <div class="dis-info-list dis-main-list">
+                {section name=ili loop=$info_list}
+                    {include file="objs/info.obj.tpl" info=$info_list[ili]}
+                    {if !$smarty.section.ili.last}<div class="dis-content-border"></div>{/if}
+                {/section}
+            </div>
+        </div>
+        <div class="dis-page-right dis-inline-block">
+            {include file="modu/chan.detail.tpl"}
+        </div>
+    </div>
+{*
+        <div class="dis-chan-info">
+            {include file="modu/chan.detail.tpl"}
+        </div>
+            <div class="dis-page-navi dis-range-navi" view="{$range}">
+                <a class="current all item" href="home?feed">今日海报</a>
+                <a class="follow item" href="home?feed&follow">一周之内</a>
+                <a class="follow item" href="home?feed&follow">半月之内</a>
+                <a class="follow item" href="home?feed&follow">更早时期</a>
+            </div>
+        <div class="dis-info-list dis-main-list">
+            {section name=ili loop=$info_list}
+                {include file="objs/info.obj.tpl" info=$info_list[ili]}
+                {if !$smarty.section.ili.last}<div class="dis-content-border"></div>{/if}
+            {/section}
+        </div>
     <div class="dis-page-left dis-chan-navi dis-inline-block">
         {include file="modu/chan.navi.tpl"}
     </div>
@@ -10,27 +48,34 @@
         <div class="dis-chan-info">
             {include file="modu/chan.detail.tpl"}
         </div>
-        <div class="dis-info-list">
             <div class="dis-page-navi dis-range-navi" view="{$range}">
                 <a class="current all item" href="home?feed">今日海报</a>
                 <a class="follow item" href="home?feed&follow">一周之内</a>
                 <a class="follow item" href="home?feed&follow">半月之内</a>
                 <a class="follow item" href="home?feed&follow">更早时期</a>
             </div>
-
+        <div class="dis-info-list dis-main-list">
             {section name=ili loop=$info_list}
                 {include file="objs/info.obj.tpl" info=$info_list[ili]}
                 {if !$smarty.section.ili.last}<div class="dis-content-border"></div>{/if}
             {/section}
         </div>
     </div>
-
+*}
     <div class="dis-content-border"></div>
     {include file="comm/footer.comm.tpl"}
-</div> <!-- end of page --> </div> <!-- end of wrap -->
+</div> <!-- end of page -->
 
 </body>
 </html>
+        {*<div class="dis-info-list">
+            <div class="dis-page-navi dis-range-navi" view="{$range}">
+                <a class="current all item" href="home?feed">今日海报</a>
+                <a class="follow item" href="home?feed&follow">一周之内</a>
+                <a class="follow item" href="home?feed&follow">半月之内</a>
+                <a class="follow item" href="home?feed&follow">更早时期</a>
+            </div>
+        </div>*}
 {*
 <link type="text/css" title="style" href="css/pmail.mail.css" rel="stylesheet"/>
 <link type="text/css" title="style" href="css/pmail.chan.css" rel="stylesheet"/>
