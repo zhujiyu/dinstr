@@ -28,7 +28,7 @@ class DisInfoHeadData extends DisDBTable
     }
 
     function init($id, $slt = "ID, user_id, chan_id, weight, status, note_id, content, 
-        note_num, interest_num, approved_num, create_time")
+        note_num, interest_num, approved_num, unix_timestamp(create_time) as create_time")
     {
         parent::init($id, $slt);
     }

@@ -5,6 +5,10 @@
         <div class="dis-load-display dis-info-photo dis-img" imgsrc={$info.objects[0].photo.big}></div>
     {/if}
     {$info.content|truncate_utf:80:'...'}<a>查看详细</a>
+    <div class="dis-chan-param">
+        <weight>{$info.head.weight}</weight>{*&nbsp;<span>{$info.head.create_time}</span>*}
+        <span class="dis-date" time="{$info.head.create_time}"></span>
+    </div>
 </div>
     {*
     <a href="info?{$info.head.ID}" target="_blank"><h3>{$info.head.content}</h3></a>

@@ -25,6 +25,13 @@
             {include file="modu/chan.detail.tpl"}
         </div>
     </div>
+    <div class="dis-content-border"></div>
+    {include file="comm/footer.comm.tpl"}
+</div> <!-- end of page -->
+<script type="text/JavaScript" src="js/core/dis.date.js"></script>
+
+</body>
+</html>
 {*
         <div class="dis-chan-info">
             {include file="modu/chan.detail.tpl"}
@@ -62,12 +69,6 @@
         </div>
     </div>
 *}
-    <div class="dis-content-border"></div>
-    {include file="comm/footer.comm.tpl"}
-</div> <!-- end of page -->
-
-</body>
-</html>
         {*<div class="dis-info-list">
             <div class="dis-page-navi dis-range-navi" view="{$range}">
                 <a class="current all item" href="home?feed">今日海报</a>

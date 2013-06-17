@@ -20,12 +20,11 @@
     </div>
     <div class="dis-chan-desc dis-content">{$chan.desc}</div>
 </div>
-<div class="dis-content-border"></div>
 
+<div class="dis-module-title">
+    <a>查看全部...</a>活跃会员
+</div>
 <div class="dis-member-list dis-user-list">
-    <div class="dis-module-title">
-        <a>查看全部...</a>活跃会员
-    </div>
     {section name=mli loop=$member_list}
         <div class="dis-user">
             <div class="dis-user-avatar dis-inline-block">
@@ -39,12 +38,11 @@
         {*if !$smarty.section.mli.last}<div class="dis-border-line"></div>{/if*}
     {/section}
 </div>
-<div class="dis-content-border"></div>
 
+<div class="dis-module-title">
+    <a>查看全部...</a>管理员
+</div>
 <div class="dis-manage-list dis-user-list">
-    <div class="dis-module-title">
-        <a>查看全部...</a>管理员
-    </div>
     {section name=mli loop=$manager_list}
         <div class="dis-user">
             <div class="dis-user-avatar dis-inline-block">

@@ -1,0 +1,188 @@
+/*
+    Document   : pmail.mail.css
+    Created on : 2011-11-30, 20:36:43
+    Author     : jiyu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.dis-info {font-size: 14px; line-height: 22px; position: relative; z-index: 0; margin: 10px 0;}
+.dis-info-top a, .dis-info-bottom a, .dis-info .dis-theme-ctrl a {color: #555;}
+
+.dis-info-avatar {position: relative; width: 70px; height: 50px;}
+.dis-info-body {width: 570px;}
+.dis-info-body .dis-expan {padding: 1px 5px; font-weight: bold; color: #105cb6; display: inline-block; float: right;}
+.dis-info-body .dis-icon-wrap {vertical-align: middle; padding: 2px;}
+.dis-info-content textarea {width: 630px; height: 200px; padding: 4px;}
+
+.dis-info-top {margin-bottom: 5px; clear: both;}
+.dis-info-top .dis-icon {background-image: url(images/ui-icons_222222_256x240.png);}
+.dis-info-bottom {clear: both;}
+.dis-info-bottom a {margin-left: 10px;}
+.dis-info-bottom .collected .dis-icon {background-image: url('images/ui-icons_eb4f01_256x240.png');}
+
+.dis-theme-title {margin: 5px 0;}
+.dis-theme-title .title {font-weight: bold; font-size: 18px;}
+.dis-theme-title textarea {width: 630px; padding: 2px 4px; height: 32px;}
+.dis-info-release {float: right;}
+.dis-info-weight {color: #14589c; font-weight: bold; font-size: 18px; margin: 0 5px;}
+
+.dis-info-content-small .dis-photo {width: 100px; height: 100px; vertical-align: top;}
+.dis-info-content-small .dis-photo img {max-height: 100px; max-width: 100px;}
+.dis-info-content-small .dis-photo-desc {display: none;}
+.dis-info-content-small .dis-shirt-v {height: 10px; vertical-align: top;}
+.dis-info-content-small .dis-object-list {float: left; margin-bottom: 10px;}
+.dis-info-content-small .dis-object-list .dis-border-line {display: none;}
+
+.dis-info-content-big .dis-shirt-v {display: none;}
+.dis-info-content-big .dis-photo img {max-width: 540px;}
+.dis-info-content-big .dis-photo-desc {padding: 5px;}
+.dis-info-content-big .dis-border-line {margin: 10px 0;}
+
+.dis-good-info {vertical-align: top; position: static;}
+.dis-good-price {font-size: 16px; line-height: 30px; text-align: center;}
+.dis-good-price span {font-size: 28px; color: #eb4f01;}
+.dis-good-source a {font-size: 16px; line-height: 30px;}
+.dis-good-title a {color: #444; font-weight: bold;}
+.dis-good-ctrl {padding: 10px 0;}
+.dis-good-publisher {text-align: right;}
+.dis-good-param span {font-size: 28px; color: #eb4f01;}
+
+.dis-good-small {margin-right: 2px; position: relative; vertical-align: top;}
+.dis-good-small .dis-good-info {display: none;}
+.dis-good-small .dis-good-photo {width: 100px; height: 100px;}
+.dis-good-small .dis-good-photo img {max-width: 100px; max-height: 100px;}
+.dis-good-small .dis-good-ctrl {padding: 10px 0; display: block;}
+.dis-good-small .dis-good-desc {display: none;}
+
+.dis-good-big {min-height: 340px; position: relative;}
+.dis-good-big .dis-good-photo {max-width: 340px; max-height: 340px; float: left; margin-right: 10px; position: relative;}
+.dis-good-big .dis-good-photo img {max-width: 340px; max-height: 340px;}
+
+.dis-add-list {margin-left: 60px; margin-bottom: -10px;}
+.dis-add-list .dis-info-avatar {width: 40px;}
+.dis-add-list .dis-info-body  {width: 500px;}
+.dis-add-list .dis-info .dis-border-line {margin: 10px 0;}
+.dis-add-list .dis-info-weight input {width: 60px;}
+
+.dis-reply-list .dis-base-mails {display: none; padding-top: 10px;}
+.dis-reply-list .dis-children-list {display: none;}
+.dis-reply-list .dis-info-content textarea {width: 540px; height: 80px;}
+.dis-reply-list .dis-info-weight input {width: 60px;}
+.dis-reply-list .dis-triangle-top {border: 10px solid transparent; border-bottom: 10px solid #e5e5e5; left: 150px; top: -20px;}
+
+.dis-special .dis-special .dis-good-big {min-height: 300px; padding: 0;}
+.dis-special .dis-special .dis-good-big .dis-good-photo {max-width: 300px; max-height: 300px;}
+.dis-special .dis-special .dis-good-big .dis-good-photo img {max-width: 300px; max-height: 300px;}
+.dis-special .dis-info-content-big .dis-photo {width: 500px; padding: 0;}
+
+.dis-forward-dialog {padding: 15px;}
+.dis-forward-dialog .dis-ctrl-table {margin-top: 5px;}
+
+.dis-input-photo, .dis-info-good {position: relative; display: inline-block;}
+.dis-input-photo .title {text-align: center; font-weight: bold; padding: 5px;}
+.dis-info-good .title {font-size: 16px; font-weight: bold;}
+.dis-info-good .price {font-size: 18px; color: #eb4f01; font-weight: bold;}
+.dis-info-good .photo {width: 500px; height: 500px;}
+.dis-info-good .photo img {max-width: 500px; max-height: 500px;}
+.dis-info-good h1 {display: inline-block;}
+.dis-info-good .info {padding: 10px;}
+
+.cart {position: absolute; top: 0; right: 0; width: 20px; height: 20px;}
+.cart img {width: 20px; height: 20px;}
+.dis-info-good .cart {top: 5px; right: 5px;}
+
+.dis-ruler {position: relative; width: 460px; cursor: pointer; white-space: nowrap;}
+.dis-ruler .dis-mark-list {position: relative; height: 5px; font-size: 0; line-height: 0; border-bottom: 2px solid black; /*padding: 0; margin: 0; border-left: 2px solid black;*/}
+.dis-ruler .dis-mark-list .dis-mark {width: 88px; height: 5px; border-right: 2px solid black;}
+.dis-ruler .dis-mark-list .dis-first-mark {width: 8px; height: 5px; border-right: 2px solid black;}
+.dis-ruler .dis-tag-list {font-size: 12px; line-height: 12px; left: 7px; position: relative;}
+.dis-ruler .dis-tag-list .dis-tag {width: 75px; position: relative;}
+.dis-ruler .dis-ruler-line {background-color: #eb4f01; height: 7px; top: 14px; left: 0; position: absolute;}
+
+.dis-info-target {margin: 5px 0;}
+.dis-info-target .dis-chan-logo {width: 30px;}
+.dis-info-target .dis-chan-add {width: 200px;}
+.dis-info-weight input {width: 160px; padding: 2px 4px;}
+
+.dis-info-edit {position: relative; font-size: 14px; text-align: left;}
+.dis-info-edit .dis-ruler {float: right;}
+.dis-info-edit .dis-info-weight {margin: 0;}
+.dis-info-edit .dis-util-tip {margin-bottom: 10px; display: block;}
+
+.dis-info-edit .dis-chan-list {display: block; position: relative;}
+.dis-info-edit .dis-chan-list #sortable {list-style: none; top: 0; position: relative;}
+.dis-info-edit .dis-chan-list #sortable li {display: inline-block; list-style: none;}
+.dis-info-edit .dis-chan-list .dis-chan-small {line-height: 20px; cursor: default; margin: 0;}
+
+.dis-drop-list {z-index: 299; position: absolute; top: 0; left: 0; border: 1px solid #aaa; background-color: red;}
+.dis-drop-list .item {padding: 5px; position: relative; vertical-align: middle; cursor: pointer; display: block;}
+.dis-drop-list .item:hover {background-color: gray;}
+.dis-drop-list .item .dis-drop-icon {width: 20px; height: 20px; vertical-align: middle; margin-right: 10px;}
+.dis-drop-list .item .dis-drop-icon img {max-width: 20px; max-height: 20px;}
+.dis-drop-list .item .dis-chan-name {white-space:  nowrap; overflow: hidden; width: 100px; vertical-align: middle;}
+
+.dis-dropchan-item .name  {font-weight: bold;}
+.dis-dropchan-item .param {margin-left: 20px;}
+.dis-dropchan-item .type {float: right; margin-left: 10px;}
+.dis-dropchan-item .dis-dropdown-icon {width: 40px; height: 40px; margin-right: 10px;}
+.dis-dropchan-item .dis-dropdown-icon img {max-width: 40px; max-height: 40px;}
+
+.dis-chan-list .dis-weight-manage {width: 70px; vertical-align: top;}
+.dis-chan-list .dis-chan-title {margin-right: 20px;}
+.dis-chan-list .dis-object-info {width: 400px; vertical-align: top;}
+
+.dis-chan-small {width: 120px; padding: 0 5px; border: 1px solid #baa;}
+.dis-chan-small input {display: none;}
+.dis-chan-small .dis-chan-name {width: 80px; padding-left: 5px; white-space: nowrap; overflow: hidden; vertical-align: middle; cursor: pointer;}
+.dis-chan-small .dis-chan-logo {width: 20px; height: 20px; vertical-align: middle;}
+.dis-chan-small .dis-chan-logo img {max-width: 20px; max-height: 20px;}
+.dis-chan-small #close {top: 0; right: 0;}
+.dis-chan-selected {background-color: activecaption; color: #000;}
+
+.dis-chan-simple {width: 100%;}
+.dis-chan-simple .dis-chan-logo {width: 60px;}
+.dis-chan-simple .dis-chan-info {line-height: 22px;}
+.dis-chan-simple .dis-chan-detail {margin-top: 5px;}
+
+.dis-chan-big {text-align: center; vertical-align: top; width: 80px; padding: 5px;}
+.dis-chan-big .dis-chan-name {width: 80px; white-space: nowrap; overflow: hidden; padding: 5px 0; position: relative;}
+.dis-chan-big .dis-chan-img {width: 50px; height: 50px; margin: 0 auto; position: relative;}
+.dis-chan-big .dis-chan-img img {max-width: 50px; max-height: 50px; position: relative;}
+
+.dis-chan-global .name {font-size: 20px; font-weight: bold;}
+.dis-chan-global .dis-chan-info {width: 470px; vertical-align: top; padding-left: 20px;}
+.dis-chan-announce .dis-announce-edit {border: 1px solid #aaa;}
+.dis-chan-announce textarea {width: 235px; height: 80px; padding: 5px; outline: 0; border: 0;}
+
+.dis-invite-dialog td {padding-bottom: 5px;}
+.dis-invite-dialog #invite .dis-border {width: 360px;}
+.dis-invite-dialog #invite .dis-err-text {padding: 0 5px;}
+.dis-invite-dialog input{padding: 0 5px; width: 350px;}
+.dis-invite-dialog textarea {padding: 3px 5px; width: 510px; height: 60px;}
+
+.dis-chan-navi {width: 110px; margin-right: 30px;}
+.dis-chan-navi .item {padding: 5px 0; text-align: right; padding-right: 20px;}
+.dis-avatar-plaza {width: 200px; margin-left: 30px;}
+.dis-chan-shirt {margin-bottom: 20px; border-bottom: 2px solid #ddd;}
+/*
+.dis-chan-page .dis-theme .dis-chan-avatar {display: none;}
+.dis-chan-page .dis-theme-body {width: 650px;}
+.dis-theme-page .dis-reply-form {margin-bottom: 300px;}
+.dis-theme-page .dis-info-content .content {white-space: pre-wrap;}
+
+.dis-chan {position: relative; list-style: none;}
+.dis-chan-type {float: right;}
+
+.dis-chan-tip {font-weight: normal; text-align: left;}
+.dis-chan-tip .dis-loading {padding: 40px 0; text-align: center;}
+.dis-chan-tip .dis-chan-content {padding: 15px 15px 0; width: 320px;}
+.dis-chan-tip .dis-chan-logo {margin-right: 15px;}
+.dis-chan-tip .dis-avatar-middle {width: 64px; height: 64px;}
+.dis-chan-tip .dis-avatar-middle img {width: 64px; height: 64px;}
+
+.dis-chan-tip .dis-chan-info {width: 240px; vertical-align: top; line-height: 22px;}
+.dis-chan-tip .dis-chan-desc {padding: 5px 0;}
+.dis-chan-tip .dis-chan-ctrl {padding: 10px 15px;}
+.dis-chan-tip .dis-content-border {margin: 0 15px;}
+.dis-chan-tip .dis-add-mail {float: left;}
+*/

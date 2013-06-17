@@ -266,7 +266,7 @@ jQuery.cookie = function (key, value, options)
 };
 
 /*!
- * DIS项目 JavaScript v1.1.12
+ * DINSTR项目 JavaScript v1.1.12
  *
  * @brief 本文件是DIS项目JS代码的根文件，提供了JS代码的命名空间和基础类，及几个常用函数
  * @author 朱继玉<zhuhz82@126.com>
@@ -447,12 +447,6 @@ disLoadImg.Adjust = function(pic)
             _img.css({width: dw + 'px', height: mwh + 'px'});
         }
         _img.css({'left': px + "px", 'top': py + "px"});
-//        alert(iw + ", " + ih + ", " + dw);
-//        alert(mwh + ", " + px + ", " + py);
-
-//        _img.css({'max-width': mwh + "px", 'max-height': mwh + "px"});
-//        _img.css({'max-width': Math.round(mwh) + "px", 'max-height': Math.round(mwh) + "px"});
-//        _img.css({'left': Math.round(px) + "px", 'top': Math.round(py) + "px"});
     });
 };
 
@@ -857,6 +851,13 @@ $(function()
 //    dis('<div>').tip({mess: '提示一下试试'});
 });
 
+//        alert(iw + ", " + ih + ", " + dw);
+//        alert(mwh + ", " + px + ", " + py);
+
+//        _img.css({'max-width': mwh + "px", 'max-height': mwh + "px"});
+//        _img.css({'max-width': Math.round(mwh) + "px", 'max-height': Math.round(mwh) + "px"});
+//        _img.css({'left': Math.round(px) + "px", 'top': Math.round(py) + "px"});
+//        
 //$(function()
 //{
 //    $('.dis-page-navi').each(function()
